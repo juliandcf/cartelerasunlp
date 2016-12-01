@@ -11,7 +11,7 @@ public class PruebaController {
 	
 	@RequestMapping(value="/prueba", method=RequestMethod.GET)
 	public String prueba(ModelMap model){
-		model.addAttribute("mensaje", "Hello Spring MVC");
+		model.addAttribute("mensaje   ", "Hello Spring MVC");
 		return "Hola prueba controlador spring";
 	}
 
