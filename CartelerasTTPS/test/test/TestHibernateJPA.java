@@ -25,7 +25,10 @@ import modelo.Publicacion;
 import modelo.PublicadorExterno;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath*:/META-INF/ApplicationContext.xml"} )
+
+//************Esta bien esta ruta?? es necesario especificar Webcontent????**************//
+
+@ContextConfiguration(locations = { "classpath*:/WebContent/WEB-INF/applicationContext.xml"} )
 public class TestHibernateJPA extends TestCase {
 	
 	@Autowired
