@@ -6,9 +6,7 @@ import java.util.List;
 public interface GenericDAO<T> {
 	public T actualizar(T entity);
 
-	public boolean borrar(T entity);
-
-	public T borrar(Serializable id);
+	public boolean borrar(Serializable id);
 
 	public boolean existe(Serializable id);
 
@@ -19,5 +17,7 @@ public interface GenericDAO<T> {
 	public List<T> recuperarTodos(String columnOrder);
 	
 	public int contar();
+
+	public List<T> recuperarTodos();
 	
 }

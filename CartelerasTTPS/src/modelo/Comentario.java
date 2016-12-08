@@ -25,7 +25,7 @@ public class Comentario implements Serializable{
 	private Long id;
     public String texto;
     public Date fecha;
-    
+    private Boolean borrado;
     
     @ManyToOne(optional=false, fetch=FetchType.EAGER)
     @JoinColumn(name="publicacion_fk")
@@ -90,6 +90,14 @@ public class Comentario implements Serializable{
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public Boolean isBorrado() {
+		return borrado;
+	}
+
+	public void setBorrado(Boolean borrado) {
+		this.borrado = borrado;
 	}
 
 

@@ -37,6 +37,8 @@ public class Publicacion implements Serializable {
 	private Date fecha;
 
 	private Boolean habilitarComentarios;
+	
+	private boolean borrado;
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "usuarioPublicador_fk")
@@ -153,6 +155,16 @@ public class Publicacion implements Serializable {
 	public Serializable getId() {
 
 		return this.id;
+	}
+
+
+	public boolean isBorrado() {
+		return borrado;
+	}
+
+
+	public void setBorrado(boolean borrado) {
+		this.borrado = borrado;
 	}
 
 //	@Override

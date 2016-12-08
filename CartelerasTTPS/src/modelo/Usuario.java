@@ -33,6 +33,7 @@ public abstract class Usuario implements Serializable {
     public String contrasena;
     public String nombre;
     public String apellido;
+    private Boolean borrado;
     @OneToMany(mappedBy="usuario",fetch=FetchType.EAGER, cascade=CascadeType.ALL)
     public List<Comentario> comentarios;
     
@@ -101,6 +102,14 @@ public abstract class Usuario implements Serializable {
 	}
 
 		
+	public Boolean isBorrado() {
+		return borrado;
+	}
+
+	public void setBorrado(Boolean borrado) {
+		this.borrado = borrado;
+	}
+
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", usuario=" + usuario + ", contrasena=" + contrasena + ", nombre=" + nombre

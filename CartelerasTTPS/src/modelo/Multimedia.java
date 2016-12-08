@@ -18,13 +18,14 @@ public class Multimedia {
 	private Long id;
 	private String url;
 	private String tipoEnlace;
+	private Boolean borrado;
 
 	public Multimedia() {
 	}
 
 	public Multimedia(String url, String tipoEnlace) {
 		super();
-		this.url = url;
+		this.setUrl(url);
 		this.tipoEnlace = tipoEnlace;
 	}
 
@@ -34,6 +35,22 @@ public class Multimedia {
 
 	public void setTipoEnlace(String tipoEnlace) {
 		this.tipoEnlace = tipoEnlace;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public Boolean isBorrado() {
+		return borrado;
+	}
+
+	public void setBorrado(Boolean borrado) {
+		this.borrado = borrado;
 	}
 
 }

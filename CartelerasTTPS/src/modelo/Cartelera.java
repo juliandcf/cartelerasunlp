@@ -6,7 +6,19 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Table
@@ -18,13 +30,9 @@ public class Cartelera implements Serializable{
 	@GeneratedValue
 	@Column(name = "id_cartelera")
 	private Long id;
-	
-    public Long getId() {
-		return id;
-	}
-
 	public String nombre;   
     public String descripcion;
+    private Boolean borrado;
   
     @ManyToMany
     @JoinTable(
@@ -36,6 +44,8 @@ public class Cartelera implements Serializable{
     
     @OneToMany(mappedBy="cartelera", cascade=CascadeType.ALL)
     public List<Publicacion> publicaciones;
+    
+    
     
     public Cartelera() {
     }
@@ -50,6 +60,10 @@ public class Cartelera implements Serializable{
 		this.setPublicaciones(new ArrayList<Publicacion>());
 	}
 
+	public Long getId() {
+		return id;
+	}
+	
 	public String getNombre() {
 		return nombre;
 	}
@@ -80,6 +94,18 @@ public class Cartelera implements Serializable{
 
 	public void setPublicaciones(List<Publicacion> publicaciones) {
 		this.publicaciones = publicaciones;
+	}
+
+
+
+	public Boolean isBorrado() {
+		return borrado;
+	}
+
+
+
+	public void setBorrado(Boolean borrado) {
+		this.borrado = borrado;
 	}
 
 }
