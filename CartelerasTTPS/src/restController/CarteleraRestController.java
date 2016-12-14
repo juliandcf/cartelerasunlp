@@ -41,7 +41,9 @@ public class CarteleraRestController {
 		ResponseEntity<CarteleraDTO> response = new ResponseEntity<CarteleraDTO>(HttpStatus.NOT_FOUND);
 		Cartelera carteleraRecuperar = carteleraService.recuperar(id);
 		if (carteleraRecuperar!= null){
-			response = new ResponseEntity<CarteleraDTO>(new CarteleraDTO(carteleraRecuperar),HttpStatus.OK);
+			CarteleraDTO carteleraDTO = new CarteleraDTO(carteleraRecuperar);
+			carteleraDTO.agregarPublicaciones(carteleraRecuperar);
+			response = new ResponseEntity<CarteleraDTO>(carteleraDTO,HttpStatus.OK);
 		}
 		return response;
 	}	

@@ -152,7 +152,7 @@ public class Publicacion implements Serializable {
 		this.comentarios = comentarios;
 	}
 
-	public Serializable getId() {
+	public Long getId() {
 
 		return this.id;
 	}

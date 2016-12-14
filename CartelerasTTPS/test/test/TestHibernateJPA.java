@@ -27,7 +27,7 @@ import modelo.PublicadorExterno;
 @RunWith(SpringJUnit4ClassRunner.class)
 
 //************Esta bien esta ruta?? es necesario especificar Webcontent????**************//
-
+@Transactional
 @ContextConfiguration(locations = { "classpath*:/WebContent/WEB-INF/applicationContext.xml"} )
 public class TestHibernateJPA extends TestCase {
 	
@@ -68,22 +68,22 @@ public class TestHibernateJPA extends TestCase {
 	}
 	
 	
-	@Test
-	public void testAgregarDocente(){
-		Docente docente1 = new Docente("doc1", "doc1", "Maria Rosa", "Grecco");
-		getDocenteDAO().persistir(docente1);
-		Docente docAgregado = getDocenteDAO().recuperar(docente1.getId());
-		assertEquals(docente1,docAgregado);
-	}
-	
-	@Test
-	public void testRecuperarDocente(){
-		Docente docente2 = new Docente("doc2", "doc2", "Susana", "Kutchen");
-		getDocenteDAO().persistir(docente2);
-		List<Docente> docentes = getDocenteDAO().recuperarTodos("nombre");
-		assertNotNull(docentes);
-		assertTrue(docentes.size()>0);
-	}
+//	@Test
+//	public void testAgregarDocente(){
+//		Docente docente1 = new Docente("doc1", "doc1", "Maria Rosa", "Grecco");
+//		getDocenteDAO().persistir(docente1);
+//		Docente docAgregado = getDocenteDAO().recuperar(docente1.getId());
+//		assertEquals(docente1,docAgregado);
+//	}
+//	
+//	@Test
+//	public void testRecuperarDocente(){
+//		Docente docente2 = new Docente("doc2", "doc2", "Susana", "Kutchen");
+//		getDocenteDAO().persistir(docente2);
+//		List<Docente> docentes = getDocenteDAO().recuperarTodos("nombre");
+//		assertNotNull(docentes);
+//		assertTrue(docentes.size()>0);
+//	}
 //	
 //	@Test
 //	public void testModificarDocente(){
@@ -111,32 +111,32 @@ public class TestHibernateJPA extends TestCase {
 //		assertNull(docEliminado);			
 //	}
 //	
-//	@Test
-//	public void testAgregarPublicacion(){
-//
-//		Cartelera c = new Cartelera("PrimerAño", "Cartelera de Primer año");
-//		getCarteleraDAO().persistir(c);
-//		
-//		Docente docente5 = new Docente("doc5", "doc5", "Monica", "Suarez");
-//		docente5.getAnios().add(Anio.PRIMERO);
-//		docente5.getPermisosCarteleras().add(c);
-//		getDocenteDAO().persistir(docente5);
-//		
-//		Publicacion p = new Publicacion("Una publicacion", "Tengo un texto", new Date(), true, docente5, c);
-//		docente5.getPublicaciones().add(p);		
-//		getPublicacionDAO().persistir(p);
-//		
-//		docente5.getPublicaciones().add(p);
-//		getDocenteDAO().actualizar(docente5);
-//		
-//		Publicacion publicacionAgregado = getPublicacionDAO().recuperar(p.getId());
-//		Docente docenteActualizado = getDocenteDAO().recuperar(docente5.getId()); 
-//		
-//		assertEquals(p.getId(),publicacionAgregado.getId());
-//		assertEquals(docente5,publicacionAgregado.getAutor());
-//		assertTrue(docenteActualizado.getPublicaciones().size() == 1);
-//		assertTrue(docenteActualizado.getAnios().size() == 1);
-//	}
+	@Test
+	public void testAgregarPublicacion(){
+
+		Cartelera c = new Cartelera("PrimerAño", "Cartelera de Primer año");
+		getCarteleraDAO().persistir(c);
+		
+		Docente docente5 = new Docente("doc5", "doc5", "Monica", "Suarez");
+		docente5.getAnios().add(Anio.PRIMERO);
+		docente5.getPermisosCarteleras().add(c);
+		getDocenteDAO().persistir(docente5);
+		
+		Publicacion p = new Publicacion("Una publicacion", "Tengo un texto", new Date(), true, docente5, c);
+		docente5.getPublicaciones().add(p);		
+		getPublicacionDAO().persistir(p);
+		
+		docente5.getPublicaciones().add(p);
+		getDocenteDAO().actualizar(docente5);
+		
+		Publicacion publicacionAgregado = getPublicacionDAO().recuperar(p.getId());
+		Docente docenteActualizado = getDocenteDAO().recuperar(docente5.getId()); 
+		
+		assertEquals(p.getId(),publicacionAgregado.getId());
+		assertEquals(docente5,publicacionAgregado.getAutor());
+		assertTrue(docenteActualizado.getPublicaciones().size() == 1);
+		assertTrue(docenteActualizado.getAnios().size() == 1);
+	}
 //	
 //	@Test
 //	public void testAgregarModificarPublicacion(){

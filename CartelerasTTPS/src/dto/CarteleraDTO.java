@@ -1,11 +1,13 @@
 package dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import modelo.Cartelera;
+import modelo.Publicacion;
 
 public class CarteleraDTO implements Serializable {
 
@@ -21,15 +23,8 @@ public class CarteleraDTO implements Serializable {
     
     // Ignorar nulos http://www.baeldung.com/jackson-ignore-null-fields
     @JsonInclude(Include.NON_NULL)
-    public String publicacion;
-    public String getPublicacion() {
-		return publicacion;
-	}
-
-	public void setPublicacion(String publicacion) {
-		this.publicacion = publicacion;
-	}
-
+    public List<PublicacionDTO> publicacionesDTO;
+   
 	public CarteleraDTO(){
     	
     }
@@ -71,6 +66,14 @@ public class CarteleraDTO implements Serializable {
 		this.descripcion = descripcion;
 	}
     
+	public List<PublicacionDTO> getPublicacionesDTO() {
+		return publicacionesDTO;
+	}
+
+	public void setPublicacionesDTO(List<PublicacionDTO> publicacionesDTO) {
+		this.publicacionesDTO = publicacionesDTO;
+	}
+	
 	public Cartelera toEntidad(){
 		return (new Cartelera(this.getNombre(), this.getDescripcion()));
 	}
@@ -79,6 +82,13 @@ public class CarteleraDTO implements Serializable {
 		carteleraActualizar.setNombre(this.getNombre());
 		carteleraActualizar.setDescripcion(this.getDescripcion());
 		return carteleraActualizar;
+	}
+
+	public Cartelera agregarPublicaciones(Cartelera carteleraRecuperar) {
+		for (Publicacion p: carteleraRecuperar.getPublicaciones()) {
+			this.getPublicacionesDTO().add(new PublicacionDTO(p));
+		}
+		return null;
 	}
     
 }
