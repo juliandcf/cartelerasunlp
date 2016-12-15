@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,10 +33,10 @@ public class CarteleraServiceImpl implements CarteleraService{
 		return carteleraDAO.actualizar(cartelera);
 	}
 
-	@Override
+	
 	public boolean baja(Cartelera cartelera) {
 		
-		return (carteleraDAO.borrar(cartelera.getId()));
+		return (this.baja(cartelera.getId()));
 	}
 
 	@Override
@@ -59,6 +60,11 @@ public class CarteleraServiceImpl implements CarteleraService{
 	@Override
 	public boolean existe(Cartelera cartelera) {
 		return this.getCarteleraDAO().existe(cartelera);
+	}
+
+	@Override
+	public boolean baja(Serializable id) {
+		return carteleraDAO.borrar(id);
 	}
 
 }

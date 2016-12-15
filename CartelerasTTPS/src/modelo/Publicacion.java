@@ -36,7 +36,7 @@ public class Publicacion implements Serializable {
 
 	private Date fecha;
 
-	private Boolean habilitarComentarios;
+	private boolean habilitarComentarios;
 	
 	private boolean borrado;
 
@@ -112,11 +112,11 @@ public class Publicacion implements Serializable {
 		this.fecha = fecha;
 	}
 
-	public Boolean getHabilitarComentarios() {
+	public boolean getHabilitarComentarios() {
 		return habilitarComentarios;
 	}
 
-	public void setHabilitarComentarios(Boolean habilitarComentarios) {
+	public void setHabilitarComentarios(boolean habilitarComentarios) {
 		this.habilitarComentarios = habilitarComentarios;
 	}
 

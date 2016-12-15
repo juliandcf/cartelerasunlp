@@ -22,7 +22,7 @@ public class PublicacionDTO implements Serializable {
 	@JsonInclude(Include.NON_NULL)
 	public boolean habilitarComentarios;
 	@JsonInclude(Include.NON_NULL)
-	public AutorDTO autor;
+	public UsuarioDTO autor;
 	@JsonInclude(Include.NON_NULL)
 	public List<MultimediaDTO> multimedias;
 	@JsonInclude(Include.NON_NULL)
@@ -79,10 +79,10 @@ public class PublicacionDTO implements Serializable {
 	public void setHabilitarComentarios(boolean habilitarComentarios) {
 		this.habilitarComentarios = habilitarComentarios;
 	}
-	public AutorDTO getAutor() {
+	public UsuarioDTO getAutor() {
 		return autor;
 	}
-	public void setAutor(AutorDTO autor) {
+	public void setAutor(UsuarioDTO autor) {
 		this.autor = autor;
 	}
 	public List<MultimediaDTO> getMultimedias() {

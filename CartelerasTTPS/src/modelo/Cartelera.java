@@ -33,7 +33,7 @@ public class Cartelera implements Serializable{
 	private Long id;
 	public String nombre;   
     public String descripcion;
-    private Boolean borrado;
+    private boolean borrado;
   
     @ManyToMany
     @JoinTable(
@@ -95,12 +95,31 @@ public class Cartelera implements Serializable{
 		this.publicaciones = publicaciones;
 	}
 
-	public Boolean isBorrado() {
+	public boolean isBorrado() {
 		return borrado;
 	}
 
-	public void setBorrado(Boolean borrado) {
+	public void setBorrado(boolean borrado) {
 		this.borrado = borrado;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Cartelera other = (Cartelera) obj;
+		if (nombre == null) {
+			if (other.nombre != null)
+				return false;
+		} else if (!nombre.equals(other.nombre))
+			return false;
+		return true;
+	}
+	
+	
 
 }

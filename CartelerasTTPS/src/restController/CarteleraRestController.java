@@ -65,8 +65,10 @@ public class CarteleraRestController {
 		if (carteleraActualizar == null){
 			return new ResponseEntity<CarteleraDTO>(HttpStatus.NOT_FOUND);
 		}
-		if(carteleraService.existe(carteleraDTO.toEntidad())){
-			return new ResponseEntity<CarteleraDTO>(HttpStatus.CONFLICT);
+		Cartelera carteleraRecibidaDTO = carteleraDTO.toEntidad();
+		if(!carteleraActualizar.equals(carteleraRecibidaDTO)){	
+			if(carteleraService.existe(carteleraRecibidaDTO))
+				return new ResponseEntity<CarteleraDTO>(HttpStatus.CONFLICT);
 		}
 		Cartelera carteleraModificada = carteleraDTO.copiarAtributos(carteleraActualizar);
 		carteleraService.modificar(carteleraModificada);

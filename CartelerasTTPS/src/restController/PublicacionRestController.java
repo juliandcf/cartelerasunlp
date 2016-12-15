@@ -8,7 +8,7 @@ import serviciosInt.CarteleraService;
 import serviciosInt.PublicacionService;
 
 @RestController
-@RequestMapping("/publicacion")
+@RequestMapping("/cartelera/publicacion")
 public class PublicacionRestController {
 	
 	@Autowired
@@ -16,6 +16,8 @@ public class PublicacionRestController {
 	
 	@Autowired
 	private PublicacionService publicacionService;
+	
+	
 
 	public CarteleraService getCarteleraService() {
 		return carteleraService;

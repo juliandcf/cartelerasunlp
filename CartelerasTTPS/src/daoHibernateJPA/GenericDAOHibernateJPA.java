@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -102,7 +103,13 @@ public class GenericDAOHibernateJPA<T> implements GenericDAO<T> {
 				.createQuery("select e from " + getPersistentClass().getSimpleName() + " e where borrado = :borrado and e.id = :id");
 		consulta.setParameter("borrado", false);
 		consulta.setParameter("id", id);
-		T entity = (T) consulta.getSingleResult();
+		@SuppressWarnings("unchecked")
+		T entity;
+		try{
+			entity = (T) consulta.getSingleResult();
+		}catch(NoResultException e){
+			entity = null;
+		}
 		return entity;
 	}
 

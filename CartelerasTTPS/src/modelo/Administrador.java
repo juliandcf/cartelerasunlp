@@ -21,15 +21,38 @@ public class Administrador extends UsuarioPublicador {
 		
     }
 	
+	
+	
     public Administrador(String usuario, String contrasena, String nombre, String apellido) {
 		super();
 		this.usuario = usuario;
 		this.contrasena = contrasena;
 		this.nombre = nombre;
 		this.apellido = apellido;
+		initialize();
+	}
+    
+    public Administrador(String usuario, String contrasena, String nombre, String apellido, Multimedia fotoPerfil) {
+  		super();
+  		this.usuario = usuario;
+  		this.contrasena = contrasena;
+  		this.nombre = nombre;
+  		this.apellido = apellido;
+  		initialize();
+  	}
+
+
+
+	private void initialize() {
 		this.setPublicaciones(new ArrayList<Publicacion>());
 		this.setPermisosCarteleras(new HashSet<Cartelera>());
 		this.setComentarios(new ArrayList<Comentario>());
 	}
+
+
+
+
+    
+    
     
 }

@@ -18,7 +18,7 @@ public class Multimedia {
 	private Long id;
 	private String url;
 	private String tipoEnlace;
-	private Boolean borrado;
+	private boolean borrado;
 
 	public Multimedia() {
 	}
@@ -45,11 +45,11 @@ public class Multimedia {
 		this.url = url;
 	}
 
-	public Boolean isBorrado() {
+	public boolean isBorrado() {
 		return borrado;
 	}
 
-	public void setBorrado(Boolean borrado) {
+	public void setBorrado(boolean borrado) {
 		this.borrado = borrado;
 	}
 
