@@ -15,10 +15,6 @@ public class AdministradorServiceImpl extends GenericServiceImpl<Administrador,A
 	public AdministradorServiceImpl(){
 	}
 	
-	@Override
-	public void setDao(AdministradorDAO dao) {
-		this.dao = dao;
-	}
 
 	@Override
 	public Administrador alta(Administrador entity) {

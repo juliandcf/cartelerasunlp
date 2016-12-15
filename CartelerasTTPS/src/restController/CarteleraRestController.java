@@ -80,7 +80,7 @@ public class CarteleraRestController {
 		ResponseEntity<CarteleraDTO> response = new ResponseEntity<CarteleraDTO>(HttpStatus.NOT_FOUND);
 		Cartelera carteleraBorrar = carteleraService.recuperar(id);
 		if (carteleraBorrar != null){
-			if (carteleraService.baja(carteleraBorrar))
+			if (carteleraService.baja(id))
 				response = new ResponseEntity<CarteleraDTO>(HttpStatus.OK);
 		}
 		return response;
