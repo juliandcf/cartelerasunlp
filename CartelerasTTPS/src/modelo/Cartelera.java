@@ -23,6 +23,7 @@ import org.hibernate.annotations.Where;
 
 @Entity
 @Table
+@Where(clause="borrado=0")
 public class Cartelera implements Serializable{
 
 	private static final long serialVersionUID = 1L;

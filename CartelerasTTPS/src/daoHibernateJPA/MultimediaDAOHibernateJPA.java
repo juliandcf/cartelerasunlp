@@ -16,4 +16,10 @@ public class MultimediaDAOHibernateJPA extends GenericDAOHibernateJPA<Multimedia
 		super(Multimedia.class);
 	}
 
+	@Override
+	public boolean existe(Multimedia entity) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

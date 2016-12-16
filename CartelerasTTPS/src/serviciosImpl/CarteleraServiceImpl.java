@@ -12,11 +12,13 @@ import dao.AdministradorDAO;
 import dao.CarteleraDAO;
 import modelo.Administrador;
 import modelo.Cartelera;
+import modelo.Publicacion;
 import serviciosInt.CarteleraService;
 
 @Transactional
 @Service
 public class CarteleraServiceImpl extends GenericServiceImpl<Cartelera,CarteleraDAO>  implements CarteleraService{
+	
 	
 	
 	@Override
@@ -28,10 +30,11 @@ public class CarteleraServiceImpl extends GenericServiceImpl<Cartelera,Cartelera
 		return carteleraReturn;
 	}
 
+
 	
-	@Override
-	public boolean existe(Cartelera cartelera) {
-		return this.getDao().existe(cartelera);
-	}
+//	@Override
+//	public boolean existe(Cartelera cartelera) {
+//		return this.getDao().existe(cartelera);
+//	}
 
 }

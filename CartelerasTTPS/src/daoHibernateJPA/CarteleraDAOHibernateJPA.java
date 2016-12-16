@@ -21,7 +21,8 @@ public class CarteleraDAOHibernateJPA extends GenericDAOHibernateJPA<Cartelera> 
 	public boolean existe(Cartelera cartelera) {
 		String nombre = cartelera.getNombre();
 		Query consulta = this.getEntityManager()
-				.createQuery("SELECT COUNT(e.id) FROM " + this.getPersistentClass().getSimpleName() + " e where e.nombre = :nombre");
+				.createQuery("SELECT COUNT(e.id) FROM " + this.getPersistentClass().getSimpleName() + " e where e.nombre = :nombre and e.borrado = :borrado");
+		consulta.setParameter("borrado", false);
 		consulta.setParameter("nombre", nombre);
 		return (((int) (long) consulta.getSingleResult()) > 0);
 	}

@@ -15,4 +15,10 @@ public class ComentarioDAOHibernateJPA extends GenericDAOHibernateJPA<Comentario
 	public ComentarioDAOHibernateJPA() {
 		super(Comentario.class);
 	}
+
+	@Override
+	public boolean existe(Comentario entity) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

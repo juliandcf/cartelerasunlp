@@ -1,13 +1,17 @@
 package dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import modelo.Cartelera;
+import modelo.Multimedia;
 import modelo.Publicacion;
+import modelo.UsuarioPublicador;
 
 public class PublicacionDTO implements Serializable {
 
@@ -17,6 +21,8 @@ public class PublicacionDTO implements Serializable {
 	public String titulo;
 	public String texto;
 	public Date fecha;
+	@JsonInclude(Include.NON_NULL)
+	public Long idPublicador;
 	@JsonInclude(Include.NON_NULL)
 	public String nombreAutor;
 	@JsonInclude(Include.NON_NULL)
@@ -39,7 +45,9 @@ public class PublicacionDTO implements Serializable {
 		this.setTitulo(p.getTitulo());
 		this.setTexto(p.getTexto());
 		this.setFecha(p.getFecha());
+		this.setHabilitarComentarios(p.getHabilitarComentarios());
 		this.setNombreAutor(p.getAutor().getNombre()+", "+p.getAutor().getApellido());
+		this.setIdPublicador(p.getAutor().getId());
 	}
 	
 	
@@ -103,6 +111,54 @@ public class PublicacionDTO implements Serializable {
 	public void setComentarios(List<ComentariosDTO> comentarios) {
 		this.comentarios = comentarios;
 	}
+	
+	public Long getIdPublicador() {
+		return idPublicador;
+	}
+
+	public void setIdPublicador(Long idPublicador) {
+		this.idPublicador = idPublicador;
+	}
+
+	public Publicacion toEntidad(Cartelera cartelera, UsuarioPublicador usuario){
+		
+		Publicacion publicacion = new Publicacion(this.getTitulo(),this.getTexto(),new Date(),this.isHabilitarComentarios(),usuario, cartelera); 
+		return this.AgregarListaMultimedia(publicacion);
+		
+		
+	}
+
+	private Publicacion AgregarListaMultimedia(Publicacion publicacion){
+		if(!this.getMultimedias().isEmpty()){
+			List<Multimedia> multimediasConvertidas = new ArrayList<Multimedia>();
+			for (MultimediaDTO m : this.getMultimedias()) {
+				multimediasConvertidas.add(m.toEntidad());
+			}
+			publicacion.setMultimedias(multimediasConvertidas);
+		}
+		return publicacion;
+	}
+
+	public Publicacion copiarAtributos(Publicacion publicacionRecuperada) {
+		publicacionRecuperada.setTexto(this.getTexto());
+		publicacionRecuperada.setTitulo(this.getTitulo());
+		publicacionRecuperada.setHabilitarComentarios(this.isHabilitarComentarios());
+		return publicacionRecuperada;
+	}
+
+	public void agregarMultimedia(Publicacion publicacionRecuperar) {
+		if(!publicacionRecuperar.getMultimedias().isEmpty()){
+			this.setMultimedias(new ArrayList<MultimediaDTO>());
+			for (Multimedia m: publicacionRecuperar.getMultimedias()){
+				if(!m.isBorrado())
+					this.getMultimedias().add(new MultimediaDTO(m));
+			}
+		}
+		
+	}
+	
+	
+	
 	
 	
 	

@@ -24,10 +24,10 @@ public class AdministradorServiceImpl extends GenericServiceImpl<Administrador,A
 		return adminReturn;
 	}
 	
-	@Override
-	public boolean existe(Administrador entity) {
-		return (this.getDao().existe(entity));
-	}
+//	@Override
+//	public boolean existe(Administrador entity) {
+//		return (this.getDao().existe(entity));
+//	}
 	
 	public boolean baja(Administrador entity){
 		return (this.getDao().borrar(entity.getId()));

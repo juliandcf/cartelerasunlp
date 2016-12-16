@@ -16,4 +16,10 @@ public class PublicacionDAOHibernateJPA extends GenericDAOHibernateJPA<Publicaci
 		super(Publicacion.class);
 	}
 
+	@Override
+	public boolean existe(Publicacion entity) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

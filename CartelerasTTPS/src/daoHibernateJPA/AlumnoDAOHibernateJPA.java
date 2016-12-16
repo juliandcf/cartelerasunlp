@@ -9,10 +9,11 @@ import dao.AlumnoDAO;
 import modelo.Alumno;
 
 @Repository
-public class AlumnoDAOHibernateJPA extends GenericDAOHibernateJPA<Alumno> implements AlumnoDAO {
+public class AlumnoDAOHibernateJPA extends UsuarioDAOHibernateJPA<Alumno> implements AlumnoDAO {
 	
 	public AlumnoDAOHibernateJPA(){
 		super(Alumno.class);
 	}
+
 
 }

@@ -17,10 +17,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Where;
+
+
 
 @Entity
 @Table
+@Where(clause="borrado=0")
 public class Publicacion implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -44,7 +47,7 @@ public class Publicacion implements Serializable {
 	@JoinColumn(name = "usuarioPublicador_fk")
 	private UsuarioPublicador autor;
 
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
 	@JoinColumn(name = "publicacion_fk", referencedColumnName = "id_publicacion", nullable=true)
 	@JoinTable(name = "publicacion_multimedia", joinColumns = {
 			@JoinColumn(name = "publicacion_id") }, inverseJoinColumns = { @JoinColumn(name = "multimedia_id") })

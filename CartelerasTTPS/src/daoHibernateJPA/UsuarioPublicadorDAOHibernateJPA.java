@@ -10,11 +10,17 @@ import modelo.Administrador;
 import modelo.UsuarioPublicador;
 
 @Repository
-public class UsuarioPublicadorDAOHibernateJPA extends GenericDAOHibernateJPA<UsuarioPublicador>
+public class UsuarioPublicadorDAOHibernateJPA extends UsuarioDAOHibernateJPA<UsuarioPublicador>
 		implements UsuarioPublicadorDAO {
 
 	public UsuarioPublicadorDAOHibernateJPA() {
 		super(UsuarioPublicador.class);
+	}
+
+	@Override
+	public boolean existe(UsuarioPublicador entity) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import dao.GenericDAO;
 
 @Transactional
-public class GenericDAOHibernateJPA<T> implements GenericDAO<T> {
+public abstract class GenericDAOHibernateJPA<T> implements GenericDAO<T> {
 
 	protected Class<T> persistentClass;
 	@PersistenceContext
@@ -120,5 +120,8 @@ public class GenericDAOHibernateJPA<T> implements GenericDAO<T> {
 		
 		return (int) (long) consulta.getSingleResult();
 	}
+
+	@Override
+	public abstract boolean existe(T entity);
 
 }

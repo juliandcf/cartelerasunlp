@@ -39,4 +39,16 @@ public class UsuarioDAOHibernateJPA<T> extends GenericDAOHibernateJPA<T> impleme
 		return respuesta;
 		
 	}
+
+	@Override
+	public boolean existe(T entity) {
+		String usuario = ((Usuario) entity).getUsuario();
+		Query consulta = this.getEntityManager()
+				.createQuery("SELECT COUNT(e.id) FROM " + this.getPersistentClass().getSimpleName() + " e where e.usuario = :usuario AND e.borrado = :borrado");
+		consulta.setParameter("borrado", false);
+		consulta.setParameter("usuario", usuario);
+		return (((int) (long) consulta.getSingleResult()) > 0);
+	}
+
+
 }

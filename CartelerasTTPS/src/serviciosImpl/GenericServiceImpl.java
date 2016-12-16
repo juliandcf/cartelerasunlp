@@ -62,7 +62,9 @@ public abstract class GenericServiceImpl<T,G> implements GenericService<T> {
 
 
 	@Override
-	public abstract boolean existe(T entity);
+	public boolean existe(T entity){
+		return ((GenericDAO<T>) this.getDao()).existe(entity);
+	};
 
 
 }

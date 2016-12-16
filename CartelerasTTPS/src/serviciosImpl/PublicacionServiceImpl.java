@@ -1,63 +1,34 @@
 package serviciosImpl;
 
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import dao.CarteleraDAO;
 import dao.PublicacionDAO;
-import dao.UsuarioPublicadorDAO;
-import modelo.Cartelera;
 import modelo.Publicacion;
 import serviciosInt.PublicacionService;
 
 @Transactional
 @Service
-public class PublicacionServiceImpl implements PublicacionService {
-	
-	@Autowired
-	private PublicacionDAO publicacionDAO;
-	
-	@Override
-	public Publicacion alta(Publicacion publicacion) {
-		return this.getPublicacionDAO().persistir(publicacion);
-	}
+public class PublicacionServiceImpl extends GenericServiceImpl<Publicacion,PublicacionDAO>  implements PublicacionService {
 
 	@Override
-	public Publicacion modificar(Publicacion publicacion) {
-		return this.getPublicacionDAO().actualizar(publicacion);
+	public boolean existe(Publicacion entity) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
-	@Override
-	public boolean baja(Publicacion publicacion) {
-		//Ver si hay que borrar los comentarios tambien.
-		return this.getPublicacionDAO().borrar(publicacion);
-	}
-
-	@Override
-	public Publicacion recuperar(Serializable id) {
-		return this.getPublicacionDAO().recuperar(id);
-	}
-
-	@Override
-	public List<Publicacion> recuperarTodos() {
-		return this.getPublicacionDAO().recuperarTodos();
-	}
-
-	@Override
-	public boolean existe(Publicacion publicacion) {
-		return this.getPublicacionDAO().existe(publicacion);
+	public List<Publicacion> getPublicaciones(Long idCartelera) {
+		List<Publicacion> publicaciones = this.getDao().recuperarTodos();
+		List<Publicacion> publicacionesRetornar = new ArrayList<>(); 
+		for (Publicacion p : publicaciones) {
+			if(p.getCartelera().getId() == idCartelera)
+				publicacionesRetornar.add(p);
+		}
+		return publicacionesRetornar;
 		
 	}
-
-	public PublicacionDAO getPublicacionDAO() {
-		return publicacionDAO;
-	}
-
-	public void setPublicacionDAO(PublicacionDAO publicacionDAO) {
-		this.publicacionDAO = publicacionDAO;
-	}
+	
 }

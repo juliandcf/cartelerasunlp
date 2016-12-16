@@ -1,6 +1,7 @@
 package dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -84,11 +85,15 @@ public class CarteleraDTO implements Serializable {
 		return carteleraActualizar;
 	}
 
-	public Cartelera agregarPublicaciones(Cartelera carteleraRecuperar) {
-		for (Publicacion p: carteleraRecuperar.getPublicaciones()) {
-			this.getPublicacionesDTO().add(new PublicacionDTO(p));
+	public void agregarPublicaciones(Cartelera carteleraRecuperar) {
+		if(!carteleraRecuperar.getPublicaciones().isEmpty()){
+			this.setPublicacionesDTO(new ArrayList<PublicacionDTO>());
+			for (Publicacion p: carteleraRecuperar.getPublicaciones()){
+				if(!p.isBorrado())
+					this.getPublicacionesDTO().add(new PublicacionDTO(p));
+			}
 		}
-		return null;
+		
 	}
     
 }

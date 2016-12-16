@@ -13,4 +13,10 @@ public class MetodoComunicacionDAOHibernateJPA extends GenericDAOHibernateJPA<Me
 	public MetodoComunicacionDAOHibernateJPA() {
 		super(MetodoComunicacion.class);
 	}
+
+	@Override
+	public boolean existe(MetodoComunicacion entity) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
