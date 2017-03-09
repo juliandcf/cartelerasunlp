@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import dao.CarteleraDAO;
 import modelo.Administrador;
 import modelo.Cartelera;
+import modelo.Publicacion;
 
 @Repository
 public class CarteleraDAOHibernateJPA extends GenericDAOHibernateJPA<Cartelera> implements CarteleraDAO {
@@ -26,4 +27,6 @@ public class CarteleraDAOHibernateJPA extends GenericDAOHibernateJPA<Cartelera> 
 		consulta.setParameter("nombre", nombre);
 		return (((int) (long) consulta.getSingleResult()) > 0);
 	}
+	
+
 }

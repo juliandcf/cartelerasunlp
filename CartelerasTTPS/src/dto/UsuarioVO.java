@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import modelo.Usuario;
 
-public abstract class UsuarioDTO implements Serializable {
+public class UsuarioVO extends GenericVO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -15,16 +15,26 @@ public abstract class UsuarioDTO implements Serializable {
 	private Long id;
 	public String usuario;
     public String contrasena;
+    @JsonInclude(Include.NON_NULL)
     public String nombre;
+    @JsonInclude(Include.NON_NULL)
     public String apellido;
     @JsonInclude(Include.NON_NULL)
     public String fotoPerfil;
 	
-    public UsuarioDTO(){
+    public UsuarioVO(String usuario, String contrasena, String nombre, String apellido) {
+		super();
+		this.usuario = usuario;
+		this.contrasena = contrasena;
+		this.nombre = nombre;
+		this.apellido = apellido;
+	}
+
+	public UsuarioVO(){
     	
     }
     
-    public UsuarioDTO(Usuario usuario){
+    public UsuarioVO(Usuario usuario){
     	this.setId(usuario.getId());
     	this.setUsuario(usuario.getUsuario());
     	this.setContrasena(usuario.getContrasena());

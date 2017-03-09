@@ -21,7 +21,8 @@
 
 	<context:annotation-config />
 	 <context:component-scan base-package="daoHibernateJPA"/>
-	 <context:component-scan base-package="serviciosImpl"/> 
+	 <context:component-scan base-package="serviciosImpl"/>
+	 <context:component-scan base-package="jwt"/>
 
 <!-- 	<bean id="myDataSource" class="org.apache.commons.dbcp2.BasicDataSource"
 		destroy-method="close">

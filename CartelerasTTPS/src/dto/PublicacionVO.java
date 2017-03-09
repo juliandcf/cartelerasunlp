@@ -13,7 +13,7 @@ import modelo.Multimedia;
 import modelo.Publicacion;
 import modelo.UsuarioPublicador;
 
-public class PublicacionDTO implements Serializable {
+public class PublicacionVO extends GenericVO implements Serializable {
 
 
 	private static final long serialVersionUID = 1L;
@@ -28,19 +28,19 @@ public class PublicacionDTO implements Serializable {
 	@JsonInclude(Include.NON_NULL)
 	public boolean habilitarComentarios;
 	@JsonInclude(Include.NON_NULL)
-	public UsuarioDTO autor;
+	public UsuarioVO autor;
 	@JsonInclude(Include.NON_NULL)
-	public List<MultimediaDTO> multimedias;
+	public List<MultimediaVO> multimedias;
 	@JsonInclude(Include.NON_NULL)
-	public CarteleraDTO cartelera;
+	public CarteleraVO cartelera;
 	@JsonInclude(Include.NON_NULL)
-	public List<ComentariosDTO> comentarios;
+	public List<ComentariosVO> comentarios;
 	
-	public PublicacionDTO(){
+	public PublicacionVO(){
 		
 	}
 	
-	public PublicacionDTO(Publicacion p){
+	public PublicacionVO(Publicacion p){
 		this.setId(p.getId());
 		this.setTitulo(p.getTitulo());
 		this.setTexto(p.getTexto());
@@ -48,9 +48,23 @@ public class PublicacionDTO implements Serializable {
 		this.setHabilitarComentarios(p.getHabilitarComentarios());
 		this.setNombreAutor(p.getAutor().getNombre()+", "+p.getAutor().getApellido());
 		this.setIdPublicador(p.getAutor().getId());
+		this.cargarMultimediasEnDTO(p);
+		//cargar comentarios
 	}
 	
 	
+	public PublicacionVO(Publicacion p, List<Multimedia> multimedias) {
+		this.setId(p.getId());
+		this.setTitulo(p.getTitulo());
+		this.setTexto(p.getTexto());
+		this.setFecha(p.getFecha());
+		this.setHabilitarComentarios(p.getHabilitarComentarios());
+		this.setNombreAutor(p.getAutor().getNombre()+", "+p.getAutor().getApellido());
+		this.setIdPublicador(p.getAutor().getId());
+		this.cargarMultimediasEnDTO(multimedias);
+	}
+
+
 	public Long getId() {
 		return id;
 	}
@@ -87,28 +101,28 @@ public class PublicacionDTO implements Serializable {
 	public void setHabilitarComentarios(boolean habilitarComentarios) {
 		this.habilitarComentarios = habilitarComentarios;
 	}
-	public UsuarioDTO getAutor() {
+	public UsuarioVO getAutor() {
 		return autor;
 	}
-	public void setAutor(UsuarioDTO autor) {
+	public void setAutor(UsuarioVO autor) {
 		this.autor = autor;
 	}
-	public List<MultimediaDTO> getMultimedias() {
+	public List<MultimediaVO> getMultimedias() {
 		return multimedias;
 	}
-	public void setMultimedias(List<MultimediaDTO> multimedias) {
+	public void setMultimedias(List<MultimediaVO> multimedias) {
 		this.multimedias = multimedias;
 	}
-	public CarteleraDTO getCartelera() {
+	public CarteleraVO getCartelera() {
 		return cartelera;
 	}
-	public void setCartelera(CarteleraDTO cartelera) {
+	public void setCartelera(CarteleraVO cartelera) {
 		this.cartelera = cartelera;
 	}
-	public List<ComentariosDTO> getComentarios() {
+	public List<ComentariosVO> getComentarios() {
 		return comentarios;
 	}
-	public void setComentarios(List<ComentariosDTO> comentarios) {
+	public void setComentarios(List<ComentariosVO> comentarios) {
 		this.comentarios = comentarios;
 	}
 	
@@ -123,15 +137,13 @@ public class PublicacionDTO implements Serializable {
 	public Publicacion toEntidad(Cartelera cartelera, UsuarioPublicador usuario){
 		
 		Publicacion publicacion = new Publicacion(this.getTitulo(),this.getTexto(),new Date(),this.isHabilitarComentarios(),usuario, cartelera); 
-		return this.AgregarListaMultimedia(publicacion);
-		
-		
+		return this.agregarMultimediasAPublicacion(publicacion);
 	}
 
-	private Publicacion AgregarListaMultimedia(Publicacion publicacion){
-		if(!this.getMultimedias().isEmpty()){
+	private Publicacion agregarMultimediasAPublicacion(Publicacion publicacion){
+		if(this.getMultimedias() != null && !this.getMultimedias().isEmpty()){
 			List<Multimedia> multimediasConvertidas = new ArrayList<Multimedia>();
-			for (MultimediaDTO m : this.getMultimedias()) {
+			for (MultimediaVO m : this.getMultimedias()) {
 				multimediasConvertidas.add(m.toEntidad());
 			}
 			publicacion.setMultimedias(multimediasConvertidas);
@@ -143,18 +155,26 @@ public class PublicacionDTO implements Serializable {
 		publicacionRecuperada.setTexto(this.getTexto());
 		publicacionRecuperada.setTitulo(this.getTitulo());
 		publicacionRecuperada.setHabilitarComentarios(this.isHabilitarComentarios());
+		this.agregarMultimediasAPublicacion(publicacionRecuperada);
 		return publicacionRecuperada;
 	}
 
-	public void agregarMultimedia(Publicacion publicacionRecuperar) {
+	public void cargarMultimediasEnDTO(Publicacion publicacionRecuperar) {
 		if(!publicacionRecuperar.getMultimedias().isEmpty()){
-			this.setMultimedias(new ArrayList<MultimediaDTO>());
+			this.setMultimedias(new ArrayList<MultimediaVO>());
 			for (Multimedia m: publicacionRecuperar.getMultimedias()){
 				if(!m.isBorrado())
-					this.getMultimedias().add(new MultimediaDTO(m));
+					this.getMultimedias().add(new MultimediaVO(m));
 			}
+		}	
+	}
+	
+	private void cargarMultimediasEnDTO(List<Multimedia> multimedias) {
+		if(!multimedias.isEmpty()){
+			this.setMultimedias(new ArrayList<MultimediaVO>());
+			for(Multimedia m: multimedias)
+				this.getMultimedias().add(new MultimediaVO(m));
 		}
-		
 	}
 	
 	

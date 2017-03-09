@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import modelo.Cartelera;
 import modelo.Publicacion;
 
-public class CarteleraDTO implements Serializable {
+public class CarteleraVO extends GenericVO implements Serializable {
 
 	/**
 	 * 
@@ -24,19 +24,19 @@ public class CarteleraDTO implements Serializable {
     
     // Ignorar nulos http://www.baeldung.com/jackson-ignore-null-fields
     @JsonInclude(Include.NON_NULL)
-    public List<PublicacionDTO> publicacionesDTO;
+    public List<PublicacionVO> publicacionesDTO;
    
-	public CarteleraDTO(){
+	public CarteleraVO(){
     	
     }
     
-    public CarteleraDTO(Cartelera cartelera){
+    public CarteleraVO(Cartelera cartelera){
     	this.setId(cartelera.getId());
     	this.setNombre(cartelera.getNombre());
     	this.setDescripcion(cartelera.getDescripcion());
     }
     
-	public CarteleraDTO(Long id,String nombre, String descripcion) {
+	public CarteleraVO(Long id,String nombre, String descripcion) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -67,11 +67,11 @@ public class CarteleraDTO implements Serializable {
 		this.descripcion = descripcion;
 	}
     
-	public List<PublicacionDTO> getPublicacionesDTO() {
+	public List<PublicacionVO> getPublicacionesDTO() {
 		return publicacionesDTO;
 	}
 
-	public void setPublicacionesDTO(List<PublicacionDTO> publicacionesDTO) {
+	public void setPublicacionesDTO(List<PublicacionVO> publicacionesDTO) {
 		this.publicacionesDTO = publicacionesDTO;
 	}
 	
@@ -87,10 +87,20 @@ public class CarteleraDTO implements Serializable {
 
 	public void agregarPublicaciones(Cartelera carteleraRecuperar) {
 		if(!carteleraRecuperar.getPublicaciones().isEmpty()){
-			this.setPublicacionesDTO(new ArrayList<PublicacionDTO>());
+			this.setPublicacionesDTO(new ArrayList<PublicacionVO>());
 			for (Publicacion p: carteleraRecuperar.getPublicaciones()){
 				if(!p.isBorrado())
-					this.getPublicacionesDTO().add(new PublicacionDTO(p));
+					this.getPublicacionesDTO().add(new PublicacionVO(p));
+			}
+		}
+		
+	}
+	
+	public void agregarPublicaciones(List<Publicacion> publicaciones) {
+		if(!publicaciones.isEmpty()){
+			this.setPublicacionesDTO(new ArrayList<PublicacionVO>());
+			for (Publicacion p: publicaciones){
+					this.getPublicacionesDTO().add(new PublicacionVO(p));
 			}
 		}
 		

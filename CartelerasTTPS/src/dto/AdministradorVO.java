@@ -6,17 +6,17 @@ import modelo.Administrador;
 import modelo.Multimedia;
 import modelo.TipoEnlace;
 
-public class AdministradorDTO extends UsuarioDTO implements Serializable {
+public class AdministradorVO extends UsuarioVO implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public AdministradorDTO(){
+	public AdministradorVO(){
 		
 	}
 	
-	public AdministradorDTO(Administrador a) {
+	public AdministradorVO(Administrador a) {
 		super(a);
 	}
 

@@ -25,29 +25,42 @@ public class UsuarioDAOHibernateJPA<T> extends GenericDAOHibernateJPA<T> impleme
 		super((Class<T>) class1);
 	}
 
-	@Override
-	public Usuario recuperar(String nombre, String apellido, String usuario) {
-		Usuario respuesta = null;
-		Query consulta = this.getEntityManager().createQuery("from Usuario where nombre = :nombre and apellido = :apellido and usuario = :usuario");
-		consulta.setMaxResults(1);
-		consulta.setParameter("nombre", nombre);
-		consulta.setParameter("apellido", apellido);
-		consulta.setParameter("usuario", usuario);
-		if(consulta.getResultList().size() >= 1){
-			respuesta = (Usuario) consulta.getResultList().get(0);
-		}	
-		return respuesta;
-		
-	}
 
 	@Override
 	public boolean existe(T entity) {
 		String usuario = ((Usuario) entity).getUsuario();
 		Query consulta = this.getEntityManager()
-				.createQuery("SELECT COUNT(e.id) FROM " + this.getPersistentClass().getSimpleName() + " e where e.usuario = :usuario AND e.borrado = :borrado");
+				.createQuery("SELECT COUNT(e.id) FROM " + this.getPersistentClass().getSimpleName() + " e where e.usuario = :usuario AND borrado = :borrado");
 		consulta.setParameter("borrado", false);
 		consulta.setParameter("usuario", usuario);
 		return (((int) (long) consulta.getSingleResult()) > 0);
+	}
+
+	@Override
+	public Usuario recuperar(String usuario) {
+		Usuario respuesta = null;
+		Query consulta = this.getEntityManager().createQuery("from " + this.getPersistentClass().getSimpleName() + " where usuario = :usuario AND borrado = :borrado");
+		consulta.setMaxResults(1);
+		consulta.setParameter("borrado", false);
+		consulta.setParameter("usuario", usuario);
+		if(consulta.getResultList().size() >= 1){
+			respuesta = (Usuario) consulta.getResultList().get(0);
+		}	
+		return respuesta;
+	}
+
+	@Override
+	public Usuario login(String usuario, String password) {
+		Usuario respuesta = null;
+		Query consulta = this.getEntityManager().createQuery("from " + this.getPersistentClass().getSimpleName() + " where usuario = :usuario AND contrasena = :contrasena AND borrado = :borrado ");
+		consulta.setMaxResults(1);
+		consulta.setParameter("usuario", usuario);
+		consulta.setParameter("contrasena", password);
+		consulta.setParameter("borrado", false);
+		if(consulta.getResultList().size() >= 1){
+			respuesta = (Usuario) consulta.getResultList().get(0);
+		}	
+		return respuesta;
 	}
 
 

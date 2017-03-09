@@ -1,5 +1,6 @@
 package restController;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import dto.CarteleraDTO;
+import dto.CarteleraVO;
+import dto.GenericDTO;
 import modelo.Cartelera;
-import modelo.Multimedia;
 import serviciosInt.CarteleraService;
 
 @RestController
@@ -25,64 +26,27 @@ public class CarteleraRestController {
 	private CarteleraService carteleraService;
 	
 	@RequestMapping(method=RequestMethod.GET, produces={"application/json"})
-	public ResponseEntity<List<CarteleraDTO>> recuperarTodos(){
-		List<CarteleraDTO> cartelerasDTO = new ArrayList<CarteleraDTO>();
-		List<Cartelera> carteleras = carteleraService.recuperarTodos();
-		carteleras.forEach((c)->cartelerasDTO.add(new CarteleraDTO(c)));
-		if(cartelerasDTO.isEmpty()){
-			return new ResponseEntity<List<CarteleraDTO>>(HttpStatus.NO_CONTENT);
-		}else{
-			return new ResponseEntity<List<CarteleraDTO>>(cartelerasDTO,HttpStatus.OK);
-		}
+	public ResponseEntity<GenericDTO> recuperarTodos(){
+		return (new ResponseEntity<GenericDTO>(carteleraService.recuperarTodosVO(),HttpStatus.OK));
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET, produces={"application/json"})
-	public ResponseEntity<CarteleraDTO> recuperar(@PathVariable("id") Long id){
-		ResponseEntity<CarteleraDTO> response = new ResponseEntity<CarteleraDTO>(HttpStatus.NOT_FOUND);
-		Cartelera carteleraRecuperar = carteleraService.recuperar(id);
-		if (carteleraRecuperar!= null){
-			CarteleraDTO carteleraDTO = new CarteleraDTO(carteleraRecuperar);
-			carteleraDTO.agregarPublicaciones(carteleraRecuperar);
-			response = new ResponseEntity<CarteleraDTO>(carteleraDTO,HttpStatus.OK);
-		}
-		return response;
+	public ResponseEntity<GenericDTO> recuperar(@PathVariable("id") Long id){
+		return new ResponseEntity<GenericDTO>(carteleraService.recuperarVO(id),HttpStatus.OK);
 	}	
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> alta(@RequestBody CarteleraDTO carteleraDTO){
-		ResponseEntity<Void> response = new ResponseEntity<Void>(HttpStatus.CONFLICT);
-		Cartelera cartelera = carteleraDTO.toEntidad();
-		Cartelera carteleraAgregada = carteleraService.alta(cartelera);
-		if (carteleraAgregada != null){
-			response = new ResponseEntity<Void>(HttpStatus.CREATED);
-		}
-		return response;	
+	public ResponseEntity<GenericDTO> alta(@RequestBody CarteleraVO carteleraVO){
+		return new ResponseEntity<GenericDTO>(carteleraService.altaVO(carteleraVO),HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT, produces={"application/json"})
-	public ResponseEntity<CarteleraDTO> pruebaJsonReciboJson(@PathVariable("id") Long id, @RequestBody CarteleraDTO carteleraDTO){
-		Cartelera carteleraActualizar = carteleraService.recuperar(id);
-		if (carteleraActualizar == null){
-			return new ResponseEntity<CarteleraDTO>(HttpStatus.NOT_FOUND);
-		}
-		Cartelera carteleraRecibidaDTO = carteleraDTO.toEntidad();
-		if(!carteleraActualizar.equals(carteleraRecibidaDTO)){	
-			if(carteleraService.existe(carteleraRecibidaDTO))
-				return new ResponseEntity<CarteleraDTO>(HttpStatus.CONFLICT);
-		}
-		Cartelera carteleraModificada = carteleraDTO.copiarAtributos(carteleraActualizar);
-		carteleraService.modificar(carteleraModificada);
-		return new ResponseEntity<CarteleraDTO>(new CarteleraDTO(carteleraModificada),HttpStatus.OK);
+	public ResponseEntity<GenericDTO> actualizar(@PathVariable("id") Long id, @RequestBody CarteleraVO carteleraVO){
+		return new ResponseEntity<GenericDTO>(carteleraService.modificarVO(id,carteleraVO),HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE, produces={"application/json"})
-	public ResponseEntity<CarteleraDTO> borrar(@PathVariable("id") Long id){
-		ResponseEntity<CarteleraDTO> response = new ResponseEntity<CarteleraDTO>(HttpStatus.NOT_FOUND);
-		Cartelera carteleraBorrar = carteleraService.recuperar(id);
-		if (carteleraBorrar != null){
-			if (carteleraService.baja(id))
-				response = new ResponseEntity<CarteleraDTO>(HttpStatus.OK);
-		}
-		return response;
+	public ResponseEntity<GenericDTO> borrar(@PathVariable("id") Long id){
+		return new ResponseEntity<GenericDTO>(carteleraService.borrarVO(id),HttpStatus.OK);
 	}
 }

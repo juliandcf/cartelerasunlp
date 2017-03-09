@@ -12,11 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import dto.AdministradorDTO;
-import dto.CarteleraDTO;
-import dto.AdministradorDTO;
+import dto.AdministradorVO;
+import dto.GenericDTO;
+import dto.UsuarioVO;
 import modelo.Administrador;
-import modelo.Cartelera;
 import serviciosInt.AdministradorService;
 
 
@@ -28,32 +27,32 @@ public class AdministradorRestController {
 	private AdministradorService administradorService;
 	
 	@RequestMapping(method=RequestMethod.GET, produces={"application/json"})
-	public ResponseEntity<List<AdministradorDTO>> recuperarTodos(){
-		ResponseEntity<List<AdministradorDTO>> response = new ResponseEntity<List<AdministradorDTO>>(HttpStatus.NO_CONTENT);
-		List<AdministradorDTO> administradoresDTO = new ArrayList<AdministradorDTO>();
+	public ResponseEntity<List<AdministradorVO>> recuperarTodos(){
+		ResponseEntity<List<AdministradorVO>> response = new ResponseEntity<List<AdministradorVO>>(HttpStatus.NO_CONTENT);
+		List<AdministradorVO> administradoresDTO = new ArrayList<AdministradorVO>();
 		List<Administrador> administradores =this.getAdministradorService().recuperarTodos();
 		if(!administradores.isEmpty()){
 			for (Administrador a : administradores) {
-				administradoresDTO.add(new AdministradorDTO(a));
+				administradoresDTO.add(new AdministradorVO(a));
 			}
-			response =  new ResponseEntity<List<AdministradorDTO>>(administradoresDTO,HttpStatus.OK);
+			response =  new ResponseEntity<List<AdministradorVO>>(administradoresDTO,HttpStatus.OK);
 		}
 		return response;
 	}
 	@RequestMapping(value="/{id}", method=RequestMethod.GET, produces={"application/json"})
-	public ResponseEntity<AdministradorDTO> recuperar(@PathVariable("id") Long id){
-		ResponseEntity<AdministradorDTO> response = new ResponseEntity<AdministradorDTO>(HttpStatus.NOT_FOUND);
+	public ResponseEntity<AdministradorVO> recuperar(@PathVariable("id") Long id){
+		ResponseEntity<AdministradorVO> response = new ResponseEntity<AdministradorVO>(HttpStatus.NOT_FOUND);
 		Administrador administradorRecuperar = this.getAdministradorService().recuperar(id);
 		if (administradorRecuperar != null){
-			AdministradorDTO administradorDTO = new AdministradorDTO(administradorRecuperar);
+			AdministradorVO administradorDTO = new AdministradorVO(administradorRecuperar);
 			
-			response = new ResponseEntity<AdministradorDTO>(administradorDTO,HttpStatus.OK);
+			response = new ResponseEntity<AdministradorVO>(administradorDTO,HttpStatus.OK);
 		}
 		return response;
 	}	
-
+	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> alta(@RequestBody AdministradorDTO administradorDTO){
+	public ResponseEntity<Void> alta(@RequestBody AdministradorVO administradorDTO){
 		ResponseEntity<Void> response = new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		Administrador administrador = administradorDTO.toEntidad();
 		Administrador adminCreado = getAdministradorService().alta(administrador);
@@ -65,30 +64,35 @@ public class AdministradorRestController {
 
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT, produces={"application/json"})
-	public ResponseEntity<AdministradorDTO> actualizar(@PathVariable("id") Long id,@RequestBody AdministradorDTO administradorDTO){
+	public ResponseEntity<AdministradorVO> actualizar(@PathVariable("id") Long id,@RequestBody AdministradorVO administradorDTO){
 		Administrador adminRecuperar = getAdministradorService().recuperar(id);
 		if (adminRecuperar == null){
-			return new ResponseEntity<AdministradorDTO>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<AdministradorVO>(HttpStatus.NOT_FOUND);
 		}
 		Administrador adminRecibidoDTO = administradorDTO.toEntidad(); 
 		if(!adminRecuperar.equals(adminRecibidoDTO)){
 			if(getAdministradorService().existe(adminRecibidoDTO))
-				return new ResponseEntity<AdministradorDTO>(HttpStatus.CONFLICT);
+				return new ResponseEntity<AdministradorVO>(HttpStatus.CONFLICT);
 		}
 		Administrador adminModificado = administradorDTO.copiarAtributos(adminRecuperar);
 		this.getAdministradorService().modificar(adminModificado);
-		return new ResponseEntity<AdministradorDTO>(new AdministradorDTO(adminModificado),HttpStatus.OK);
+		return new ResponseEntity<AdministradorVO>(new AdministradorVO(adminModificado),HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE, produces={"application/json"})
-	public ResponseEntity<AdministradorDTO> borrar(@PathVariable("id") Long id){
-		ResponseEntity<AdministradorDTO> response = new ResponseEntity<AdministradorDTO>(HttpStatus.NOT_FOUND);
+	public ResponseEntity<AdministradorVO> borrar(@PathVariable("id") Long id){
+		ResponseEntity<AdministradorVO> response = new ResponseEntity<AdministradorVO>(HttpStatus.NOT_FOUND);
 		Administrador adminBorrar = this.getAdministradorService().recuperar(id);
 		if (adminBorrar != null){
 			if (this.getAdministradorService().baja(id))
-				response = new ResponseEntity<AdministradorDTO>(HttpStatus.OK);
+				response = new ResponseEntity<AdministradorVO>(HttpStatus.OK);
 		}
 		return response;
+	}
+	
+	@RequestMapping(value="/login",method=RequestMethod.POST)
+	public ResponseEntity<GenericDTO> login(@RequestBody UsuarioVO usuarioVO){
+		return (new ResponseEntity<>(this.getAdministradorService().login(usuarioVO) ,HttpStatus.OK));
 	}
 	
 	

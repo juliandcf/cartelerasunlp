@@ -2,16 +2,16 @@ package dto;
 
 import modelo.Multimedia;
 
-public class MultimediaDTO {
+public class MultimediaVO extends GenericVO  {
 
 	private String url;
 	private String tipoEnlace;
 	
-	public MultimediaDTO(){
+	public MultimediaVO(){
 		
 	}
 	
-	public MultimediaDTO(Multimedia m){
+	public MultimediaVO(Multimedia m){
 		this.setTipoEnlace(m.getTipoEnlace());
 		this.setUrl(m.getUrl());
 	}

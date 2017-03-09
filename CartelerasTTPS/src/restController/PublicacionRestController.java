@@ -1,8 +1,5 @@
 package restController;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,13 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import dto.CarteleraDTO;
-import dto.PublicacionDTO;
+import dto.GenericDTO;
+import dto.PublicacionVO;
 import modelo.Cartelera;
 import modelo.Publicacion;
 import modelo.UsuarioPublicador;
 import serviciosInt.CarteleraService;
-import serviciosInt.GenericService;
 import serviciosInt.PublicacionService;
 import serviciosInt.UsuarioPublicadorService;
 
@@ -36,67 +32,43 @@ public class PublicacionRestController {
 	private UsuarioPublicadorService usuarioPublicadorService;
 	
 	@RequestMapping(value="/{idCartelera}/publicacion",  method=RequestMethod.GET, produces={"application/json"})
-	public ResponseEntity<List<PublicacionDTO>> recuperarTodos(@PathVariable("idCartelera") Long idCartelera){
-		ResponseEntity<List<PublicacionDTO>> response = new ResponseEntity<List<PublicacionDTO>>(HttpStatus.NO_CONTENT);
-		Cartelera cartelera = this.getCarteleraService().recuperar(idCartelera);
-		List<Publicacion> publicaciones = this.getPublicacionService().getPublicaciones(idCartelera);
-		List<PublicacionDTO> publicacionesDTO = new ArrayList<PublicacionDTO>();
-		if(!publicaciones.isEmpty()){
-			for (Publicacion p : publicaciones) {
-				publicacionesDTO.add(new PublicacionDTO(p));
-			}
-			response =  new ResponseEntity<List<PublicacionDTO>>(publicacionesDTO,HttpStatus.OK);
-		}
-		return response;
+	public ResponseEntity<GenericDTO> recuperarTodos(@PathVariable("idCartelera") Long idCartelera){
+		return new ResponseEntity<GenericDTO>(this.getPublicacionService().recuperarTodosVO(idCartelera),HttpStatus.OK);
 	}
 	
+
 	@RequestMapping(value="/{idCartelera}/publicacion", method=RequestMethod.POST)
-	public ResponseEntity<Void> alta(@PathVariable("idCartelera") Long idCartelera, @RequestBody PublicacionDTO publicacionDTO){
-		ResponseEntity<Void> response = new ResponseEntity<Void>(HttpStatus.CONFLICT);
-		Cartelera cartelera = this.getCarteleraService().recuperar(idCartelera);
-		UsuarioPublicador publicador = (UsuarioPublicador) this.getUsuarioPublicadorService().recuperar(publicacionDTO.getIdPublicador());
-		Publicacion publicacion = publicacionDTO.toEntidad(cartelera, publicador);
-		Publicacion publicacionAgregada= this.getPublicacionService().alta(publicacion);
-		if (publicacionAgregada != null){
-			response = new ResponseEntity<Void>(HttpStatus.CREATED);
-		}
-		return response;	
+	public ResponseEntity<GenericDTO> alta(@PathVariable("idCartelera") Long idCartelera, @RequestBody PublicacionVO publicacionVO){
+		return new ResponseEntity<GenericDTO>(this.getPublicacionService().altaVO(publicacionVO,idCartelera),HttpStatus.OK);
+		
 	}
+	
 	
 	@RequestMapping(value="/{idCartelera}/publicacion/{idPublicacion}", method=RequestMethod.PUT, produces={"application/json"})
-	public ResponseEntity<PublicacionDTO> actualizar(@PathVariable("idPublicacion") Long idPublicacion,
-													@RequestBody PublicacionDTO publicacionDTO){
-		Publicacion publicacionRecuperada = getPublicacionService().recuperar(idPublicacion);
-		if (publicacionRecuperada == null)
-			return new ResponseEntity<PublicacionDTO>(HttpStatus.NOT_FOUND);
-		Publicacion publicacionModificada = publicacionDTO.copiarAtributos(publicacionRecuperada);
-		this.getPublicacionService().modificar(publicacionModificada);
-		return new ResponseEntity<PublicacionDTO>(new PublicacionDTO(publicacionModificada),HttpStatus.OK);
+	public ResponseEntity<GenericDTO> actualizar(@PathVariable("idPublicacion") Long idPublicacion,
+													@RequestBody PublicacionVO publicacionVO){
+		return new ResponseEntity<GenericDTO>(this.getPublicacionService().modificarVO(idPublicacion,publicacionVO),HttpStatus.OK);
+
 	}
 	
 	@RequestMapping(value="/{idCartelera}/publicacion/{idPublicacion}", method=RequestMethod.DELETE, produces={"application/json"})
-	public ResponseEntity<PublicacionDTO> borrar(@PathVariable("idPublicacion") Long idPublicacion){
-		ResponseEntity<PublicacionDTO> response = new ResponseEntity<PublicacionDTO>(HttpStatus.NOT_FOUND);
-		Publicacion publicacionBorrar = this.getPublicacionService().recuperar(idPublicacion);
-		if (publicacionBorrar != null){
-			if (this.getPublicacionService().baja(idPublicacion))
-				response = new ResponseEntity<PublicacionDTO>(HttpStatus.OK);
-		}
-		return response;
+	public ResponseEntity<GenericDTO> borrar(@PathVariable("idPublicacion") Long idPublicacion){
+		return new ResponseEntity<GenericDTO>(this.getPublicacionService().borrarVO(idPublicacion), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/{idCartelera}/publicacion/{idPublicacion}", method=RequestMethod.GET, produces={"application/json"})
-	public ResponseEntity<PublicacionDTO> recuperar(@PathVariable("idPublicacion") Long idPublicacion){
-		ResponseEntity<PublicacionDTO> response = new ResponseEntity<PublicacionDTO>(HttpStatus.NOT_FOUND);
-		Publicacion publicacionRecuperar = this.getPublicacionService().recuperar(idPublicacion);
-		if (publicacionRecuperar!= null){
-			PublicacionDTO publicacionDTO = new PublicacionDTO(publicacionRecuperar);
-			publicacionDTO.agregarMultimedia(publicacionRecuperar);
-			//publicacionDTO.agregarComentarios(publicacionRecuperar);
-			
-			response = new ResponseEntity<PublicacionDTO>(publicacionDTO,HttpStatus.OK);
-		}
-		return response;
+	public ResponseEntity<GenericDTO> recuperar(@PathVariable("idCartelera") Long idCartelera, @PathVariable("idPublicacion") Long idPublicacion){
+		return new ResponseEntity<GenericDTO>(this.getPublicacionService().recuperarVO(idCartelera,idPublicacion), HttpStatus.OK);
+//		ResponseEntity<PublicacionVO> response = new ResponseEntity<PublicacionVO>(HttpStatus.NOT_FOUND);
+//		Publicacion publicacionRecuperar = this.getPublicacionService().recuperar(idPublicacion);
+//		if (publicacionRecuperar!= null){
+//			PublicacionVO publicacionDTO = new PublicacionVO(publicacionRecuperar);
+//			publicacionDTO.cargarMultimediasEnDTO(publicacionRecuperar);
+//			//publicacionDTO.agregarComentarios(publicacionRecuperar);
+//			
+//			response = new ResponseEntity<PublicacionVO>(publicacionDTO,HttpStatus.OK);
+//		}
+//		return response;
 	}	
 	
 	
