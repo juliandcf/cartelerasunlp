@@ -18,9 +18,7 @@ public class PublicadorExterno extends UsuarioPublicador {
 	private static final long serialVersionUID = 1L;
 
 	public PublicadorExterno() {
-		this.setPublicaciones(new ArrayList<Publicacion>());
-		this.setPermisosCarteleras(new HashSet<Cartelera>());
-		this.setComentarios(new ArrayList<Comentario>());
+		this.initialize();
     }
 	
 	public PublicadorExterno(String usuario, String contrasena, String nombre, String apellido){
@@ -29,9 +27,25 @@ public class PublicadorExterno extends UsuarioPublicador {
 		this.contrasena = contrasena;
 		this.nombre = nombre;
 		this.apellido = apellido;
+		this.initialize();
+	}
+	
+    public PublicadorExterno(String usuario, String contrasena, String nombre, String apellido, Multimedia fotoPerfil) {
+  		super();
+  		this.usuario = usuario;
+  		this.contrasena = contrasena;
+  		this.nombre = nombre;
+  		this.apellido = apellido;
+  		initialize();
+  	}
+
+
+
+	private void initialize() {
 		this.setPublicaciones(new ArrayList<Publicacion>());
 		this.setPermisosCarteleras(new HashSet<Cartelera>());
 		this.setComentarios(new ArrayList<Comentario>());
 	}
+
 
 }

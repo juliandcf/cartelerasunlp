@@ -14,55 +14,56 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dto.AdministradorVO;
 import dto.GenericDTO;
+import dto.PublicadorExternoVO;
 import dto.UsuarioVO;
 import modelo.Administrador;
 import serviciosInt.AdministradorService;
+import serviciosInt.PublicadorExternoService;
 
 
 @RestController
-@RequestMapping("/usuario/administrador")
-public class AdministradorRestController {
+@RequestMapping("/usuario/publicadorExterno")
+public class PublicadorExternoRestController {
 	
 	@Autowired
-	private AdministradorService administradorService;
+	private PublicadorExternoService publicadorExternoService;
 	
 	@RequestMapping(method=RequestMethod.GET, produces={"application/json"})
 	public ResponseEntity<GenericDTO> recuperarTodos(){
-		return new ResponseEntity<>(this.getAdministradorService().recuperarTodosVO(), HttpStatus.OK);
+		return new ResponseEntity<>(this.getPublicadorExternoService().recuperarTodosVO(), HttpStatus.OK);
 	}
 	@RequestMapping(value="/{id}", method=RequestMethod.GET, produces={"application/json"})
 	public ResponseEntity<GenericDTO> recuperar(@PathVariable("id") Long id){
-		return new ResponseEntity<>(this.getAdministradorService().recuperarVO(id), HttpStatus.OK);
+		return new ResponseEntity<>(this.getPublicadorExternoService().recuperarVO(id), HttpStatus.OK);
 	}	
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<GenericDTO> alta(@RequestBody AdministradorVO administradorVO){
-		return (new ResponseEntity<GenericDTO>(this.getAdministradorService().altaVO(administradorVO), HttpStatus.OK));
+	public ResponseEntity<GenericDTO> alta(@RequestBody PublicadorExternoVO publicadorVO){
+		return (new ResponseEntity<GenericDTO>(this.getPublicadorExternoService().altaVO(publicadorVO), HttpStatus.OK));
 	}
 
-	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT, produces={"application/json"})
-	public ResponseEntity<GenericDTO> actualizar(@PathVariable("id") Long id,@RequestBody AdministradorVO administradorVO){
-		return new ResponseEntity<>(this.getAdministradorService().modificarVO(id, administradorVO),HttpStatus.OK);
-	}
-	
+	public ResponseEntity<GenericDTO> actualizar(@PathVariable("id") Long id,@RequestBody PublicadorExternoVO publicadorVO){
+		return new ResponseEntity<>(this.getPublicadorExternoService().modificarVO(id, publicadorVO),HttpStatus.OK);
+	}	
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE, produces={"application/json"})
 	public ResponseEntity<GenericDTO> borrar(@PathVariable("id") Long id){
-		return (new ResponseEntity<>(this.getAdministradorService().borrarVO(id),HttpStatus.OK)); 
+		return (new ResponseEntity<>(this.getPublicadorExternoService().borrarVO(id),HttpStatus.OK)); 
 	}
 	
 	@RequestMapping(value="/login",method=RequestMethod.POST)
 	public ResponseEntity<GenericDTO> login(@RequestBody UsuarioVO usuarioVO){
-		return (new ResponseEntity<>(this.getAdministradorService().login(usuarioVO),HttpStatus.OK));
+		return (new ResponseEntity<>(this.getPublicadorExternoService().login(usuarioVO),HttpStatus.OK));
+	}
+	
+	public PublicadorExternoService getPublicadorExternoService() {
+		return publicadorExternoService;
+	}
+	public void setPublicadorExternoService(PublicadorExternoService publicadorExternoService) {
+		this.publicadorExternoService = publicadorExternoService;
 	}
 	
 	
-	public AdministradorService getAdministradorService() {
-		return administradorService;
-	}
 
-	public void setAdministradorService(AdministradorService administradorService) {
-		this.administradorService = administradorService;
-	}
 }

@@ -16,20 +16,14 @@ import modelo.Publicacion;
 import modelo.UsuarioPublicador;
 import serviciosInt.CarteleraService;
 import serviciosInt.PublicacionService;
-import serviciosInt.UsuarioPublicadorService;
+import serviciosInt.UsuarioPublicadorServiceJerarquia;
 
 @RestController
 @RequestMapping("/cartelera")
 public class PublicacionRestController {
 	
 	@Autowired
-	private CarteleraService carteleraService;
-		
-	@Autowired
 	private PublicacionService publicacionService;
-	
-	@Autowired
-	private UsuarioPublicadorService usuarioPublicadorService;
 	
 	@RequestMapping(value="/{idCartelera}/publicacion",  method=RequestMethod.GET, produces={"application/json"})
 	public ResponseEntity<GenericDTO> recuperarTodos(@PathVariable("idCartelera") Long idCartelera){
@@ -59,28 +53,9 @@ public class PublicacionRestController {
 	@RequestMapping(value="/{idCartelera}/publicacion/{idPublicacion}", method=RequestMethod.GET, produces={"application/json"})
 	public ResponseEntity<GenericDTO> recuperar(@PathVariable("idCartelera") Long idCartelera, @PathVariable("idPublicacion") Long idPublicacion){
 		return new ResponseEntity<GenericDTO>(this.getPublicacionService().recuperarVO(idCartelera,idPublicacion), HttpStatus.OK);
-//		ResponseEntity<PublicacionVO> response = new ResponseEntity<PublicacionVO>(HttpStatus.NOT_FOUND);
-//		Publicacion publicacionRecuperar = this.getPublicacionService().recuperar(idPublicacion);
-//		if (publicacionRecuperar!= null){
-//			PublicacionVO publicacionDTO = new PublicacionVO(publicacionRecuperar);
-//			publicacionDTO.cargarMultimediasEnDTO(publicacionRecuperar);
-//			//publicacionDTO.agregarComentarios(publicacionRecuperar);
-//			
-//			response = new ResponseEntity<PublicacionVO>(publicacionDTO,HttpStatus.OK);
-//		}
-//		return response;
 	}	
 	
 	
-	
-	public CarteleraService getCarteleraService() {
-		return carteleraService;
-	}	
-	
-	public void setCarteleraService(CarteleraService carteleraService) {
-		this.carteleraService = carteleraService;
-	}
-
 	public PublicacionService getPublicacionService() {
 		return publicacionService;
 	}
@@ -88,19 +63,5 @@ public class PublicacionRestController {
 	public void setPublicacionService(PublicacionService publicacionService) {
 		this.publicacionService = publicacionService;
 	}
-
-
-	public UsuarioPublicadorService getUsuarioPublicadorService() {
-		return usuarioPublicadorService;
-	}
-
-
-	public void setUsuarioPublicadorService(UsuarioPublicadorService usuarioPublicadorService) {
-		this.usuarioPublicadorService = usuarioPublicadorService;
-	}
-	
-	
-	
-	
 
 }

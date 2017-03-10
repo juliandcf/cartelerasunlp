@@ -4,7 +4,7 @@ import dto.AdministradorVO;
 import dto.GenericDTO;
 import modelo.Administrador;
 
-public interface AdministradorService extends UsuarioPublicadorService<Administrador,AdministradorVO>{
+public interface AdministradorService extends UsuarioPublicadorServiceJerarquia<Administrador,AdministradorVO>{
 
 
 }

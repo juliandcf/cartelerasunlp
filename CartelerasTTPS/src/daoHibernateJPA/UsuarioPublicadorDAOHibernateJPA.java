@@ -17,10 +17,4 @@ public class UsuarioPublicadorDAOHibernateJPA extends UsuarioDAOHibernateJPA<Usu
 		super(UsuarioPublicador.class);
 	}
 
-	@Override
-	public boolean existe(UsuarioPublicador entity) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }
