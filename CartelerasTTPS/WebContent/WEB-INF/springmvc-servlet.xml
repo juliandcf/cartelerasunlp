@@ -10,7 +10,12 @@ http://www.springframework.org/schema/context
 http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
 	<context:component-scan base-package="restController, jwt" />
- 	
+
 	<mvc:annotation-driven />
+
+	<mvc:cors>
+		<mvc:mapping path="/**" />
+	</mvc:cors>
+
 
 </beans>

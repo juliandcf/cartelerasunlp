@@ -28,7 +28,7 @@ public class AdministradorVO extends UsuarioVO implements Serializable {
 		return a;
 	}
 
-	public Administrador copiarAtributos(Administrador adminRecuperar) {
+	public Administrador copiarAtributosEn(Administrador adminRecuperar) {
 		adminRecuperar.setUsuario(this.getUsuario());
 		adminRecuperar.setContrasena(this.getContrasena());
 		adminRecuperar.setNombre(this.getNombre());

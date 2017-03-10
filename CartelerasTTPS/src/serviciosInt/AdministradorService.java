@@ -1,10 +1,10 @@
 package serviciosInt;
 
-import dto.UsuarioVO;
+import dto.AdministradorVO;
+import dto.GenericDTO;
 import modelo.Administrador;
 
-public interface AdministradorService extends UsuarioPublicadorService<Administrador>{
+public interface AdministradorService extends UsuarioPublicadorService<Administrador,AdministradorVO>{
 
-	
 
 }
