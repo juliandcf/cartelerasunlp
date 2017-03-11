@@ -17,8 +17,7 @@ public class Institucional extends UsuarioPublicador {
 	private static final long serialVersionUID = 1L;
 
 	public Institucional(){
-		this.setPublicaciones(new ArrayList<Publicacion>());
-		this.setPermisosCarteleras(new HashSet<Cartelera>());
+		this.initialize();
 	}
 	
 	public Institucional(String usuario, String contrasena, String nombre, String apellido) {
@@ -27,8 +26,25 @@ public class Institucional extends UsuarioPublicador {
 		this.contrasena = contrasena;
 		this.nombre = nombre;
 		this.apellido = apellido;
-		this.setPublicaciones(new ArrayList<Publicacion>());
-		this.setPermisosCarteleras(new HashSet<Cartelera>());
+		this.initialize();
 		
 	}
+	
+    public Institucional(String usuario, String contrasena, String nombre, String apellido, Multimedia fotoPerfil) {
+  		super();
+  		this.usuario = usuario;
+  		this.contrasena = contrasena;
+  		this.nombre = nombre;
+  		this.apellido = apellido;
+  		this.initialize();
+  	}
+
+
+
+	private void initialize() {
+		this.setPublicaciones(new ArrayList<Publicacion>());
+		this.setPermisosCarteleras(new HashSet<Cartelera>());
+		this.setComentarios(new ArrayList<Comentario>());
+	}
+
 }
