@@ -60,7 +60,7 @@ public class AdministradorServiceImpl extends GenericServiceImpl<Administrador,A
 			if (usuario != null){
 				try {
 					UsuarioVO userVO= new UsuarioVO(usuario);
-					userVO.usuarioConRolParaToken("ADMINISTRADOR");
+					userVO.usuarioConRolParaToken("administrador");
 					String token = tokenManagerSecurity.createJWT(userVO);
 					dto.setObjeto(token);
 				} catch (Exception e) {

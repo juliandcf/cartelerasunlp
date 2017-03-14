@@ -59,7 +59,7 @@ public class InstitucionalServiceImpl extends GenericServiceImpl<Institucional,I
 			if (usuario != null){
 				try {
 					UsuarioVO userVO= new UsuarioVO(usuario);
-					userVO.usuarioConRolParaToken("INSTITUCIONAL");
+					userVO.usuarioConRolParaToken("institucional");
 					String token = tokenManagerSecurity.createJWT(userVO);
 					dto.setObjeto(token);
 				} catch (Exception e) {

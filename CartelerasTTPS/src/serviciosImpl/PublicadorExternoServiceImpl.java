@@ -59,7 +59,7 @@ public class PublicadorExternoServiceImpl extends GenericServiceImpl<PublicadorE
 			if (usuario != null){
 				try {
 					UsuarioVO userVO= new UsuarioVO(usuario);
-					userVO.usuarioConRolParaToken("PUBLICADOR_EXTERNO");
+					userVO.usuarioConRolParaToken("publicadorExterno");
 					String token = tokenManagerSecurity.createJWT(userVO);
 					dto.setObjeto(token);
 				} catch (Exception e) {

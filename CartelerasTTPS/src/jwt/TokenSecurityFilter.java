@@ -39,7 +39,6 @@ public class TokenSecurityFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		System.out.println("Estoy en el filtro");
 		HttpServletRequest req = (HttpServletRequest) request;
-		System.out.println(req.getContentType());
 		String[] splitPath = req.getRequestURI().split("/");
 		
 		String path = "";
@@ -49,8 +48,7 @@ public class TokenSecurityFilter implements Filter {
 		}
 
 		System.out.println(path);
-        //res.setHeader("Access-Control-Allow-Origin", "*");
-		chain.doFilter(req, response);
+		chain.doFilter(request, response);
 		
 		/*HttpServletRequest req = (HttpServletRequest) request;
 		String[] splitPath = req.getRequestURI().split("/");
