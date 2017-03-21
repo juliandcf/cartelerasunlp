@@ -13,6 +13,7 @@ public class UsuarioVO extends GenericVO implements Serializable {
 	
 	@JsonInclude(Include.NON_NULL)
 	private Long id;
+	@JsonInclude(Include.NON_NULL)
 	public String usuario;
 	@JsonInclude(Include.NON_NULL)
     public String contrasena;

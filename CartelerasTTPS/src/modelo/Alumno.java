@@ -49,11 +49,26 @@ public class Alumno extends Usuario {
 		super();
 		this.legajo = legajo;
 		this.mail = mail;
+		initialize();
+	}
+
+	private void initialize() {
 		this.interes = new ArrayList<MetodoComunicacion>();
 		this.cartelerasDeInteres = new HashSet<Cartelera>();
 		this.setComentarios(new ArrayList<Comentario>());
 	}
 
+	
+
+	public Alumno(String legajo, String mail, String usuario, String nombre, String apellido, Multimedia multimedia) {
+		this.legajo = legajo;
+		this.mail = mail;
+		this.setUsuario(usuario);
+		this.setNombre(nombre);
+		this.setApellido(apellido);
+		this.setFotoPerfil(multimedia);
+		this.initialize();
+	}
 
 	public String getLegajo() {
 		return legajo;

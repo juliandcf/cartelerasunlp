@@ -6,12 +6,7 @@ import dto.CarteleraVO;
 import dto.GenericDTO;
 import dto.UsuarioVO;
 
-public interface UsuarioPublicadorServiceJerarquia<T,G> extends GenericService<T>{ 
+public interface UsuarioPublicadorServiceJerarquia<T,G> extends UsuarioService<T,G>{ 
 	GenericDTO login(UsuarioVO usuarioVO);
-	public GenericDTO altaVO(G usuarioVO);
-	public GenericDTO borrarVO(Long id);
-	public GenericDTO modificarVO(Long id, G usuarioVO);
-	public GenericDTO recuperarTodosVO();
-	public GenericDTO recuperarVO(Long id);
 	
 }

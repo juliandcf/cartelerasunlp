@@ -169,6 +169,7 @@ public class AdministradorServiceImpl extends GenericServiceImpl<Administrador,A
 		Administrador administradorRecuperar = this.recuperar(id);
 		if (administradorRecuperar != null){
 			AdministradorVO administradorVO = new AdministradorVO(administradorRecuperar);
+			administradorVO.setContrasena(null);
 			dto.setObjeto(administradorVO);
 		}else{
 			dto.setCodigo(HttpStatus.NOT_FOUND.value());
