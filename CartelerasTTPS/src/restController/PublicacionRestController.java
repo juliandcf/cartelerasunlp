@@ -16,7 +16,7 @@ import modelo.Publicacion;
 import modelo.UsuarioPublicador;
 import serviciosInt.CarteleraService;
 import serviciosInt.PublicacionService;
-import serviciosInt.UsuarioPublicadorServiceJerarquia;
+import serviciosInt.UsuarioPublicadorService;
 
 @RestController
 @RequestMapping("/cartelera")

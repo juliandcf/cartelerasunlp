@@ -2,14 +2,17 @@ package dto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import modelo.Cartelera;
+import modelo.PermisoCartelera;
 import modelo.Publicacion;
-
+@JsonInclude(Include.NON_NULL)
 public class CarteleraVO extends GenericVO implements Serializable {
 
 	/**
@@ -20,13 +23,13 @@ public class CarteleraVO extends GenericVO implements Serializable {
 	public Long id;
 	public String nombre;   
     public String descripcion;
+    public Set<Long> permisosCarteleras;
     
     
-    // Ignorar nulos http://www.baeldung.com/jackson-ignore-null-fields
-    @JsonInclude(Include.NON_NULL)
     public List<PublicacionVO> publicacionesDTO;
    
 	public CarteleraVO(){
+		this.setPermisosCarteleras(new HashSet<Long>());
     	
     }
     
@@ -34,6 +37,10 @@ public class CarteleraVO extends GenericVO implements Serializable {
     	this.setId(cartelera.getId());
     	this.setNombre(cartelera.getNombre());
     	this.setDescripcion(cartelera.getDescripcion());
+		this.setPermisosCarteleras(new HashSet<Long>());
+    	for(PermisoCartelera p :cartelera.getPermisosPublicadores()){
+    		this.getPermisosCarteleras().add(p.getId());
+    	}
     }
     
 	public CarteleraVO(Long id,String nombre, String descripcion) {
@@ -74,7 +81,15 @@ public class CarteleraVO extends GenericVO implements Serializable {
 	public void setPublicacionesDTO(List<PublicacionVO> publicacionesDTO) {
 		this.publicacionesDTO = publicacionesDTO;
 	}
-	
+		
+	public Set<Long> getPermisosCarteleras() {
+		return permisosCarteleras;
+	}
+
+	public void setPermisosCarteleras(Set<Long> permisosCarteleras) {
+		this.permisosCarteleras = permisosCarteleras;
+	}
+
 	public Cartelera toEntidad(){
 		return (new Cartelera(this.getNombre(), this.getDescripcion()));
 	}
@@ -92,8 +107,7 @@ public class CarteleraVO extends GenericVO implements Serializable {
 				if(!p.isBorrado())
 					this.getPublicacionesDTO().add(new PublicacionVO(p));
 			}
-		}
-		
+		}	
 	}
 	
 	public void agregarPublicaciones(List<Publicacion> publicaciones) {
@@ -103,7 +117,6 @@ public class CarteleraVO extends GenericVO implements Serializable {
 					this.getPublicacionesDTO().add(new PublicacionVO(p));
 			}
 		}
-		
 	}
     
 }

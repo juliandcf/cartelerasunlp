@@ -8,9 +8,7 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
 import dao.MultimediaDAO;
-import modelo.Administrador;
 import modelo.Multimedia;
-import modelo.Publicacion;
 
 @Repository
 public class MultimediaDAOHibernateJPA extends GenericDAOHibernateJPA<Multimedia> implements MultimediaDAO {

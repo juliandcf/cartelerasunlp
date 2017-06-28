@@ -11,14 +11,15 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
-import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 @Entity
@@ -29,7 +30,7 @@ public class Cartelera implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id	
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "id_cartelera")
 	private Long id;
 	public String nombre;   
@@ -47,19 +48,14 @@ public class Cartelera implements Serializable{
     @OneToMany(mappedBy="cartelera", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     public List<Publicacion> publicaciones;
     
+	@ManyToMany(cascade=CascadeType.ALL)
+	@JoinTable(name = "cartelera_permiso", 
+			   joinColumns = { @JoinColumn(name = "cartelera_id", referencedColumnName="id_cartelera") }, 
+			   inverseJoinColumns = {@JoinColumn(name = "permisos_id", referencedColumnName="id_permiso")},
+			   uniqueConstraints=@UniqueConstraint(columnNames = { "cartelera_id", "permisos_id"})	
+			)
+	public Set<PermisoCartelera> permisosPublicadores;
     
-    
-    public Cartelera() {
-    }
-    
-	public Cartelera(String nombre, String descripcion) {
-		super();
-		this.nombre = nombre;
-		this.descripcion = descripcion;
-		this.setAlumnos(new HashSet<Alumno>());
-		this.setPublicaciones(new ArrayList<Publicacion>());
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -102,6 +98,38 @@ public class Cartelera implements Serializable{
 
 	public void setBorrado(boolean borrado) {
 		this.borrado = borrado;
+	}
+	
+	public Set<PermisoCartelera> getPermisosPublicadores() {
+		return permisosPublicadores;
+	}
+
+	public void setPermisosPublicadores(Set<PermisoCartelera> permisosPublicadores) {
+		this.permisosPublicadores = permisosPublicadores;
+	}
+	
+    public Cartelera() {
+    }
+    
+	public Cartelera(String nombre, String descripcion) {
+		super();
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		initialize();
+	}
+
+	public Cartelera(String nombre, String descripcion, PermisoCartelera permiso) {
+		super();
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		initialize();
+		this.getPermisosPublicadores().add(permiso);
+	}
+
+	private void initialize() {
+		this.setAlumnos(new HashSet<Alumno>());
+		this.setPublicaciones(new ArrayList<Publicacion>());
+		this.setPermisosPublicadores(new HashSet<PermisoCartelera>());
 	}
 
 	@Override

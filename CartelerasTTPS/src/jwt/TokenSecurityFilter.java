@@ -37,7 +37,8 @@ public class TokenSecurityFilter implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		System.out.println("Estoy en el filtro");
+		
+		//System.out.println("Estoy en el filtro");
 		HttpServletRequest req = (HttpServletRequest) request;
 		String[] splitPath = req.getRequestURI().split("/");
 		
@@ -46,9 +47,16 @@ public class TokenSecurityFilter implements Filter {
 		if(splitPath.length > 0) {
 			path = splitPath[splitPath.length -1];
 		}
-
+        
 		System.out.println(path);
-		chain.doFilter(request, response);
+		if ("login".equals(path)) {
+			// sigue la cadena de ejecucion hacia el login
+			chain.doFilter(req, response);
+		}else{
+			//Debo verificar la validez del token.
+			chain.doFilter(req, response);
+		}
+		
 		
 		/*HttpServletRequest req = (HttpServletRequest) request;
 		String[] splitPath = req.getRequestURI().split("/");

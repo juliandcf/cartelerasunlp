@@ -8,8 +8,6 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
 import dao.PublicacionDAO;
-import modelo.Administrador;
-import modelo.Cartelera;
 import modelo.Publicacion;
 
 @Repository

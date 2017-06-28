@@ -2,32 +2,29 @@ package test;
 
 
 import java.util.Date;
-import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import dao.CarteleraDAO;
-import dao.DocenteDAO;
+
 import dao.MultimediaDAO;
 import dao.PublicacionDAO;
 import junit.framework.TestCase;
 import modelo.Anio;
 import modelo.Cartelera;
-import modelo.Docente;
+
 import modelo.Multimedia;
 import modelo.Publicacion;
-import modelo.PublicadorExterno;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+//@RunWith(SpringJUnit4ClassRunner.class);
 
 //************Esta bien esta ruta?? es necesario especificar Webcontent????**************//
-@Transactional
+/*@Transactional
 @ContextConfiguration(locations = { "classpath*:/WebContent/WEB-INF/applicationContext.xml"} )
 public class TestHibernateJPA extends TestCase {
 	
@@ -194,4 +191,4 @@ public class TestHibernateJPA extends TestCase {
 		this.publicacionDAO = publicacionDAO;
 	}
 	
-}
+}*/

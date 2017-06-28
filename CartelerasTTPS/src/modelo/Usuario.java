@@ -40,7 +40,8 @@ public abstract class Usuario implements Serializable {
     @OneToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="multimedia_fk")
     public Multimedia fotoPerfil;
-
+    //public String tipoUsuario;
+    
 	public Usuario() {
 		comentarios=new ArrayList<Comentario>();
     }

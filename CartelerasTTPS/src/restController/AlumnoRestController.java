@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import dto.AlumnoVO;
-import dto.DocenteVO;
 import dto.GenericDTO;
 import serviciosInt.AlumnoService;
 

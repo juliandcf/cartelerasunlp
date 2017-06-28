@@ -12,10 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 import dao.CarteleraDAO;
 import dto.CarteleraVO;
 import dto.GenericDTO;
-import jwt.TokenSecurityFilter;
 import modelo.Cartelera;
+import modelo.PermisoCartelera;
 import modelo.Publicacion;
 import serviciosInt.CarteleraService;
+import serviciosInt.PermisoCarteleraService;
 import serviciosInt.PublicacionService;
 
 @Transactional
@@ -24,6 +25,9 @@ public class CarteleraServiceImpl extends GenericServiceImpl<Cartelera,Cartelera
 	
 	@Autowired
 	private PublicacionService publicacionService;
+	
+	@Autowired
+	private PermisoCarteleraService permisoCarteleraService;
 	
 	@Override
 	public Cartelera alta(Cartelera cartelera) {
@@ -66,15 +70,21 @@ public class CarteleraServiceImpl extends GenericServiceImpl<Cartelera,Cartelera
 	}
 	
 	public GenericDTO altaVO(CarteleraVO carteleraVO){
-		Cartelera cartelera = carteleraVO.toEntidad();
 		GenericDTO dto = new GenericDTO();
-		Cartelera carteleraAgregada = this.alta(cartelera);
-		if(carteleraAgregada!=null){
-			dto.setCodigo(HttpStatus.CREATED.value());
-			dto.setObjeto(new CarteleraVO(cartelera));
+		if (getPermisoCarteleraService().existenId(carteleraVO.getPermisosCarteleras())){
+			Cartelera cartelera = carteleraVO.toEntidad();
+			cartelera = agregarPermisos(carteleraVO, cartelera);
+			Cartelera carteleraAgregada = this.alta(cartelera);
+			if(carteleraAgregada!=null){
+				dto.setCodigo(HttpStatus.CREATED.value());
+				dto.setObjeto(new CarteleraVO(cartelera));
+			}else{
+				dto.setCodigo(HttpStatus.CONFLICT.value());
+				dto.setMensaje("Ya existe una cartelera con ese nombre");
+			}
 		}else{
 			dto.setCodigo(HttpStatus.CONFLICT.value());
-			dto.setMensaje("Ya existe una cartelera con ese nombre");
+			dto.setMensaje("Los permisos ingresados no son correctos");
 		}
 		return dto;
 	}
@@ -82,21 +92,27 @@ public class CarteleraServiceImpl extends GenericServiceImpl<Cartelera,Cartelera
 	@Override
 	public GenericDTO modificarVO(Serializable id, CarteleraVO carteleraVO){
 		GenericDTO dto = new GenericDTO();
-		Cartelera carteleraActualizar = this.recuperar(id);
-		if(carteleraActualizar==null){
-			dto.setCodigo(HttpStatus.NOT_FOUND.value());
-			dto.setMensaje("El id de cartelera ingresado no existe");
-		}else{
-			Cartelera carteleraRecibida = carteleraVO.toEntidad();
-			//Si el nombre de la cartelera que paso para modificar NO es igual a la cartelera que voy a modificar Y el nombre que voy a ponerle ya existe
-			if(!carteleraRecibida.equals(carteleraActualizar) && this.existe(carteleraRecibida)){
-					dto.setCodigo(HttpStatus.CONFLICT.value());
-					dto.setMensaje("Ya existe una cartelera con ese nombre");
+		if (getPermisoCarteleraService().existenId(carteleraVO.getPermisosCarteleras())){
+			Cartelera carteleraActualizar = this.recuperar(id);
+			if(carteleraActualizar==null){
+				dto.setCodigo(HttpStatus.NOT_FOUND.value());
+				dto.setMensaje("El id de cartelera ingresado no existe");
 			}else{
-				Cartelera carteleraModificada = carteleraVO.copiarAtributos(carteleraActualizar);
-				this.modificar(carteleraModificada);
-				dto.setObjeto(new CarteleraVO(carteleraModificada));
+				Cartelera carteleraRecibida = carteleraVO.toEntidad();
+				//Si el nombre de la cartelera que paso para modificar NO es igual a la cartelera que voy a modificar Y el nombre que voy a ponerle ya existe
+				if(!carteleraRecibida.equals(carteleraActualizar) && this.existe(carteleraRecibida)){
+						dto.setCodigo(HttpStatus.CONFLICT.value());
+						dto.setMensaje("Ya existe una cartelera con ese nombre");
+				}else{
+					Cartelera carteleraModificada = carteleraVO.copiarAtributos(carteleraActualizar);
+					carteleraModificada = agregarPermisos(carteleraVO, carteleraModificada);
+					this.modificar(carteleraModificada);
+					dto.setObjeto(new CarteleraVO(carteleraModificada));
+				}
 			}
+		}else{
+			dto.setCodigo(HttpStatus.CONFLICT.value());
+			dto.setMensaje("Los permisos ingresados no son correctos");
 		}
 		return dto;
 	}
@@ -115,6 +131,14 @@ public class CarteleraServiceImpl extends GenericServiceImpl<Cartelera,Cartelera
 		return dto;	
 	}
 	
+	private Cartelera agregarPermisos(CarteleraVO carteleraVO, Cartelera cartelera) {
+		for (Long idPermiso : carteleraVO.getPermisosCarteleras()) {
+			PermisoCartelera perm = this.getPermisoCarteleraService().recuperar(idPermiso);
+			cartelera.getPermisosPublicadores().add(perm);
+		}
+		return cartelera;
+	}
+	
 	public PublicacionService getPublicacionService() {
 		return publicacionService;
 	}
@@ -123,6 +147,18 @@ public class CarteleraServiceImpl extends GenericServiceImpl<Cartelera,Cartelera
 	public void setPublicacionService(PublicacionService publicacionService) {
 		this.publicacionService = publicacionService;
 	}
+
+
+	public PermisoCarteleraService getPermisoCarteleraService() {
+		return permisoCarteleraService;
+	}
+
+
+	public void setPermisoCarteleraService(PermisoCarteleraService permisoCarteleraService) {
+		this.permisoCarteleraService = permisoCarteleraService;
+	}
+
+
 	
 //	@Override
 //	public boolean existe(Cartelera cartelera) {

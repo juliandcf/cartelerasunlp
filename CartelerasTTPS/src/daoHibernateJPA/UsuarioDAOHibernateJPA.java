@@ -1,17 +1,10 @@
 package daoHibernateJPA;
 
-import java.io.Serializable;
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
 import dao.UsuarioDAO;
-import modelo.Administrador;
-import modelo.Docente;
 import modelo.Usuario;
 
 @Repository

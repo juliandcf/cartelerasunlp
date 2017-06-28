@@ -1,12 +1,8 @@
 package daoHibernateJPA;
 
-import java.io.Serializable;
-import java.util.List;
-
 import org.springframework.stereotype.Repository;
 
 import dao.ComentarioDAO;
-import modelo.Administrador;
 import modelo.Comentario;
 
 @Repository

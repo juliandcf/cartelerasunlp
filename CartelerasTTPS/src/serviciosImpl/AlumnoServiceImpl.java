@@ -131,7 +131,7 @@ public class AlumnoServiceImpl extends GenericServiceImpl<Alumno,AlumnoDAO> impl
 		Alumno alumnoRecuperar = this.recuperar(nombreUsuario);
 		if (alumnoRecuperar != null){
 			AlumnoVO alumnoVO = new AlumnoVO(alumnoRecuperar);
-			alumnoVO.setRol("alumnos");
+			//alumnoVO.setRol("alumnos");
 			dto.setObjeto(this.generateToken(alumnoVO));
 		}else{
 			dto.setCodigo(HttpStatus.NOT_FOUND.value());

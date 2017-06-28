@@ -1,16 +1,11 @@
 package daoHibernateJPA;
 
-import java.io.Serializable;
-import java.util.List;
-
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
 import dao.CarteleraDAO;
-import modelo.Administrador;
 import modelo.Cartelera;
-import modelo.Publicacion;
 
 @Repository
 public class CarteleraDAOHibernateJPA extends GenericDAOHibernateJPA<Cartelera> implements CarteleraDAO {
