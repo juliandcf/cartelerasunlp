@@ -21,4 +21,6 @@ public interface GenericDAO<T> {
 	public List<T> recuperarTodos();
 	
 	public boolean existe(T entity);
+	
+	
 }

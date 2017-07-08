@@ -29,6 +29,8 @@ public class CarteleraServiceImpl extends GenericServiceImpl<Cartelera,Cartelera
 	@Autowired
 	private PermisoCarteleraService permisoCarteleraService;
 	
+	
+	
 	@Override
 	public Cartelera alta(Cartelera cartelera) {
 		Cartelera carteleraReturn = null;	
@@ -159,10 +161,32 @@ public class CarteleraServiceImpl extends GenericServiceImpl<Cartelera,Cartelera
 	}
 
 
+	@Override
+	public GenericDTO recuperarNombreCarteleraVO(String nombreCartelera) {
+		GenericDTO dto = new GenericDTO();
+		boolean cartelera = this.getDao().existeConNombre(nombreCartelera);  
+		dto.setObjeto(cartelera);
+		if(cartelera){
+			dto.setCodigo(HttpStatus.NO_CONTENT.value());
+			dto.setMensaje("Ya existe la cartelera con nombre "+nombreCartelera);
+			
+			
+		}else{
+			dto.setCodigo(HttpStatus.OK.value());
+			dto.setMensaje("no existe "+nombreCartelera+" se puede agregar con seguridad");
+		}
+		return dto;
+	}
+
+
 	
-//	@Override
-//	public boolean existe(Cartelera cartelera) {
-//		return this.getDao().existe(cartelera);
-//	}
+	
+	
+
+		
+
+	
+	
+
 
 }

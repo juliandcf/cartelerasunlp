@@ -12,5 +12,6 @@ public interface CarteleraService extends GenericService<Cartelera> {
 	public GenericDTO altaVO(CarteleraVO carteleraVO);
 	public GenericDTO modificarVO(Serializable id, CarteleraVO carteleraVO);
 	public GenericDTO borrarVO(Serializable id);
+	public GenericDTO recuperarNombreCarteleraVO(String nombreCartelera);
 	
 }
