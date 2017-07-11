@@ -14,6 +14,7 @@ public interface GenericService<G> {
 	public G recuperar(Serializable id);
 	public List<G> recuperarTodos();
 	public boolean existe(G entity);
+	
 
 
 

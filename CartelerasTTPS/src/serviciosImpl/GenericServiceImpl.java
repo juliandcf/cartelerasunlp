@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import dao.GenericDAO;
+import modelo.Cartelera;
 import serviciosInt.GenericService;
 @Transactional
 @Service
@@ -68,6 +69,7 @@ public abstract class GenericServiceImpl<T,G> implements GenericService<T> {
 	public boolean existe(T entity){
 		return ((GenericDAO<T>) this.getDao()).existe(entity);
 	};
-
+    
+	
 
 }

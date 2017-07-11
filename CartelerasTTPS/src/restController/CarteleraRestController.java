@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import dto.AlumnoVO;
 import dto.CarteleraVO;
 import dto.GenericDTO;
 import serviciosInt.CarteleraService;
@@ -44,4 +45,8 @@ public class CarteleraRestController {
 	public ResponseEntity<GenericDTO> borrar(@PathVariable("id") Long id){
 		return new ResponseEntity<GenericDTO>(carteleraService.borrarVO(id),HttpStatus.OK);
 	}
+	@RequestMapping(value="/existeCartelera/{nombre}", method=RequestMethod.GET, produces={"application/json"})
+	public ResponseEntity<GenericDTO> recuperar(@PathVariable("nombre") String nombre ){
+		return new ResponseEntity<GenericDTO>(carteleraService.recuperarNombreCarteleraVO(nombre), HttpStatus.OK);
+	}	
 }
