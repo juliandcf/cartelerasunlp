@@ -76,7 +76,6 @@ public class CarteleraServiceImpl extends GenericServiceImpl<Cartelera,Cartelera
 			cartelera = agregarPermisos(carteleraVO, cartelera);
 			Cartelera carteleraAgregada = this.alta(cartelera);
 			if(carteleraAgregada!=null){
-				dto.setCodigo(HttpStatus.CREATED.value());
 				dto.setObjeto(new CarteleraVO(cartelera));
 			}else{
 				dto.setCodigo(HttpStatus.CONFLICT.value());

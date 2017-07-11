@@ -22,6 +22,4 @@ public class CarteleraDAOHibernateJPA extends GenericDAOHibernateJPA<Cartelera> 
 		consulta.setParameter("nombre", nombre);
 		return (((int) (long) consulta.getSingleResult()) > 0);
 	}
-	
-
 }
