@@ -13,6 +13,9 @@ import modelo.Cartelera;
 import serviciosInt.GenericService;
 @Transactional
 @Service
+/*T es la Clase del servicio que se esta realizando
+ *G es el DAO que va a usar el servicio
+ */
 public abstract class GenericServiceImpl<T,G> implements GenericService<T> {
 	
 	@Autowired
