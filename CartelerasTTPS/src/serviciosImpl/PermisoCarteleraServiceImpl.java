@@ -130,9 +130,9 @@ public class PermisoCarteleraServiceImpl extends GenericServiceImpl<PermisoCarte
 	}
 
 	@Override
-	public boolean existen(List<String> nombresPermisos) {
-		for (String nombre : nombresPermisos) {
-			if(!this.getDao().existeConNombre(nombre)){
+	public boolean existen(List<Long> permisos) {
+		for (Long idPermiso : permisos) {
+			if(!this.getDao().existe(idPermiso)){
 				return false;
 			}			
 		}
