@@ -21,12 +21,14 @@ public interface PermisoCarteleraService extends GenericService<PermisoCartelera
 
 	GenericDTO cargarPermisosPorDefecto();
 
-	boolean existen(List<String> permisosCartelerasId);
 	
 	boolean existenId(Set<Long> set);
 
 	List<PermisoCartelera> recuperarPermisosDeUsuario(Long id);
 
 	PermisoCartelera recuperarPorNombre(String nombrePermiso);
+	
+	boolean existen(List<Long> permisos);
+
 	
 }

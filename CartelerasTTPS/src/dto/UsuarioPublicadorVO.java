@@ -20,8 +20,9 @@ public class UsuarioPublicadorVO extends UsuarioVO implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public List<String> permisosCarteleras;
+	public List<Long> permisosCarteleras;
 	public List<PermisoCarteleraVO> permisosCartelerasVO;
+	
 	
 	public UsuarioPublicadorVO(){
 		
@@ -54,16 +55,16 @@ public class UsuarioPublicadorVO extends UsuarioVO implements Serializable {
 		return userRecuperar;
 	}
 
-	public List<String> getPermisosCarteleras() {
+	public List<Long> getPermisosCarteleras() {
 		return permisosCarteleras;
 	}
 
-	public void setPermisosCarteleras(List<String> permisosCarteleras) {
+	public void setPermisosCarteleras(List<Long> permisosCarteleras) {
 		this.permisosCarteleras = permisosCarteleras;
 	}
 	
 	private void initialize() {
-		this.setPermisosCarteleras(new ArrayList<String>());
+		this.setPermisosCarteleras(new ArrayList<Long>());
 	}
 
 	public List<PermisoCarteleraVO> getPermisosCartelerasVO() {

@@ -72,11 +72,16 @@ public class UsuarioPublicadorServiceImpl extends GenericServiceImpl<UsuarioPubl
 	}
 
 	private UsuarioPublicador agregarPermisos(UsuarioPublicadorVO usuarioVO, UsuarioPublicador usuario){
-		for (String nombrePermiso : usuarioVO.getPermisosCarteleras()) {
-			PermisoCartelera perm = this.getPermisoCarteleraService().recuperarPorNombre(nombrePermiso);
-			usuario.getPermisosCarteleras().add(perm);
-		}
-		return usuario;
+//		for (String nombrePermiso : usuarioVO.getPermisosCarteleras()) {
+//			PermisoCartelera perm = this.getPermisoCarteleraService().recuperarPorNombre(nombrePermiso);
+//			usuario.getPermisosCarteleras().add(perm);
+//		}
+//		return usuario;
+	for (Long idPermiso : usuarioVO.getPermisosCarteleras()) {
+		PermisoCartelera perm = this.getPermisoCarteleraService().recuperar(idPermiso);
+		usuario.getPermisosCarteleras().add(perm);
+	}
+	return usuario;
 	}
 
 	@Override
