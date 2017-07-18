@@ -252,7 +252,6 @@ public class UsuarioPublicadorServiceImpl extends GenericServiceImpl<UsuarioPubl
 		return token;
 	}
 
-
 	@Override
 	public GenericDTO recuperarCartelerasParaUsuarioVO(Long id) {
 		GenericDTO dto = new GenericDTO();
