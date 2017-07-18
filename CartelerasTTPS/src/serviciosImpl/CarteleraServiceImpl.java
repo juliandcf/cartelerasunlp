@@ -185,7 +185,7 @@ public class CarteleraServiceImpl extends GenericServiceImpl<Cartelera,Cartelera
 		if (!carteleras.isEmpty()) {
 			Set<Cartelera> cartelerasConPermiso = new HashSet<Cartelera>();
 			for (PermisoCartelera permisoCartelera : permisosCarteleras) {
-				cartelerasConPermiso.addAll(permisoCartelera.getCartelerasConPermiso());
+				cartelerasConPermiso.addAll(this.getDao().getCartelerasConPermiso(permisoCartelera));
 			}
 			cartelerasConPermiso.forEach((c)->cartelerasVO.add(new CarteleraVO(c)));
 			dto.setObjeto(cartelerasVO);

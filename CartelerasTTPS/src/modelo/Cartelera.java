@@ -130,6 +130,7 @@ public class Cartelera implements Serializable{
 		this.setAlumnos(new HashSet<Alumno>());
 		this.setPublicaciones(new ArrayList<Publicacion>());
 		this.setPermisosPublicadores(new HashSet<PermisoCartelera>());
+		
 	}
 
 	@Override

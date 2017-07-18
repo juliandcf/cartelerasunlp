@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import dao.PermisoCarteleraDAO;
 import dto.GenericDTO;
 import dto.PermisoCarteleraVO;
+import modelo.Cartelera;
 import modelo.PermisoCartelera;
 import serviciosInt.PermisoCarteleraService;
 
@@ -131,14 +132,17 @@ public class PermisoCarteleraServiceImpl extends GenericServiceImpl<PermisoCarte
 
 	@Override
 	public boolean existen(List<Long> permisos) {
-		for (Long idPermiso : permisos) {
+		for (Long idPermiso : permisos) { 
 			if(!this.getDao().existe(idPermiso)){
 				return false;
 			}			
 		}
 		return true;		
 	}
-
+    
+    	
+    	
+    
 	@Override
 	public List<PermisoCartelera> recuperarPermisosDeUsuario(Long id) {
 		return this.getDao().getPermisosParaUsuario(id);

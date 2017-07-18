@@ -2,6 +2,7 @@ package dao;
 
 import java.util.List;
 
+import modelo.Cartelera;
 import modelo.PermisoCartelera;
 
 public interface PermisoCarteleraDAO extends GenericDAO<PermisoCartelera> {
@@ -11,5 +12,7 @@ public interface PermisoCarteleraDAO extends GenericDAO<PermisoCartelera> {
 	PermisoCartelera getPermisoPorNombre(String nombrePermiso);
 
 	boolean existeConNombre(String nombre);
+
+	
 
 }
