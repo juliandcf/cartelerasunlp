@@ -2,7 +2,9 @@ package serviciosImpl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -168,8 +170,6 @@ public class CarteleraServiceImpl extends GenericServiceImpl<Cartelera,Cartelera
 		if(cartelera){
 			dto.setCodigo(HttpStatus.NO_CONTENT.value());
 			dto.setMensaje("Ya existe la cartelera con nombre "+nombreCartelera);
-			
-			
 		}else{
 			dto.setCodigo(HttpStatus.OK.value());
 			dto.setMensaje("no existe "+nombreCartelera+" se puede agregar con seguridad");
@@ -178,7 +178,23 @@ public class CarteleraServiceImpl extends GenericServiceImpl<Cartelera,Cartelera
 	}
 
 
-	
+	public GenericDTO recuperarConPermisos(Set<PermisoCartelera> permisosCarteleras) {
+		GenericDTO dto = new GenericDTO();
+		List<Cartelera> carteleras = this.recuperarTodos();
+		List<CarteleraVO> cartelerasVO = new ArrayList<>();
+		if (!carteleras.isEmpty()) {
+			Set<Cartelera> cartelerasConPermiso = new HashSet<Cartelera>();
+			for (PermisoCartelera permisoCartelera : permisosCarteleras) {
+				cartelerasConPermiso.addAll(permisoCartelera.getCartelerasConPermiso());
+			}
+			cartelerasConPermiso.forEach((c)->cartelerasVO.add(new CarteleraVO(c)));
+			dto.setObjeto(cartelerasVO);
+		} else {
+			dto.setCodigo(HttpStatus.NO_CONTENT.value());
+			dto.setMensaje("No se encontraron carteleras");
+		}
+		return dto;
+	}
 	
 	
 

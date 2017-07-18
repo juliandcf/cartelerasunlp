@@ -58,6 +58,22 @@ public class PermisoCartelera {
 		this.descripcion = descripcion;
 	}
 
+	public Set<Cartelera> getCartelerasConPermiso() {
+		return cartelerasConPermiso;
+	}
+
+	public void setCartelerasConPermiso(Set<Cartelera> cartelerasConPermiso) {
+		this.cartelerasConPermiso = cartelerasConPermiso;
+	}
+
+	public Set<UsuarioPublicador> getUsuariosConPermiso() {
+		return usuariosConPermiso;
+	}
+
+	public void setUsuariosConPermiso(Set<UsuarioPublicador> usuariosConPermiso) {
+		this.usuariosConPermiso = usuariosConPermiso;
+	}
+
 	public boolean isBorrado() {
 		return borrado;
 	}
@@ -67,13 +83,6 @@ public class PermisoCartelera {
 	}
 
 	
-	public Set<Cartelera> getPublicadoresConPermiso() {
-		return cartelerasConPermiso;
-	}
-
-	public void setPublicadoresConPermiso(Set<Cartelera> cartelerasConPermiso) {
-		this.cartelerasConPermiso = cartelerasConPermiso;
-	}
 
 	@Override
 	public boolean equals(Object obj) {

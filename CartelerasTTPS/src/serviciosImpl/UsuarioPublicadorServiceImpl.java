@@ -1,7 +1,9 @@
 package serviciosImpl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -16,8 +18,10 @@ import dto.PermisoCarteleraVO;
 import dto.UsuarioPublicadorVO;
 import dto.UsuarioVO;
 import jwt.TokenManagerSecurity;
+import modelo.Cartelera;
 import modelo.PermisoCartelera;
 import modelo.UsuarioPublicador;
+import serviciosInt.CarteleraService;
 import serviciosInt.PermisoCarteleraService;
 import serviciosInt.UsuarioPublicadorService;
 
@@ -27,6 +31,9 @@ public class UsuarioPublicadorServiceImpl extends GenericServiceImpl<UsuarioPubl
 	
 	@Autowired
 	private PermisoCarteleraService permisoCarteleraService;
+	
+	@Autowired
+	private CarteleraService carteleraService;
 	
 	@Inject
 	private TokenManagerSecurity tokenManagerSecurity;
@@ -243,6 +250,22 @@ public class UsuarioPublicadorServiceImpl extends GenericServiceImpl<UsuarioPubl
 			e.printStackTrace();
 		}
 		return token;
+	}
+
+
+	@Override
+	public GenericDTO recuperarCartelerasParaUsuarioVO(Long id) {
+		GenericDTO dto = new GenericDTO();
+		UsuarioPublicador usuarioRecuperar = this.recuperar(id);
+		if (usuarioRecuperar != null) {
+			usuarioRecuperar.getPermisosCarteleras();
+			GenericDTO cartelerasConPermiso = carteleraService.recuperarConPermisos(usuarioRecuperar.getPermisosCarteleras());
+			dto.setObjeto(cartelerasConPermiso);
+		} else {
+			dto.setCodigo(HttpStatus.NOT_FOUND.value());
+			dto.setMensaje("El usuario con el id " + id + " no existe");
+		}
+		return dto;
 	}
 
 }

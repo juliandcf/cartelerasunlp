@@ -49,4 +49,6 @@ public class CarteleraRestController {
 	public ResponseEntity<GenericDTO> recuperar(@PathVariable("nombre") String nombre ){
 		return new ResponseEntity<GenericDTO>(carteleraService.recuperarNombreCarteleraVO(nombre), HttpStatus.OK);
 	}	
+	
+	
 }

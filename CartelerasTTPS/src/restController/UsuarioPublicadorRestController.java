@@ -56,6 +56,14 @@ public class UsuarioPublicadorRestController {
 	public ResponseEntity<GenericDTO> recuperar(@RequestBody UsuarioPublicadorVO usuarioPublicadorVO){
 		return new ResponseEntity<>(this.getUsuarioPublicadorService().recuperarNombreUsuarioVO(usuarioPublicadorVO.getUsuario()), HttpStatus.OK);
 	}	
+	
+	@RequestMapping(value="/{id}/carteleras", method=RequestMethod.GET, produces={"application/json"})
+	public ResponseEntity<GenericDTO> recuperarCarteleras(@PathVariable("id") Long id){
+		return new ResponseEntity<>(this.getUsuarioPublicadorService().recuperarCartelerasParaUsuarioVO(id), HttpStatus.OK);
+	}	
+	
+	
+	
 
 	public UsuarioPublicadorService getUsuarioPublicadorService() {
 		return usuarioPublicadorService;
