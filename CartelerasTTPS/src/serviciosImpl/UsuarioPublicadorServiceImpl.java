@@ -281,20 +281,7 @@ public class UsuarioPublicadorServiceImpl extends GenericServiceImpl<UsuarioPubl
 		return token;
 	}
 
-	@Override
-	public GenericDTO recuperarCartelerasParaUsuarioVO(Long id) {
-		GenericDTO dto = new GenericDTO();
-		UsuarioPublicador usuarioRecuperar = this.recuperar(id);
-		if (usuarioRecuperar != null) {
-			usuarioRecuperar.getPermisosCarteleras();
-			Set<CarteleraVO> cartelerasConPermiso =  carteleraService.recuperarConPermisos(usuarioRecuperar.getPermisosCarteleras());
-			dto.setObjeto(cartelerasConPermiso);
-		} else {
-			dto.setCodigo(HttpStatus.NOT_FOUND.value());
-			dto.setMensaje("El usuario con el id " + id + " no existe");
-		}
-		return dto;
-	}
+	
 
 
 	

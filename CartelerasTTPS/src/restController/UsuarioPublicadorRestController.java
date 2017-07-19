@@ -57,10 +57,7 @@ public class UsuarioPublicadorRestController {
 		return new ResponseEntity<>(this.getUsuarioPublicadorService().recuperarNombreUsuarioVO(usuarioPublicadorVO.getUsuario()), HttpStatus.OK);
 	}	
 	
-	@RequestMapping(value="/{id}/carteleras", method=RequestMethod.GET, produces={"application/json"})
-	public ResponseEntity<GenericDTO> recuperarCarteleras(@PathVariable("id") Long id){
-		return new ResponseEntity<>(this.getUsuarioPublicadorService().recuperarCartelerasParaUsuarioVO(id), HttpStatus.OK);
-	}	
+	
 	@RequestMapping(value="admin/{id}/usuariosPublicadores", method=RequestMethod.GET, produces={"application/json"})
 	public ResponseEntity<GenericDTO> recuperarUsuariosPublicadores(@PathVariable("id") Long id){
 		return new ResponseEntity<>(this.getUsuarioPublicadorService().recuperarPublicadoresVO(id), HttpStatus.OK);

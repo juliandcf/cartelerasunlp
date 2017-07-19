@@ -17,5 +17,8 @@ public interface CarteleraService extends GenericService<Cartelera> {
 	public GenericDTO borrarVO(Serializable id);
 	public GenericDTO recuperarNombreCarteleraVO(String nombreCartelera);
 	public Set<CarteleraVO> recuperarConPermisos(Set<PermisoCartelera> permisosCarteleras);
+	public GenericDTO recuperarCartelerasParaUsuarioVO(Long id);
+	
+	
 	
 }

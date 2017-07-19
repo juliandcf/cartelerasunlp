@@ -18,9 +18,11 @@ import dto.GenericDTO;
 import modelo.Cartelera;
 import modelo.PermisoCartelera;
 import modelo.Publicacion;
+import modelo.UsuarioPublicador;
 import serviciosInt.CarteleraService;
 import serviciosInt.PermisoCarteleraService;
 import serviciosInt.PublicacionService;
+import serviciosInt.UsuarioPublicadorService;
 
 @Transactional
 @Service
@@ -31,9 +33,21 @@ public class CarteleraServiceImpl extends GenericServiceImpl<Cartelera,Cartelera
 	
 	@Autowired
 	private PermisoCarteleraService permisoCarteleraService;
+	@Autowired
+	private UsuarioPublicadorService usuarioPublicadorService;
 	
 	
 	
+	public UsuarioPublicadorService getUsuarioPublicadorService() {
+		return usuarioPublicadorService;
+	}
+
+
+	public void setUsuarioPublicadorService(UsuarioPublicadorService usuarioPublicadorService) {
+		this.usuarioPublicadorService = usuarioPublicadorService;
+	}
+
+
 	@Override
 	public Cartelera alta(Cartelera cartelera) {
 		Cartelera carteleraReturn = null;	
@@ -184,11 +198,32 @@ public class CarteleraServiceImpl extends GenericServiceImpl<Cartelera,Cartelera
 			Set<Cartelera> cartelerasConPermiso = new HashSet<Cartelera>();
 			Set<CarteleraVO> cartelerasVO = new HashSet<CarteleraVO>();
 			for (PermisoCartelera permisoCartelera : permisosCarteleras){
-				//cartelerasConPermiso.addAll(this.getDao().getCartelerasConPermiso(permisoCartelera));
 				cartelerasConPermiso = 	this.getDao().getCartelerasConPermiso(permisoCartelera);
-				cartelerasConPermiso.forEach((c)->cartelerasVO.add(new CarteleraVO(c)));
+				for (Cartelera c: cartelerasConPermiso) {
+					CarteleraVO cVO = new CarteleraVO(c);
+					List<Publicacion> publicaciones = this.getPublicacionService().getPublicaciones(c.getId());
+					cVO.agregarPublicaciones(publicaciones);
+					cartelerasVO.add(cVO);
+				}
+				//cartelerasConPermiso.forEach((c)->cartelerasVO.add(new CarteleraVO(c)));
 			}
 			return cartelerasVO;
+	}
+
+
+	@Override
+	public GenericDTO recuperarCartelerasParaUsuarioVO(Long id) {
+		GenericDTO dto = new GenericDTO();
+		UsuarioPublicador usuarioRecuperar = this.getUsuarioPublicadorService().recuperar(id);
+		if (usuarioRecuperar != null) {
+			usuarioRecuperar.getPermisosCarteleras();
+			Set<CarteleraVO> cartelerasConPermiso = this.recuperarConPermisos(usuarioRecuperar.getPermisosCarteleras());
+			dto.setObjeto(cartelerasConPermiso);
+		} else {
+			dto.setCodigo(HttpStatus.NOT_FOUND.value());
+			dto.setMensaje("El usuario con el id " + id + " no existe");
+		}
+		return dto;
 	}
 	
 	
