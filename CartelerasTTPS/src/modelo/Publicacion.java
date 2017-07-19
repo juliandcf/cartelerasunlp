@@ -36,7 +36,7 @@ public class Publicacion implements Serializable {
 	private String titulo;
 
 	private String texto;
-
+	
 	private Date fecha;
 
 	private boolean habilitarComentarios;
