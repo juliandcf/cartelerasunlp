@@ -192,10 +192,5 @@ public class CarteleraServiceImpl extends GenericServiceImpl<Cartelera,Cartelera
 	
 	
 
-		
-
-	
-	
-
 
 }
