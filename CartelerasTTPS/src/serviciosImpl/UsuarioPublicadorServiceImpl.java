@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import dao.UsuarioPublicadorDAO;
+import dto.CarteleraVO;
 import dto.GenericDTO;
 import dto.PermisoCarteleraVO;
 import dto.UsuarioPublicadorVO;
@@ -258,7 +259,7 @@ public class UsuarioPublicadorServiceImpl extends GenericServiceImpl<UsuarioPubl
 		UsuarioPublicador usuarioRecuperar = this.recuperar(id);
 		if (usuarioRecuperar != null) {
 			usuarioRecuperar.getPermisosCarteleras();
-			GenericDTO cartelerasConPermiso = carteleraService.recuperarConPermisos(usuarioRecuperar.getPermisosCarteleras());
+			Set<CarteleraVO> cartelerasConPermiso =  carteleraService.recuperarConPermisos(usuarioRecuperar.getPermisosCarteleras());
 			dto.setObjeto(cartelerasConPermiso);
 		} else {
 			dto.setCodigo(HttpStatus.NOT_FOUND.value());
