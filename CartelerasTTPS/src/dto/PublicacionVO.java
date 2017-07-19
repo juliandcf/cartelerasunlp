@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -20,6 +21,7 @@ public class PublicacionVO extends GenericVO implements Serializable {
 	public Long id;
 	public String titulo;
 	public String texto;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm")
 	public Date fecha;
 	@JsonInclude(Include.NON_NULL)
 	public Long idPublicador;
