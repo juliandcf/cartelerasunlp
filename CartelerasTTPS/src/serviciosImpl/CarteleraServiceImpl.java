@@ -205,7 +205,6 @@ public class CarteleraServiceImpl extends GenericServiceImpl<Cartelera,Cartelera
 					cVO.agregarPublicaciones(publicaciones);
 					cartelerasVO.add(cVO);
 				}
-				//cartelerasConPermiso.forEach((c)->cartelerasVO.add(new CarteleraVO(c)));
 			}
 			return cartelerasVO;
 	}
