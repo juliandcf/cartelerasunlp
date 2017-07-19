@@ -11,6 +11,8 @@ public interface UsuarioPublicadorService extends UsuarioService<UsuarioPublicad
 	GenericDTO recuperarNombreUsuarioVO(String usuario);
 
 	GenericDTO recuperarCartelerasParaUsuarioVO(Long id);
+
+	GenericDTO recuperarPublicadoresVO(Long id);
 	
 	
 	

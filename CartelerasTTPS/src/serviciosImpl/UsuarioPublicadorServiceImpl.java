@@ -154,6 +154,34 @@ public class UsuarioPublicadorServiceImpl extends GenericServiceImpl<UsuarioPubl
 		}		
 		return dto;
 	}
+	// recupera usuarios publicadores excepto el id que te llega osea el usuario admin logueado
+	@Override
+	public GenericDTO recuperarPublicadoresVO(Long id) {
+		GenericDTO dto = new GenericDTO();	
+		List<UsuarioPublicadorVO> usuariosVO = new ArrayList<UsuarioPublicadorVO>();
+		List<UsuarioPublicador> usuariosPublicadores = this.recuperarTodos();
+		if(!usuariosPublicadores.isEmpty()){
+			for (UsuarioPublicador u : usuariosPublicadores) {
+				if (u.getId() != id) {
+					boolean ok = true;
+					for (PermisoCartelera permiso : u.getPermisosCarteleras()) {
+						if (permiso.getNombre().matches("PRIMER AÑO|SEGUNDO AÑO|TERCER AÑO|CUARTO AÑO|QUINTO AÑO")) {
+							ok = false;
+						}
+
+					}
+					if (ok) {
+						UsuarioPublicadorVO uVO = new UsuarioPublicadorVO(u);
+						uVO.setPermisosCartelerasVO(this.getPermisosDeUsuario(u.getId()));
+						usuariosVO.add(uVO);
+					}
+
+				}
+				dto.setObjeto(usuariosVO);
+			}
+		}
+		return dto;
+	}
 
 
 	private List<PermisoCarteleraVO> getPermisosDeUsuario(Long id) {
@@ -267,5 +295,8 @@ public class UsuarioPublicadorServiceImpl extends GenericServiceImpl<UsuarioPubl
 		}
 		return dto;
 	}
+
+
+	
 
 }
