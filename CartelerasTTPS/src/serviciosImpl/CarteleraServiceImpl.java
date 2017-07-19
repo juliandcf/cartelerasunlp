@@ -136,6 +136,7 @@ public class CarteleraServiceImpl extends GenericServiceImpl<Cartelera,Cartelera
 	}
 	
 	private Cartelera agregarPermisos(CarteleraVO carteleraVO, Cartelera cartelera) {
+		cartelera.getPermisosPublicadores().clear();
 		for (Long idPermiso : carteleraVO.getPermisosCarteleras()) {
 			PermisoCartelera perm = this.getPermisoCarteleraService().recuperar(idPermiso);
 			cartelera.getPermisosPublicadores().add(perm);
