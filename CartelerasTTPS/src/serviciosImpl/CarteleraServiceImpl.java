@@ -1,5 +1,6 @@
 package serviciosImpl;
 
+import java.io.Console;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -178,22 +179,15 @@ public class CarteleraServiceImpl extends GenericServiceImpl<Cartelera,Cartelera
 	}
 
 
-	public GenericDTO recuperarConPermisos(Set<PermisoCartelera> permisosCarteleras) {
-		GenericDTO dto = new GenericDTO();
-		List<Cartelera> carteleras = this.recuperarTodos();
-		List<CarteleraVO> cartelerasVO = new ArrayList<>();
-		if (!carteleras.isEmpty()) {
+	public Set<CarteleraVO> recuperarConPermisos(Set<PermisoCartelera> permisosCarteleras) {
 			Set<Cartelera> cartelerasConPermiso = new HashSet<Cartelera>();
-			for (PermisoCartelera permisoCartelera : permisosCarteleras) {
-				cartelerasConPermiso.addAll(this.getDao().getCartelerasConPermiso(permisoCartelera));
+			Set<CarteleraVO> cartelerasVO = new HashSet<CarteleraVO>();
+			for (PermisoCartelera permisoCartelera : permisosCarteleras){
+				//cartelerasConPermiso.addAll(this.getDao().getCartelerasConPermiso(permisoCartelera));
+				cartelerasConPermiso = 	this.getDao().getCartelerasConPermiso(permisoCartelera);
+				cartelerasConPermiso.forEach((c)->cartelerasVO.add(new CarteleraVO(c)));
 			}
-			cartelerasConPermiso.forEach((c)->cartelerasVO.add(new CarteleraVO(c)));
-			dto.setObjeto(cartelerasVO);
-		} else {
-			dto.setCodigo(HttpStatus.NO_CONTENT.value());
-			dto.setMensaje("No se encontraron carteleras");
-		}
-		return dto;
+			return cartelerasVO;
 	}
 	
 	
