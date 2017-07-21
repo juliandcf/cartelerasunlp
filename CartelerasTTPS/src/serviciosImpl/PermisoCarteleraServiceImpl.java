@@ -162,4 +162,10 @@ public class PermisoCarteleraServiceImpl extends GenericServiceImpl<PermisoCarte
 		}
 		return true;
 	}
+
+	@Override
+	public GenericDTO recuperarSinDocentesVO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

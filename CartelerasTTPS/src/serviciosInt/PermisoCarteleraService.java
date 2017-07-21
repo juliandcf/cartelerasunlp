@@ -10,6 +10,8 @@ import modelo.PermisoCartelera;
 public interface PermisoCarteleraService extends GenericService<PermisoCartelera>{
 
 	GenericDTO recuperarTodosVO();
+	
+	GenericDTO recuperarSinDocentesVO();
 
 	GenericDTO recuperarVO(Long id);
 
@@ -29,6 +31,8 @@ public interface PermisoCarteleraService extends GenericService<PermisoCartelera
 	PermisoCartelera recuperarPorNombre(String nombrePermiso);
 	
 	boolean existen(List<Long> permisos);
+
+	
 
 	
 }
