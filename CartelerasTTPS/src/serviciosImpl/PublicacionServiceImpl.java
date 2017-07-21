@@ -69,9 +69,7 @@ public class PublicacionServiceImpl extends GenericServiceImpl<Publicacion,Publi
 		if(cartelera!=null && usuario!=null){
 			Publicacion publicacion = publicacionVO.toEntidad(cartelera, usuario);
 			Publicacion publicacionAgregada= this.alta(publicacion);
-			if (publicacionAgregada != null){
-				dto.setCodigo(HttpStatus.CREATED.value());
-			}else{
+			if (publicacionAgregada == null){
 				dto.setCodigo(HttpStatus.CONFLICT.value());
 			}
 		}else{
