@@ -16,5 +16,6 @@ public interface PublicacionService extends GenericService<Publicacion> {
 	public GenericDTO altaVO(PublicacionVO publicacionVO, Serializable idCartelera);
 	public GenericDTO modificarVO(Serializable id, PublicacionVO publicacionVO);
 	public GenericDTO borrarVO(Long idPublicacion);
+	public List<Publicacion> getPublicacionesDeUsuario(Long id, Long id2);
 	
 }

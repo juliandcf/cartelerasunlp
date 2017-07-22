@@ -216,7 +216,7 @@ public class CarteleraServiceImpl extends GenericServiceImpl<Cartelera,Cartelera
 		UsuarioPublicador usuarioRecuperar = this.getUsuarioPublicadorService().recuperar(id);
 		if (usuarioRecuperar != null) {
 			usuarioRecuperar.getPermisosCarteleras();
-			Set<CarteleraVO> cartelerasConPermiso = this.recuperarConPermisos(usuarioRecuperar.getPermisosCarteleras());
+			Set<CarteleraVO> cartelerasConPermiso = this.recuperarConPublicUsuario(usuarioRecuperar);
 			dto.setObjeto(cartelerasConPermiso);
 		} else {
 			dto.setCodigo(HttpStatus.NOT_FOUND.value());
@@ -225,6 +225,22 @@ public class CarteleraServiceImpl extends GenericServiceImpl<Cartelera,Cartelera
 		return dto;
 	}
 
+
+
+	private Set<CarteleraVO> recuperarConPublicUsuario(UsuarioPublicador usuarioRecuperar) {
+		Set<Cartelera> cartelerasConPermiso = new HashSet<Cartelera>();
+		Set<CarteleraVO> cartelerasVO = new HashSet<CarteleraVO>();
+		for (PermisoCartelera permisoCartelera : usuarioRecuperar.getPermisosCarteleras()){
+			cartelerasConPermiso = 	this.getDao().getCartelerasConPermiso(permisoCartelera);
+			for (Cartelera c: cartelerasConPermiso) {
+				CarteleraVO cVO = new CarteleraVO(c);
+				List<Publicacion> publicaciones = this.getPublicacionService().getPublicacionesDeUsuario(c.getId(),usuarioRecuperar.getId());
+				cVO.agregarPublicaciones(publicaciones);
+				cartelerasVO.add(cVO);
+			}
+		}
+		return cartelerasVO;
+	}
 
 
 	@Override

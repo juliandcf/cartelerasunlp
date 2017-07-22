@@ -10,4 +10,6 @@ public interface PublicacionDAO extends GenericDAO<Publicacion> {
 
 	public List<Publicacion> recuperarPublicacionesDeCartelera(Serializable idCartelera);
 
+	public List<Publicacion> recuperarPublicacionesDeCartelera(Long idCartelera, Long idUsuario);
+
 }

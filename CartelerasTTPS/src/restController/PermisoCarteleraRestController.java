@@ -24,7 +24,7 @@ public class PermisoCarteleraRestController {
 	public ResponseEntity<GenericDTO> recuperarTodos(){
 		return (new ResponseEntity<GenericDTO>(permisoCarteleraService.recuperarTodosVO(),HttpStatus.OK));
 	}
-	@RequestMapping(value="/permisoCarteleraSinDocente",method=RequestMethod.GET, produces={"application/json"})
+	@RequestMapping(value="/sinDocente",method=RequestMethod.GET, produces={"application/json"})
 	public ResponseEntity<GenericDTO> recuperarSinDocentes(){
 		return (new ResponseEntity<GenericDTO>(permisoCarteleraService.recuperarSinDocentesVO(),HttpStatus.OK));
 	

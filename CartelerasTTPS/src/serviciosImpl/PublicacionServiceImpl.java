@@ -60,6 +60,10 @@ public class PublicacionServiceImpl extends GenericServiceImpl<Publicacion,Publi
 		return this.getDao().recuperarPublicacionesDeCartelera(idCartelera);
 		
 	}
+	@Override
+	public List<Publicacion> getPublicacionesDeUsuario(Long idCartelera, Long idUsuario) {
+		return this.getDao().recuperarPublicacionesDeCartelera(idCartelera,idUsuario);
+	}
 
 	@Override
 	public GenericDTO altaVO(PublicacionVO publicacionVO, Serializable idCartelera) {
@@ -158,5 +162,7 @@ public class PublicacionServiceImpl extends GenericServiceImpl<Publicacion,Publi
 	public void setMultimediaService(MultimediaService multimediaService) {
 		this.multimediaService = multimediaService;
 	}
+
+	
 	
 }
