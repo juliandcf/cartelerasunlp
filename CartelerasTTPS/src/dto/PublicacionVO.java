@@ -21,7 +21,7 @@ public class PublicacionVO extends GenericVO implements Serializable {
 	public Long id;
 	public String titulo;
 	public String texto;
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy hh:mm:ss")
 	public Date fecha;
 	@JsonInclude(Include.NON_NULL)
 	public Long idPublicador;
