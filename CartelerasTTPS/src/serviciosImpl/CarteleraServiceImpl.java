@@ -224,6 +224,9 @@ public class CarteleraServiceImpl extends GenericServiceImpl<Cartelera,Cartelera
 		}
 		return dto;
 	}
+
+
+	
 	
 	
 

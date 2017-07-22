@@ -165,7 +165,25 @@ public class PermisoCarteleraServiceImpl extends GenericServiceImpl<PermisoCarte
 
 	@Override
 	public GenericDTO recuperarSinDocentesVO() {
-		// TODO Auto-generated method stub
-		return null;
+		GenericDTO dto = new GenericDTO();
+		List<PermisoCartelera> permisos = this.recuperarTodos();
+		if (!permisos.isEmpty()) {
+			List<PermisoCarteleraVO> permisosVO = new ArrayList<>();
+			for (PermisoCartelera p : permisos) {
+				boolean ok = true;
+				if (p.getNombre().matches("PRIMER AÑO|SEGUNDO AÑO|TERCER AÑO|CUARTO AÑO|QUINTO AÑO")) {
+					ok = false;
+				}
+				if (ok) {
+					permisosVO.add(new PermisoCarteleraVO(p));
+				}
+			}
+			dto.setObjeto(permisosVO);
+		} else {
+			dto.setCodigo(HttpStatus.NO_CONTENT.value());
+			dto.setMensaje("No se encontraron permisos");
+		}
+		return dto;
+
 	}
 }

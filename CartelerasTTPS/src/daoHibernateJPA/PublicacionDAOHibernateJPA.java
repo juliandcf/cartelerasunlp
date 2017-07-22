@@ -27,7 +27,7 @@ public class PublicacionDAOHibernateJPA extends GenericDAOHibernateJPA<Publicaci
 	public List<Publicacion> recuperarPublicacionesDeCartelera(Serializable idCartelera){
 		List<Publicacion> resultado = null;
 		Query consulta = this.getEntityManager()
-				.createQuery("SELECT e FROM " + this.getPersistentClass().getSimpleName() + " e where borrado = :borrado and cartelera_fk = :id_cartelera");
+				.createQuery("SELECT e FROM " + this.getPersistentClass().getSimpleName() + " e where borrado = :borrado and cartelera_fk = :id_cartelera order by e.fecha desc");
 		consulta.setParameter("borrado", false);
 		consulta.setParameter("id_cartelera", idCartelera);
 		resultado = consulta.getResultList();

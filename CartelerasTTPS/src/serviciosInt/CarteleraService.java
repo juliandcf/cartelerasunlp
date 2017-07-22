@@ -21,4 +21,5 @@ public interface CarteleraService extends GenericService<Cartelera> {
 	
 	
 	
+	
 }

@@ -49,10 +49,15 @@ public class CarteleraRestController {
 	public ResponseEntity<GenericDTO> recuperar(@PathVariable("nombre") String nombre ){
 		return new ResponseEntity<GenericDTO>(carteleraService.recuperarNombreCarteleraVO(nombre), HttpStatus.OK);
 	}
+	
 	@RequestMapping(value="/paraPublicador/{id}", method=RequestMethod.GET, produces={"application/json"})
 	public ResponseEntity<GenericDTO> recuperarCarteleras(@PathVariable("id") Long id){
 		return new ResponseEntity<GenericDTO>(carteleraService.recuperarCartelerasParaUsuarioVO(id), HttpStatus.OK);
 	}	
 	
+	@RequestMapping(value="/conPublicaciones", method=RequestMethod.GET, produces={"application/json"})
+	public ResponseEntity<GenericDTO> recuperarCartelerasConPublicaciones(){
+		return new ResponseEntity<GenericDTO>(carteleraService.recuperarCartelerasConPublicacionesVO(), HttpStatus.OK);
+	}
 	
 }
