@@ -226,7 +226,27 @@ public class CarteleraServiceImpl extends GenericServiceImpl<Cartelera,Cartelera
 	}
 
 
-	
+
+	@Override
+	public GenericDTO recuperarCartelerasConPublicacionesVO() {
+		GenericDTO dto = new GenericDTO();
+		List<Cartelera> carteleras = this.recuperarTodos();
+		List<CarteleraVO> cartelerasVO = new ArrayList<>();
+		if(!carteleras.isEmpty()){			
+			for (Cartelera c: carteleras) {
+				CarteleraVO cVO = new CarteleraVO(c);
+				List<Publicacion> publicaciones = this.getPublicacionService().getPublicaciones(c.getId());
+				cVO.agregarPublicaciones(publicaciones);
+				cartelerasVO.add(cVO);
+			}
+		}else{
+			dto.setCodigo(HttpStatus.NO_CONTENT.value());
+			dto.setMensaje("No se encontraron carteleras");
+		}
+		dto.setObjeto(cartelerasVO);
+		return dto;
+	}
+
 	
 	
 
