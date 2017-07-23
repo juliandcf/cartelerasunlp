@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import dto.AlumnoVO;
+import dto.CarteleraVO;
 import dto.GenericDTO;
 import serviciosInt.AlumnoService;
 
@@ -49,6 +50,17 @@ public class AlumnoRestController {
 	public ResponseEntity<GenericDTO> borrar(@PathVariable("id") Long id){
 		return (new ResponseEntity<>(this.getAlumnoService().borrarVO(id),HttpStatus.OK)); 
 	}
+	
+	@RequestMapping(value="/{id}/registrarInteres", method=RequestMethod.PUT, produces={"application/json"})
+	public ResponseEntity<GenericDTO> registrarInteres(@PathVariable("id") Long idAlumno,@RequestBody CarteleraVO carteleraVO){
+		return new ResponseEntity<>(this.getAlumnoService().registrarInteresVO(idAlumno, carteleraVO),HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/{idAlumno}/eliminarInteres/{idCartelera}", method=RequestMethod.DELETE, produces={"application/json"})
+	public ResponseEntity<GenericDTO> borrar(@PathVariable("idAlumno") Long idAlumno, @PathVariable("idCartelera") Long idCartelera){
+		return (new ResponseEntity<>(this.getAlumnoService().eliminarInteresVO(idAlumno, idCartelera),HttpStatus.OK)); 
+	}
+	
 	
 	
 	public AlumnoService getAlumnoService() {

@@ -5,16 +5,21 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import dao.AlumnoDAO;
 import dto.AlumnoVO;
+import dto.CarteleraVO;
 import dto.GenericDTO;
 import jwt.TokenManagerSecurity;
 import modelo.Alumno;
+import modelo.Cartelera;
+import modelo.Publicacion;
 import serviciosInt.AlumnoService;
+import serviciosInt.CarteleraService;
 
 @Transactional
 @Service
@@ -23,6 +28,8 @@ public class AlumnoServiceImpl extends GenericServiceImpl<Alumno,AlumnoDAO> impl
 	@Inject
 	private TokenManagerSecurity tokenManagerSecurity;
 	
+	@Autowired
+	private CarteleraService carteleraService;
 	
 	public AlumnoServiceImpl(){
 	}
@@ -49,8 +56,17 @@ public class AlumnoServiceImpl extends GenericServiceImpl<Alumno,AlumnoDAO> impl
 	public void setTokenManagerSecurity(TokenManagerSecurity tokenManagerSecurity) {
 		this.tokenManagerSecurity = tokenManagerSecurity;
 	}
-
 	
+
+	public CarteleraService getCarteleraService() {
+		return carteleraService;
+	}
+
+
+	public void setCarteleraService(CarteleraService carteleraService) {
+		this.carteleraService = carteleraService;
+	}
+
 
 	@Override
 	public GenericDTO altaVO(AlumnoVO alumnoVO) {
@@ -148,6 +164,50 @@ public class AlumnoServiceImpl extends GenericServiceImpl<Alumno,AlumnoDAO> impl
 			e.printStackTrace();
 		}
 		return token;
+	}
+
+
+	@Override
+	public GenericDTO registrarInteresVO(Long idAlumno, CarteleraVO carteleraVO) {
+		GenericDTO dto = new GenericDTO();
+		Alumno alumno = this.recuperar(idAlumno);
+		Cartelera cartelera = this.getCarteleraService().recuperar(carteleraVO.getId());
+//		cartelera.getAlumnos();
+		if(cartelera!=null || alumno !=null){
+			alumno.registrarInteres(cartelera);
+			cartelera.agregarAlumnoInteresado(alumno);
+			this.modificar(alumno);	
+			this.getCarteleraService().modificar(cartelera);
+			//Tengo hacer la persistencia del lado de la cartelera tambien porque sino no me lo toma en la base... debe ser por la forma del mapeo.
+			AlumnoVO alumnoVO = new AlumnoVO(alumno);
+			alumnoVO.agregarCartelerasInteres(alumno.getCartelerasDeInteres());
+			dto.setObjeto(alumnoVO);
+		}else{
+			dto.setCodigo(HttpStatus.NO_CONTENT.value());
+			dto.setMensaje("No existe la cartelera o el alumno seleccionado");
+		}
+		return dto;
+	}
+
+
+	@Override
+	public GenericDTO eliminarInteresVO(Long idAlumno, Long idCartelera) {
+		GenericDTO dto = new GenericDTO();
+		Alumno alumno = this.recuperar(idAlumno);
+		Cartelera cartelera = this.getCarteleraService().recuperar(idCartelera);
+		if(cartelera!=null || alumno !=null){
+			alumno.eliminarInteres(cartelera);
+			cartelera.eliminarAlumnoInteresado(alumno);
+			this.modificar(alumno);	
+			this.getCarteleraService().modificar(cartelera);
+			AlumnoVO alumnoVO = new AlumnoVO(alumno);
+			alumnoVO.agregarCartelerasInteres(alumno.getCartelerasDeInteres());
+			dto.setObjeto(alumnoVO);
+		}else{
+			dto.setCodigo(HttpStatus.NO_CONTENT.value());
+			dto.setMensaje("No existe la cartelera o el alumno seleccionado");
+		}
+		return dto;
 	}
 	
 

@@ -1,6 +1,7 @@
 package dto;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -11,6 +12,7 @@ import modelo.Alumno;
 import modelo.Cartelera;
 import modelo.MetodoComunicacion;
 import modelo.Multimedia;
+import modelo.PermisoCartelera;
 import modelo.TipoEnlace;
 @JsonInclude(Include.NON_NULL)
 public class AlumnoVO extends UsuarioVO implements Serializable {
@@ -21,7 +23,7 @@ public class AlumnoVO extends UsuarioVO implements Serializable {
 
 	public String legajo;
 	public String mail;
-	public Set<Cartelera> cartelerasDeInteres;
+	public Set<CarteleraVO> cartelerasDeInteres;
 	public List<MetodoComunicacion> interes;
 	
 	public AlumnoVO(){
@@ -36,6 +38,7 @@ public class AlumnoVO extends UsuarioVO implements Serializable {
     	this.setFotoPerfil(a.getUrlFotoPerfil());
     	this.setLegajo(a.getLegajo());
     	this.setMail(a.getMail());
+    	this.setCartelerasDeInteres(new HashSet<CarteleraVO>());
     	//falta setear carteleras y metodo interes
 	}
 
@@ -72,11 +75,11 @@ public class AlumnoVO extends UsuarioVO implements Serializable {
 		this.mail = mail;
 	}
 
-	public Set<Cartelera> getCartelerasDeInteres() {
+	public Set<CarteleraVO> getCartelerasDeInteres() {
 		return cartelerasDeInteres;
 	}
 
-	public void setCartelerasDeInteres(Set<Cartelera> cartelerasDeInteres) {
+	public void setCartelerasDeInteres(Set<CarteleraVO> cartelerasDeInteres) {
 		this.cartelerasDeInteres = cartelerasDeInteres;
 	}
 
@@ -86,6 +89,12 @@ public class AlumnoVO extends UsuarioVO implements Serializable {
 
 	public void setInteres(List<MetodoComunicacion> interes) {
 		this.interes = interes;
+	}
+
+	public void agregarCartelerasInteres(Set<Cartelera> intereses) {
+		for (Cartelera cartelera : intereses) {
+			this.getCartelerasDeInteres().add(new CarteleraVO(cartelera));
+		}			
 	}	
 	
 	

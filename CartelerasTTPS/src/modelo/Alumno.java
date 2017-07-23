@@ -94,4 +94,12 @@ public class Alumno extends Usuario {
 		this.cartelerasDeInteres = interes;
 	}
 
+	public void registrarInteres(Cartelera cartelera) {
+		this.getCartelerasDeInteres().add(cartelera);		
+	}
+
+	public void eliminarInteres(Cartelera cartelera) {
+		this.getCartelerasDeInteres().remove(cartelera);
+	}
+
 }

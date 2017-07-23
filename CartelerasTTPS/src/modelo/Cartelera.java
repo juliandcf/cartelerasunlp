@@ -37,7 +37,7 @@ public class Cartelera implements Serializable{
     public String descripcion;
     private boolean borrado;
   
-    @ManyToMany
+    @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(
     		name="cartelera_alumno", 
     		joinColumns=@JoinColumn(name="cartelera_id",referencedColumnName="id_cartelera"),
@@ -148,6 +148,15 @@ public class Cartelera implements Serializable{
 		} else if (!nombre.equals(other.nombre))
 			return false;
 		return true;
+	}
+
+	public void agregarAlumnoInteresado(Alumno alumno) {
+		this.getAlumnos().add(alumno);		
+	}
+
+	public void eliminarAlumnoInteresado(Alumno alumno) {
+		this.getAlumnos().remove(alumno);		
+		
 	}
 	
 	
