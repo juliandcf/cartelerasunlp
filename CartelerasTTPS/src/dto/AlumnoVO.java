@@ -24,6 +24,7 @@ public class AlumnoVO extends UsuarioVO implements Serializable {
 	public String legajo;
 	public String mail;
 	public Set<CarteleraVO> cartelerasDeInteres;
+	public Set<Long> cartelerasInteresId;
 	public List<MetodoComunicacion> interes;
 	
 	public AlumnoVO(){
@@ -91,10 +92,26 @@ public class AlumnoVO extends UsuarioVO implements Serializable {
 		this.interes = interes;
 	}
 
+	public Set<Long> getCartelerasInteresId() {
+		return cartelerasInteresId;
+	}
+
+	public void setCartelerasInteresId(Set<Long> cartelerasInteresId) {
+		this.cartelerasInteresId = cartelerasInteresId;
+	}
+
 	public void agregarCartelerasInteres(Set<Cartelera> intereses) {
 		for (Cartelera cartelera : intereses) {
 			this.getCartelerasDeInteres().add(new CarteleraVO(cartelera));
 		}			
+	}
+
+	public void agregarIdCartelerasInteres(Set<Cartelera> intereses) {
+		this.setCartelerasInteresId(new HashSet<Long>());
+		for (Cartelera cartelera : intereses) {
+			this.getCartelerasInteresId().add(cartelera.getId());
+		}	
+		
 	}	
 	
 	

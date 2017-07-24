@@ -133,6 +133,7 @@ public class AlumnoServiceImpl extends GenericServiceImpl<Alumno,AlumnoDAO> impl
 		Alumno alumnoRecuperar = this.recuperar(id);
 		if (alumnoRecuperar != null){
 			AlumnoVO alumnoVO = new AlumnoVO(alumnoRecuperar);
+			alumnoVO.agregarCartelerasInteres(alumnoRecuperar.getCartelerasDeInteres());
 			dto.setObjeto(alumnoVO);
 		}else{
 			dto.setCodigo(HttpStatus.NOT_FOUND.value());
@@ -207,6 +208,22 @@ public class AlumnoServiceImpl extends GenericServiceImpl<Alumno,AlumnoDAO> impl
 			dto.setCodigo(HttpStatus.NO_CONTENT.value());
 			dto.setMensaje("No existe la cartelera o el alumno seleccionado");
 		}
+		return dto;
+	}
+
+
+	@Override
+	public GenericDTO recuperarCartelerasInteresVO(Long id) {
+		GenericDTO dto = new GenericDTO();
+		Alumno alumnoRecuperar = this.recuperar(id);
+		if (alumnoRecuperar != null){
+			AlumnoVO alumnoVO = new AlumnoVO(alumnoRecuperar);
+			alumnoVO.agregarIdCartelerasInteres(alumnoRecuperar.getCartelerasDeInteres());
+			dto.setObjeto(alumnoVO);
+		}else{
+			dto.setCodigo(HttpStatus.NOT_FOUND.value());
+			dto.setMensaje("El alumno con el id "+id+" no existe");
+		}		
 		return dto;
 	}
 	

@@ -13,4 +13,6 @@ public interface AlumnoService extends UsuarioService<Alumno,AlumnoVO> {
 
 	GenericDTO eliminarInteresVO(Long idAlumno, Long idCartelera);
 
+	GenericDTO recuperarCartelerasInteresVO(Long id);
+
 }
