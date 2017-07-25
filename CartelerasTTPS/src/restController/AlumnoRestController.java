@@ -26,6 +26,7 @@ public class AlumnoRestController {
 	public ResponseEntity<GenericDTO> recuperarTodos(){
 		return new ResponseEntity<>(this.getAlumnoService().recuperarTodosVO(), HttpStatus.OK);
 	}
+	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET, produces={"application/json"})
 	public ResponseEntity<GenericDTO> recuperar(@PathVariable("id") Long id){
 		return new ResponseEntity<>(this.getAlumnoService().recuperarVO(id), HttpStatus.OK);
@@ -61,6 +62,11 @@ public class AlumnoRestController {
 		return (new ResponseEntity<>(this.getAlumnoService().eliminarInteresVO(idAlumno, idCartelera),HttpStatus.OK)); 
 	}
 	
+	@RequestMapping(value="/{id}/cartelerasInteresId", method=RequestMethod.GET, produces={"application/json"})
+	public ResponseEntity<GenericDTO> recuperarCartelerasInteres(@PathVariable("id") Long id){
+		/*Este rest solo retorna el alumnoVO pero las carteleras de interes solo con el ID, me sirve para mostrar cuales son*/
+		return new ResponseEntity<>(this.getAlumnoService().recuperarCartelerasInteresVO(id), HttpStatus.OK);
+	}	
 	
 	
 	public AlumnoService getAlumnoService() {
