@@ -9,6 +9,7 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import modelo.Alumno;
 import modelo.Cartelera;
 import modelo.PermisoCartelera;
 import modelo.Publicacion;
@@ -24,9 +25,12 @@ public class CarteleraVO extends GenericVO implements Serializable {
 	public String nombre;   
     public String descripcion;
     public Set<Long> permisosCarteleras;
+    public Set<Alumno> alumnos;
     
     
     public List<PublicacionVO> publicacionesDTO;
+
+	private List<AlumnoVO> alumnosDTO;
    
 	public CarteleraVO(){
 		this.setPermisosCarteleras(new HashSet<Long>());
@@ -81,6 +85,11 @@ public class CarteleraVO extends GenericVO implements Serializable {
 	public void setPublicacionesDTO(List<PublicacionVO> publicacionesDTO) {
 		this.publicacionesDTO = publicacionesDTO;
 	}
+	
+	private void setAlumnosDTO(List<AlumnoVO> alumnosDTO) {
+		this.alumnosDTO =  alumnosDTO;
+		
+	}
 		
 	public Set<Long> getPermisosCarteleras() {
 		return permisosCarteleras;
@@ -118,8 +127,31 @@ public class CarteleraVO extends GenericVO implements Serializable {
 			}
 		}
 	}
+	public void agregarInteresados(Set<Alumno> interesados) {
+		if(!interesados.isEmpty()){
+			this.setAlumnosDTO(new ArrayList<AlumnoVO>());
+			for (Alumno a: interesados){
+				this.getAlumnosDTO().add(new AlumnoVO(a));
+			}
+		}
+		
+	}
 	
     
+	
+
+	public List<AlumnoVO> getAlumnosDTO() {
+		return alumnosDTO;
+	}
+
+	public Set<Alumno> getAlumnos() {
+		return alumnos;
+	}
+
+	public void setAlumnos(Set<Alumno> alumnos) {
+		this.alumnos = alumnos;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -150,6 +182,8 @@ public class CarteleraVO extends GenericVO implements Serializable {
 			return false;
 		return true;
 	}
+
+	
 
     
 }
