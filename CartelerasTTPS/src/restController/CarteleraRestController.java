@@ -60,4 +60,9 @@ public class CarteleraRestController {
 		return new ResponseEntity<GenericDTO>(carteleraService.recuperarCartelerasConPublicacionesVO(), HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/interesados", method=RequestMethod.GET, produces={"application/json"})
+	public ResponseEntity<GenericDTO> recuperarCartelerasConInteresados(){
+		return new ResponseEntity<GenericDTO>(carteleraService.recuperarCartelerasConInteresadosVO(), HttpStatus.OK);
+	}
+	
 }

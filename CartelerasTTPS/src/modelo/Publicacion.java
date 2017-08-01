@@ -34,7 +34,7 @@ public class Publicacion implements Serializable {
 	private Long id;
 
 	private String titulo;
-
+	@Column(length = 65535, columnDefinition = "text")
 	private String texto;
 	
 	private Date fecha;

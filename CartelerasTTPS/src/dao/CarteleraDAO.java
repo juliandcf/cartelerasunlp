@@ -11,4 +11,6 @@ public interface CarteleraDAO extends GenericDAO<Cartelera> {
 	public boolean existe(Cartelera cartelera);
 	public boolean existeConNombre(String nombreCartelera);
 	public Set<Cartelera> getCartelerasConPermiso(PermisoCartelera permisoCartelera);
+
+	public Set<Cartelera> getCartelerasConinteresados();
 }

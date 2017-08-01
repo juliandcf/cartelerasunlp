@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import dao.CarteleraDAO;
 import dto.CarteleraVO;
 import dto.GenericDTO;
+import modelo.Alumno;
 import modelo.Cartelera;
 import modelo.PermisoCartelera;
 import modelo.Publicacion;
@@ -236,6 +237,8 @@ public class CarteleraServiceImpl extends GenericServiceImpl<Cartelera,Cartelera
 				CarteleraVO cVO = new CarteleraVO(c);
 				List<Publicacion> publicaciones = this.getPublicacionService().getPublicacionesDeUsuario(c.getId(),usuarioRecuperar.getId());
 				cVO.agregarPublicaciones(publicaciones);
+				Set<Alumno> interesados = c.getAlumnos();
+				cVO.agregarInteresados(interesados);
 				cartelerasVO.add(cVO);
 			}
 		}
@@ -263,8 +266,29 @@ public class CarteleraServiceImpl extends GenericServiceImpl<Cartelera,Cartelera
 		return dto;
 	}
 
-	
+
+	@Override
+	public GenericDTO recuperarCartelerasConInteresadosVO() {
+		GenericDTO dto = new GenericDTO();
+		
+		List<CarteleraVO> cartelerasVO = new ArrayList<>();
+		
+			List<Cartelera> carteleras =  this.recuperarTodos();
+            
+			for (Cartelera c : carteleras) {
+				
+				CarteleraVO cVO = new CarteleraVO(c);
+				Set<Alumno> interesados = c.getAlumnos();
+				cVO.agregarInteresados(interesados);
+
+				cartelerasVO.add(cVO);
+			}
+
+			dto.setObjeto(cartelerasVO);
+			return dto;
+	} 
+	}
 	
 
 
-}
+

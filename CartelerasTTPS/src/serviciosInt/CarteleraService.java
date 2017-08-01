@@ -19,6 +19,7 @@ public interface CarteleraService extends GenericService<Cartelera> {
 	public Set<CarteleraVO> recuperarConPermisos(Set<PermisoCartelera> permisosCarteleras);
 	public GenericDTO recuperarCartelerasParaUsuarioVO(Long id);
 	public GenericDTO recuperarCartelerasConPublicacionesVO();
+	public GenericDTO recuperarCartelerasConInteresadosVO();
 	
 	
 	

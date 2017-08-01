@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import dao.CarteleraDAO;
 import modelo.Cartelera;
 import modelo.PermisoCartelera;
+import modelo.Publicacion;
 
 @Repository
 public class CarteleraDAOHibernateJPA extends GenericDAOHibernateJPA<Cartelera> implements CarteleraDAO {
@@ -47,6 +48,29 @@ public class CarteleraDAOHibernateJPA extends GenericDAOHibernateJPA<Cartelera> 
 		List<Cartelera> cartelerasList = consulta.getResultList();
 		Set<Cartelera> resultado = new HashSet<>(cartelerasList);
 	    return resultado;
+	}
+
+	@Override
+	public Set<Cartelera> getCartelerasConinteresados() {
+		Query consulta = this.getEntityManager()
+				.createQuery("SELECT c "
+					    + "FROM Cartelera c inner join  c.alumnos a WHERE" 
+						+ " c.borrado = :borrado and "
+						+ " a.borrado = :borrado ");
+						
+					//.createQuery("SELECT * FROM Cartelera inner join cartelera_permiso on Cartelera.id_cartelera = cartelera_permiso.cartelera_id where Cartelera.id_cartelera = :idCartelera");			  
+		consulta.setParameter("borrado", false);		
+		
+		List<Cartelera> cartelerasList = consulta.getResultList();
+		Set<Cartelera> resultado = new HashSet<>(cartelerasList);
+	    return resultado;
+	    
+	    
+	    
+	    
+	    
+	    
+		
 	}
 
 }
