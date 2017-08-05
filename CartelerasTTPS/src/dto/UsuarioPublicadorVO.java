@@ -22,6 +22,7 @@ public class UsuarioPublicadorVO extends UsuarioVO implements Serializable {
 
 	public List<Long> permisosCarteleras;
 	public List<PermisoCarteleraVO> permisosCartelerasVO;
+	public List<String> permisosCartelerasNombres;
 	
 	
 	public UsuarioPublicadorVO(){
@@ -73,6 +74,15 @@ public class UsuarioPublicadorVO extends UsuarioVO implements Serializable {
 
 	public void setPermisosCartelerasVO(List<PermisoCarteleraVO> permisosCartelerasVO) {
 		this.permisosCartelerasVO = permisosCartelerasVO;
+	}
+	
+
+	public List<String> getPermisosCartelerasNombres() {
+		return permisosCartelerasNombres;
+	}
+
+	public void setPermisosCartelerasNombres(List<String> permisosCartelerasNombres) {
+		this.permisosCartelerasNombres = permisosCartelerasNombres;
 	}
 
 	public void agregarPermisos(Set<PermisoCartelera> permisosCartelerasParaAgregar) {

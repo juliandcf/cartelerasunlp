@@ -32,6 +32,8 @@ public interface PermisoCarteleraService extends GenericService<PermisoCartelera
 	
 	boolean existen(List<Long> permisos);
 
+	boolean existenNombre(List<String> permisosCartelerasNombres);
+
 	
 
 	

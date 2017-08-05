@@ -59,9 +59,9 @@ public class UsuarioPublicadorServiceImpl extends GenericServiceImpl<UsuarioPubl
 	@Override
 	public GenericDTO altaVO(UsuarioPublicadorVO usuarioVO) {
 		GenericDTO dto = new GenericDTO();
-		if (getPermisoCarteleraService().existen(usuarioVO.getPermisosCarteleras())){
+		if (getPermisoCarteleraService().existenNombre(usuarioVO.getPermisosCartelerasNombres())){
 			UsuarioPublicador usuario = usuarioVO.toEntidad();
-			usuario = agregarPermisos(usuarioVO, usuario);
+			usuario = agregarPermisosNombre(usuarioVO, usuario);
 			UsuarioPublicador usuarioCreado = this.alta(usuario);
 			if(usuarioCreado == null){
 				dto.setCodigo(HttpStatus.CONFLICT.value());
@@ -83,6 +83,15 @@ public class UsuarioPublicadorServiceImpl extends GenericServiceImpl<UsuarioPubl
 		usuario.getPermisosCarteleras().clear();
 		for (Long idPermiso : usuarioVO.getPermisosCarteleras()) {
 			PermisoCartelera perm = this.getPermisoCarteleraService().recuperar(idPermiso);
+			usuario.getPermisosCarteleras().add(perm);
+		}
+		return usuario;
+	}
+	
+	private UsuarioPublicador agregarPermisosNombre(UsuarioPublicadorVO usuarioVO, UsuarioPublicador usuario){
+		usuario.getPermisosCarteleras().clear();
+		for (String nombrePermiso : usuarioVO.getPermisosCartelerasNombres()) {
+			PermisoCartelera perm = this.getPermisoCarteleraService().recuperarPorNombre(nombrePermiso);
 			usuario.getPermisosCarteleras().add(perm);
 		}
 		return usuario;

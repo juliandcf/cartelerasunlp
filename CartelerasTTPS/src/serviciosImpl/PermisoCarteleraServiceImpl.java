@@ -186,4 +186,14 @@ public class PermisoCarteleraServiceImpl extends GenericServiceImpl<PermisoCarte
 		return dto;
 
 	}
+
+	@Override
+	public boolean existenNombre(List<String> permisosCartelerasNombres) {
+		for (String nombre : permisosCartelerasNombres) { 
+			if(!this.getDao().existeConNombre(nombre)){
+				return false;
+			}			
+		}
+		return true;
+	}
 }
