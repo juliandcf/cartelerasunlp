@@ -42,6 +42,11 @@ public class UsuarioPublicadorRestController {
 		return new ResponseEntity<>(this.getUsuarioPublicadorService().modificarVO(id, usuarioPublicadorVO),HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/{id}/perfil", method=RequestMethod.PUT, produces={"application/json"})
+	public ResponseEntity<GenericDTO> actualizarPerfil(@PathVariable("id") Long id,@RequestBody UsuarioPublicadorVO usuarioPublicadorVO){
+		return new ResponseEntity<>(this.getUsuarioPublicadorService().modificarPerfilVO(id, usuarioPublicadorVO),HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE, produces={"application/json"})
 	public ResponseEntity<GenericDTO> borrar(@PathVariable("id") Long id){
 		return (new ResponseEntity<>(this.getUsuarioPublicadorService().borrarVO(id),HttpStatus.OK)); 

@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import modelo.Cartelera;
+import modelo.Comentario;
 import modelo.Multimedia;
 import modelo.Publicacion;
 import modelo.UsuarioPublicador;
@@ -40,7 +41,10 @@ public class PublicacionVO extends GenericVO implements Serializable {
 	@JsonInclude(Include.NON_NULL)
 	public CarteleraVO cartelera;
 	@JsonInclude(Include.NON_NULL)
-	public List<ComentariosVO> comentarios;
+	public List<ComentarioVO> comentarios;
+	@JsonInclude(Include.NON_NULL)
+	public String fotoPerfil;
+	
 	
 	public PublicacionVO(){
 		
@@ -53,6 +57,7 @@ public class PublicacionVO extends GenericVO implements Serializable {
 		this.setFecha(p.getFecha());
 		this.setHabilitarComentarios(p.getHabilitarComentarios());
 		this.setNombreAutor(p.getAutor().getNombre()+", "+p.getAutor().getApellido());
+		this.setFotoPerfil(p.getAutor().getUrlFotoPerfil());
 		this.setIdPublicador(p.getAutor().getId());
 		this.cargarMultimediasEnDTO(p);
 		//cargar comentarios
@@ -66,6 +71,7 @@ public class PublicacionVO extends GenericVO implements Serializable {
 		this.setFecha(p.getFecha());
 		this.setHabilitarComentarios(p.getHabilitarComentarios());
 		this.setNombreAutor(p.getAutor().getNombre()+", "+p.getAutor().getApellido());
+		this.setFotoPerfil(p.getAutor().getUrlFotoPerfil());
 		this.setIdPublicador(p.getAutor().getId());
 		this.cargarMultimediasEnDTO(multimedias);
 	}
@@ -125,10 +131,10 @@ public class PublicacionVO extends GenericVO implements Serializable {
 	public void setCartelera(CarteleraVO cartelera) {
 		this.cartelera = cartelera;
 	}
-	public List<ComentariosVO> getComentarios() {
+	public List<ComentarioVO> getComentarios() {
 		return comentarios;
 	}
-	public void setComentarios(List<ComentariosVO> comentarios) {
+	public void setComentarios(List<ComentarioVO> comentarios) {
 		this.comentarios = comentarios;
 	}
 	
@@ -138,6 +144,15 @@ public class PublicacionVO extends GenericVO implements Serializable {
 
 	public void setIdPublicador(Long idPublicador) {
 		this.idPublicador = idPublicador;
+	}
+	
+
+	public String getFotoPerfil() {
+		return fotoPerfil;
+	}
+
+	public void setFotoPerfil(String fotoPerfil) {
+		this.fotoPerfil = fotoPerfil;
 	}
 
 	public Publicacion toEntidad(Cartelera cartelera, UsuarioPublicador usuario){
@@ -181,6 +196,17 @@ public class PublicacionVO extends GenericVO implements Serializable {
 			for(Multimedia m: multimedias)
 				this.getMultimedias().add(new MultimediaVO(m));
 		}
+	}
+
+	public void agregarComentarios(List<Comentario> comentariosAgregar) {
+		if(!comentariosAgregar.isEmpty()){
+			this.setComentarios(new ArrayList<ComentarioVO>());
+			for (Comentario c: comentariosAgregar){
+					ComentarioVO cVO = new ComentarioVO(c);
+					this.getComentarios().add(cVO);
+			}
+		}
+		
 	}
 	
 	

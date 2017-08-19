@@ -1,5 +1,7 @@
 package daoHibernateJPA;
 
+import java.io.Serializable;
+
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
@@ -55,6 +57,7 @@ public class UsuarioDAOHibernateJPA<T> extends GenericDAOHibernateJPA<T> impleme
 		}	
 		return respuesta;
 	}
+	
 
 
 }

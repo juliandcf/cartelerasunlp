@@ -118,7 +118,7 @@ public class UsuarioPublicadorServiceImpl extends GenericServiceImpl<UsuarioPubl
 	@Override
 	public GenericDTO modificarVO(Long id, UsuarioPublicadorVO usuarioVO) {
 		GenericDTO dto = new GenericDTO();
-		if (getPermisoCarteleraService().existen(usuarioVO.getPermisosCarteleras())){
+		if (usuarioVO.getPermisosCarteleras() != null && getPermisoCarteleraService().existen(usuarioVO.getPermisosCarteleras())){
 			UsuarioPublicador usuarioRecuperar = this.recuperar(id);
 			if (usuarioRecuperar == null){
 				dto.setCodigo(HttpStatus.NOT_FOUND.value());
@@ -140,6 +140,21 @@ public class UsuarioPublicadorServiceImpl extends GenericServiceImpl<UsuarioPubl
 		}else{
 			dto.setCodigo(HttpStatus.CONFLICT.value());
 			dto.setMensaje("Los permisos ingresados no son correctos");
+		}
+		return dto;
+	}
+	
+	@Override
+	public GenericDTO modificarPerfilVO(Long id, UsuarioPublicadorVO usuarioPublicadorVO) {
+		GenericDTO dto = new GenericDTO();
+		UsuarioPublicador usuarioRecuperar = this.recuperar(id);
+		if (usuarioRecuperar == null){
+			dto.setCodigo(HttpStatus.NOT_FOUND.value());
+			dto.setMensaje("No existe el usuario publicador seleccionado");
+		}else{
+			UsuarioPublicador usuarioModificado = usuarioPublicadorVO.copiarAtributosEn(usuarioRecuperar);
+			this.modificar(usuarioModificado);			
+			dto.setObjeto(new UsuarioPublicadorVO(usuarioModificado));
 		}
 		return dto;
 	}
@@ -285,6 +300,9 @@ public class UsuarioPublicadorServiceImpl extends GenericServiceImpl<UsuarioPubl
 		}
 		return token;
 	}
+
+
+
 
 	
 

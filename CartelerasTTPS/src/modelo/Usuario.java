@@ -119,10 +119,12 @@ public abstract class Usuario implements Serializable {
 	}
 	
 	public void setURlFotoPerfil(String urlFotoPerfil) {
-		if(this.getFotoPerfil() != null)
+		if(this.getFotoPerfil() != null) {
 			this.getFotoPerfil().setUrl(urlFotoPerfil);
-		
-		
+		}else {
+			Multimedia multimedia= new Multimedia(urlFotoPerfil,TipoEnlace.IMAGEN.name());
+			this.setFotoPerfil(multimedia);
+		}
 	}
 
 	@Override

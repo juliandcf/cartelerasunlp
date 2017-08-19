@@ -25,6 +25,7 @@ public class Comentario implements Serializable{
 	private Long id;
     public String texto;
     public Date fecha;
+    public Date fechaEdicion = null;
     private boolean borrado;
     
     @ManyToOne(optional=false, fetch=FetchType.EAGER)
@@ -51,6 +52,7 @@ public class Comentario implements Serializable{
 		super();
 		this.texto = texto;
 		this.fecha = new Date();
+		
 	}
 
 	public Comentario(String texto, Usuario usuario) {
@@ -99,6 +101,16 @@ public class Comentario implements Serializable{
 	public void setBorrado(boolean borrado) {
 		this.borrado = borrado;
 	}
+
+	public Date getFechaEdicion() {
+		return fechaEdicion;
+	}
+
+	public void setFechaEdicion(Date fechaEdicion) {
+		this.fechaEdicion = fechaEdicion;
+	}
+	
+	
 
 
 }

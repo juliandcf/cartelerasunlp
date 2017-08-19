@@ -50,7 +50,12 @@ public class UsuarioPublicadorVO extends UsuarioVO implements Serializable {
 		userRecuperar.setContrasena(this.getContrasena());
 		userRecuperar.setNombre(this.getNombre());
 		userRecuperar.setApellido(this.getApellido());
-		userRecuperar.setURlFotoPerfil(this.getFotoPerfil());
+//		if(userRecuperar.getFotoPerfil() == null) {
+//			Multimedia multimedia= new Multimedia(this.getFotoPerfil(),TipoEnlace.IMAGEN.name());
+//			userRecuperar.setFotoPerfil(multimedia);
+//		}else {
+			userRecuperar.setURlFotoPerfil(this.getFotoPerfil());
+		//}
 		//userRecuperar.setTipoUsuario(this.getTipoUsuario());
 		// setear los permisos en los servicios, para poder llamar al service de roles.
 		return userRecuperar;

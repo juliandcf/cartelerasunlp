@@ -57,7 +57,7 @@ public class Publicacion implements Serializable {
 	@JoinColumn(name = "cartelera_fk")
 	private Cartelera cartelera;
 
-	@OneToMany(mappedBy = "publicacion", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "publicacion", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<Comentario> comentarios;
 
 	public Publicacion() {

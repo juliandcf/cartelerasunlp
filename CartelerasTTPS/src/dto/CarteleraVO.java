@@ -123,7 +123,9 @@ public class CarteleraVO extends GenericVO implements Serializable {
 		if(!publicaciones.isEmpty()){
 			this.setPublicacionesDTO(new ArrayList<PublicacionVO>());
 			for (Publicacion p: publicaciones){
-					this.getPublicacionesDTO().add(new PublicacionVO(p));
+					PublicacionVO pVO = new PublicacionVO(p);
+					pVO.agregarComentarios(p.getComentarios());
+					this.getPublicacionesDTO().add(pVO);
 			}
 		}
 	}
