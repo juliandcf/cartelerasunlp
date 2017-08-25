@@ -1,6 +1,8 @@
 package dto;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -23,6 +25,17 @@ public class UsuarioVO extends GenericVO implements Serializable {
     public String apellido;
     @JsonInclude(Include.NON_NULL)
     public String fotoPerfil;
+    @JsonInclude(Include.NON_NULL)
+    public List<PermisoCarteleraVO> permisosCartelerasVO;
+    @JsonInclude(Include.NON_NULL)
+	public List<Long> permisosCarteleras;
+    @JsonInclude(Include.NON_NULL)
+    public String legajo;
+    @JsonInclude(Include.NON_NULL)
+	public String mail;
+    @JsonInclude(Include.NON_NULL)
+    public Set<CarteleraVO> cartelerasDeInteres;
+
     
 	
     public UsuarioVO(String usuario, String contrasena, String nombre, String apellido) {
@@ -105,4 +118,48 @@ public class UsuarioVO extends GenericVO implements Serializable {
 	public void setFotoPerfil(String fotoPerfil) {
 		this.fotoPerfil = fotoPerfil;
 	}
+
+	public List<PermisoCarteleraVO> getPermisosCartelerasVO() {
+		return permisosCartelerasVO;
+	}
+
+	public void setPermisosCartelerasVO(List<PermisoCarteleraVO> permisosCartelerasVO) {
+		this.permisosCartelerasVO = permisosCartelerasVO;
+	}
+
+	public List<Long> getPermisosCarteleras() {
+		return permisosCarteleras;
+	}
+
+	public void setPermisosCarteleras(List<Long> permisosCarteleras) {
+		this.permisosCarteleras = permisosCarteleras;
+	}
+
+	public String getLegajo() {
+		return legajo;
+	}
+
+	public void setLegajo(String legajo) {
+		this.legajo = legajo;
+	}
+
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	public Set<CarteleraVO> getCartelerasDeInteres() {
+		return cartelerasDeInteres;
+	}
+
+	public void setCartelerasDeInteres(Set<CarteleraVO> cartelerasDeInteres) {
+		this.cartelerasDeInteres = cartelerasDeInteres;
+	}
+	
+	
+	
+	
 }

@@ -1,6 +1,7 @@
 package jwt;
 
 import java.io.IOException;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -10,6 +11,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
+
 import dto.UsuarioVO;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;
@@ -17,6 +21,7 @@ import io.jsonwebtoken.SignatureException;
 /**
  * Servlet Filter implementation class TokenSecurityFilter
  */
+@Order(Ordered.LOWEST_PRECEDENCE)
 public class TokenSecurityFilter implements Filter {
 
     /**
@@ -49,12 +54,50 @@ public class TokenSecurityFilter implements Filter {
 		}
         
 		System.out.println(path);
-		if ("login".equals(path)) {
-			// sigue la cadena de ejecucion hacia el login
+		if ("login".equals(path) || "existeUsuario".equals(path)) {
+			// sigue la cadena de ejecucion hacia el login o al existeUsuario
 			chain.doFilter(req, response);
 		}else{
+			String jwt = req.getHeader("Authorization");
+			System.out.println(jwt);
+			if(jwt != null) {
+				// valido token
+				try {
+					// Si la validacion es correcta y el token no expiro, parsea el contenido del token y devuelve el user
+					UsuarioVO user = this.getTokenManagerSecurity().parseJWT(jwt);
+
+					// Seteo el user en un atributo nuevo, de esta forma ya estaria disponible para el resto de los controllers
+					request.setAttribute("user", user);
+
+					chain.doFilter(req, response);
+
+				} catch (ExpiredJwtException e) {
+					System.out.println(
+							"El token ya no es valido, expiro su tiempo de validez: " + jwt + " " + e.getMessage());
+
+					// ejecuta el logout para invalidar la session en banca
+					if (e.getClaims().containsKey("content")) {
+						UsuarioVO user = this.getTokenManagerSecurity().getContentJWT(e.getClaims().get("content").toString());
+						System.out.println(
+								"Expiro el tiempo de ejecucion del token, por lo que se invalida la session del usuario (logout) "
+										+ e.getMessage());
+						
+					}
+					((HttpServletResponse) response).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+
+				} catch (SignatureException e) {
+					System.out.println("No es un token valido, token: " + jwt + " " + e.getMessage());
+					((HttpServletResponse) response).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+				} catch (Exception e) {
+					System.out.println("No es un token valido, token: " + jwt + " " + e.getMessage());
+					((HttpServletResponse) response).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+				}
+			
+			}else {
+				System.out.println("es null");
+			}
 			//Debo verificar la validez del token.
-			chain.doFilter(req, response);
+			
 		}
 		
 		
