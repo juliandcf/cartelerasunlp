@@ -59,9 +59,9 @@ public class UsuarioPublicadorServiceImpl extends GenericServiceImpl<UsuarioPubl
 	@Override
 	public GenericDTO altaVO(UsuarioPublicadorVO usuarioVO) {
 		GenericDTO dto = new GenericDTO();
-		if (getPermisoCarteleraService().existenNombre(usuarioVO.getPermisosCartelerasNombres())){
+		if (getPermisoCarteleraService().existen(usuarioVO.getPermisosCarteleras())){
 			UsuarioPublicador usuario = usuarioVO.toEntidad();
-			usuario = agregarPermisosNombre(usuarioVO, usuario);
+			usuario = agregarPermisos(usuarioVO, usuario);
 			UsuarioPublicador usuarioCreado = this.alta(usuario);
 			if(usuarioCreado == null){
 				dto.setCodigo(HttpStatus.CONFLICT.value());
@@ -71,6 +71,35 @@ public class UsuarioPublicadorServiceImpl extends GenericServiceImpl<UsuarioPubl
 				usuarioVOReturn.setContrasena(null);
 				usuarioVOReturn.setPermisosCarteleras(usuarioVO.getPermisosCarteleras());
 				dto.setObjeto(usuarioVOReturn);
+			}
+		}else{
+			dto.setCodigo(HttpStatus.CONFLICT.value());
+			dto.setMensaje("Los permisos ingresados no son correctos");
+		}
+		return dto;
+	}
+	
+	@Override
+	public GenericDTO modificarVO(Long id, UsuarioPublicadorVO usuarioVO) {
+		GenericDTO dto = new GenericDTO();
+		if (usuarioVO.getPermisosCarteleras() != null && getPermisoCarteleraService().existen(usuarioVO.getPermisosCarteleras())){
+			UsuarioPublicador usuarioRecuperar = this.recuperar(id);
+			if (usuarioRecuperar == null){
+				dto.setCodigo(HttpStatus.NOT_FOUND.value());
+				dto.setMensaje("No existe el usuario publicador seleccionado");
+			}else{
+				UsuarioPublicador usuarioRecibidoVO = usuarioVO.toEntidad(); 
+				//if(!usuarioRecuperar.equals(usuarioRecibidoVO)){
+					if(this.existe(usuarioRecibidoVO) && !usuarioRecuperar.equals(usuarioRecibidoVO)){
+						dto.setCodigo(HttpStatus.CONFLICT.value());
+						dto.setMensaje("El nombre de usuario "+usuarioRecibidoVO.getUsuario()+" ya existe");
+					}else{
+						UsuarioPublicador usuarioModificado = usuarioVO.copiarAtributosEn(usuarioRecuperar);
+						usuarioModificado = agregarPermisos(usuarioVO, usuarioModificado);
+						this.modificar(usuarioModificado);
+						dto.setObjeto(new UsuarioPublicadorVO(usuarioModificado));
+					}
+				//}
 			}
 		}else{
 			dto.setCodigo(HttpStatus.CONFLICT.value());
@@ -115,34 +144,7 @@ public class UsuarioPublicadorServiceImpl extends GenericServiceImpl<UsuarioPubl
 	}
 
 
-	@Override
-	public GenericDTO modificarVO(Long id, UsuarioPublicadorVO usuarioVO) {
-		GenericDTO dto = new GenericDTO();
-		if (usuarioVO.getPermisosCarteleras() != null && getPermisoCarteleraService().existen(usuarioVO.getPermisosCarteleras())){
-			UsuarioPublicador usuarioRecuperar = this.recuperar(id);
-			if (usuarioRecuperar == null){
-				dto.setCodigo(HttpStatus.NOT_FOUND.value());
-				dto.setMensaje("No existe el usuario publicador seleccionado");
-			}else{
-				UsuarioPublicador usuarioRecibidoVO = usuarioVO.toEntidad(); 
-				//if(!usuarioRecuperar.equals(usuarioRecibidoVO)){
-					if(this.existe(usuarioRecibidoVO) && !usuarioRecuperar.equals(usuarioRecibidoVO)){
-						dto.setCodigo(HttpStatus.CONFLICT.value());
-						dto.setMensaje("El nombre de usuario "+usuarioRecibidoVO.getUsuario()+" ya existe");
-					}else{
-						UsuarioPublicador usuarioModificado = usuarioVO.copiarAtributosEn(usuarioRecuperar);
-						usuarioModificado = agregarPermisos(usuarioVO, usuarioModificado);
-						this.modificar(usuarioModificado);
-						dto.setObjeto(new UsuarioPublicadorVO(usuarioModificado));
-					}
-				//}
-			}
-		}else{
-			dto.setCodigo(HttpStatus.CONFLICT.value());
-			dto.setMensaje("Los permisos ingresados no son correctos");
-		}
-		return dto;
-	}
+	
 	
 	@Override
 	public GenericDTO modificarPerfilVO(Long id, UsuarioPublicadorVO usuarioPublicadorVO) {
@@ -177,19 +179,30 @@ public class UsuarioPublicadorServiceImpl extends GenericServiceImpl<UsuarioPubl
 	// recupera usuarios publicadores excepto el id que te llega osea el usuario admin logueado
 	@Override
 	public GenericDTO recuperarPublicadoresVO(Long id) {
+//		GenericDTO dto = new GenericDTO();	
+//		List<UsuarioPublicadorVO> usuariosVO = new ArrayList<UsuarioPublicadorVO>();
+//		List<UsuarioPublicador> usuariosPublicadores = this.getDao().recuperarTodosExcepto(id);
+//		if(!usuariosPublicadores.isEmpty()){
+//			for (UsuarioPublicador u : usuariosPublicadores) {
+//				UsuarioPublicadorVO uVO = new UsuarioPublicadorVO(u);
+//				uVO.setPermisosCartelerasVO(this.getPermisosDeUsuario(u.getId()));
+//				usuariosVO.add(uVO);
+//			}
+//			dto.setObjeto(usuariosVO);
+//		}		
+//		return dto;
+		
 		GenericDTO dto = new GenericDTO();	
 		List<UsuarioPublicadorVO> usuariosVO = new ArrayList<UsuarioPublicadorVO>();
-		List<UsuarioPublicador> usuariosPublicadores = this.recuperarTodos();
+		List<UsuarioPublicador> usuariosPublicadores = this.getDao().recuperarTodosExcepto(id);
+		boolean ok;
 		if(!usuariosPublicadores.isEmpty()){
 			for (UsuarioPublicador u : usuariosPublicadores) {
-				if (u.getId() != id) {
-					boolean ok = true;
+					ok = true;
 					for (PermisoCartelera permiso : u.getPermisosCarteleras()) {
 						if (permiso.getNombre().matches("PRIMER AÑO|SEGUNDO AÑO|TERCER AÑO|CUARTO AÑO|QUINTO AÑO")) {
 							ok = false;
 						}
-
-					}
 					if (ok) {
 						UsuarioPublicadorVO uVO = new UsuarioPublicadorVO(u);
 						uVO.setPermisosCartelerasVO(this.getPermisosDeUsuario(u.getId()));

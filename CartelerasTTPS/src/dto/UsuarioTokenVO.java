@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import modelo.Usuario;
 
-public class UsuarioVO extends GenericVO implements Serializable {
+public class UsuarioTokenVO extends GenericVO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -25,21 +25,21 @@ public class UsuarioVO extends GenericVO implements Serializable {
     public String apellido;
     @JsonInclude(Include.NON_NULL)
     public String fotoPerfil;
-//    /*Estos tuve que incluirlos porque el token parsea y retorna un usuarioVO, quizas podria ver crear un usuarioTokenVo*/
-//    @JsonInclude(Include.NON_NULL)
-//    public List<PermisoCarteleraVO> permisosCartelerasVO;
-//    @JsonInclude(Include.NON_NULL)
-//	public List<Long> permisosCarteleras;
-//    @JsonInclude(Include.NON_NULL)
-//    public String legajo;
-//    @JsonInclude(Include.NON_NULL)
-//	public String mail;
-//    @JsonInclude(Include.NON_NULL)
-//    public Set<CarteleraVO> cartelerasDeInteres;
+    /*Estos tuve que incluirlos porque el token parsea y retorna un usuarioVO, quizas podria ver crear un usuarioTokenVo*/
+    @JsonInclude(Include.NON_NULL)
+    public List<PermisoCarteleraVO> permisosCartelerasVO;
+    @JsonInclude(Include.NON_NULL)
+	public List<Long> permisosCarteleras;
+    @JsonInclude(Include.NON_NULL)
+    public String legajo;
+    @JsonInclude(Include.NON_NULL)
+	public String mail;
+    @JsonInclude(Include.NON_NULL)
+    public Set<CarteleraVO> cartelerasDeInteres;
 
     
 	
-    public UsuarioVO(String usuario, String contrasena, String nombre, String apellido) {
+    public UsuarioTokenVO(String usuario, String contrasena, String nombre, String apellido) {
 		super();
 		this.usuario = usuario;
 		this.contrasena = contrasena;
@@ -47,7 +47,7 @@ public class UsuarioVO extends GenericVO implements Serializable {
 		this.apellido = apellido;
 	}
 
-    public UsuarioVO(String usuario, String contrasena, String nombre, String apellido,String tipoUsuario) {
+    public UsuarioTokenVO(String usuario, String contrasena, String nombre, String apellido,String tipoUsuario) {
 		super();
 		this.usuario = usuario;
 		this.contrasena = contrasena;
@@ -55,11 +55,11 @@ public class UsuarioVO extends GenericVO implements Serializable {
 		this.apellido = apellido;
 	}
     
-	public UsuarioVO(){
+	public UsuarioTokenVO(){
     	
     }
     
-    public UsuarioVO(Usuario usuario){
+    public UsuarioTokenVO(Usuario usuario){
     	this.setId(usuario.getId());
     	this.setUsuario(usuario.getUsuario());
     	this.setContrasena(usuario.getContrasena());
@@ -120,45 +120,45 @@ public class UsuarioVO extends GenericVO implements Serializable {
 		this.fotoPerfil = fotoPerfil;
 	}
 
-//	public List<PermisoCarteleraVO> getPermisosCartelerasVO() {
-//		return permisosCartelerasVO;
-//	}
-//
-//	public void setPermisosCartelerasVO(List<PermisoCarteleraVO> permisosCartelerasVO) {
-//		this.permisosCartelerasVO = permisosCartelerasVO;
-//	}
-//
-//	public List<Long> getPermisosCarteleras() {
-//		return permisosCarteleras;
-//	}
-//
-//	public void setPermisosCarteleras(List<Long> permisosCarteleras) {
-//		this.permisosCarteleras = permisosCarteleras;
-//	}
-//
-//	public String getLegajo() {
-//		return legajo;
-//	}
-//
-//	public void setLegajo(String legajo) {
-//		this.legajo = legajo;
-//	}
-//
-//	public String getMail() {
-//		return mail;
-//	}
-//
-//	public void setMail(String mail) {
-//		this.mail = mail;
-//	}
-//
-//	public Set<CarteleraVO> getCartelerasDeInteres() {
-//		return cartelerasDeInteres;
-//	}
-//
-//	public void setCartelerasDeInteres(Set<CarteleraVO> cartelerasDeInteres) {
-//		this.cartelerasDeInteres = cartelerasDeInteres;
-//	}
+	public List<PermisoCarteleraVO> getPermisosCartelerasVO() {
+		return permisosCartelerasVO;
+	}
+
+	public void setPermisosCartelerasVO(List<PermisoCarteleraVO> permisosCartelerasVO) {
+		this.permisosCartelerasVO = permisosCartelerasVO;
+	}
+
+	public List<Long> getPermisosCarteleras() {
+		return permisosCarteleras;
+	}
+
+	public void setPermisosCarteleras(List<Long> permisosCarteleras) {
+		this.permisosCarteleras = permisosCarteleras;
+	}
+
+	public String getLegajo() {
+		return legajo;
+	}
+
+	public void setLegajo(String legajo) {
+		this.legajo = legajo;
+	}
+
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	public Set<CarteleraVO> getCartelerasDeInteres() {
+		return cartelerasDeInteres;
+	}
+
+	public void setCartelerasDeInteres(Set<CarteleraVO> cartelerasDeInteres) {
+		this.cartelerasDeInteres = cartelerasDeInteres;
+	}
 	
 	
 	

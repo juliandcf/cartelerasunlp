@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 
-import dto.UsuarioVO;
+import dto.UsuarioTokenVO;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;
 
@@ -64,10 +64,10 @@ public class TokenSecurityFilter implements Filter {
 				// valido token
 				try {
 					// Si la validacion es correcta y el token no expiro, parsea el contenido del token y devuelve el user
-					UsuarioVO user = this.getTokenManagerSecurity().parseJWT(jwt);
+					UsuarioTokenVO user = this.getTokenManagerSecurity().parseJWT(jwt);
 
 					// Seteo el user en un atributo nuevo, de esta forma ya estaria disponible para el resto de los controllers
-					request.setAttribute("user", user);
+					//request.setAttribute("user", user);
 
 					chain.doFilter(req, response);
 
@@ -77,7 +77,7 @@ public class TokenSecurityFilter implements Filter {
 
 					// ejecuta el logout para invalidar la session en banca
 					if (e.getClaims().containsKey("content")) {
-						UsuarioVO user = this.getTokenManagerSecurity().getContentJWT(e.getClaims().get("content").toString());
+						UsuarioTokenVO user = this.getTokenManagerSecurity().getContentJWT(e.getClaims().get("content").toString());
 						System.out.println(
 								"Expiro el tiempo de ejecucion del token, por lo que se invalida la session del usuario (logout) "
 										+ e.getMessage());
@@ -86,11 +86,11 @@ public class TokenSecurityFilter implements Filter {
 					((HttpServletResponse) response).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
 				} catch (SignatureException e) {
-					System.out.println("No es un token valido, token: " + jwt + " " + e.getMessage());
+					System.out.println("No es un token valido signature exeption, token: " + jwt + " " + e.getMessage());
 					((HttpServletResponse) response).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-				} catch (Exception e) {
-					System.out.println("No es un token valido, token: " + jwt + " " + e.getMessage());
-					((HttpServletResponse) response).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//				} catch (Exception e) {
+//					System.out.println("No es un token valido, token: " + jwt + " " + e.getMessage());
+//					((HttpServletResponse) response).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 				}
 			
 			}else {

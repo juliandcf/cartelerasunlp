@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import dto.UsuarioTokenVO;
 import dto.UsuarioVO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
@@ -56,17 +57,17 @@ public class TokenManagerSecurity {
 		return Long.valueOf(1 * 60 * 60 * 10);
 	}
 	
-	public UsuarioVO parseJWT(String jwt) {
+	public UsuarioTokenVO parseJWT(String jwt) {
 
 		Claims claims = Jwts.parser().setSigningKey(this.getSecretKey()).parseClaimsJws(jwt).getBody();
 
 		return this.getContentJWT(claims.get("content").toString());
 	}
 	
-	public UsuarioVO getContentJWT(String contentJson) {
+	public UsuarioTokenVO getContentJWT(String contentJson) {
 
 		try {
-			return this.getMapper().readValue(contentJson, UsuarioVO.class);
+			return this.getMapper().readValue(contentJson, UsuarioTokenVO.class);
 		} catch (Exception e) {
 			System.out.println("Error intentando parsear el payload del token: " + contentJson + e.getMessage());
 			throw new IllegalStateException("Error de parseo. El payload del token no puede parsearse");

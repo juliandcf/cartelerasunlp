@@ -1,5 +1,7 @@
 package daoHibernateJPA;
 
+import java.util.List;
+
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
@@ -27,5 +29,16 @@ public class UsuarioPublicadorDAOHibernateJPA extends UsuarioDAOHibernateJPA<Usu
 			respuesta = (UsuarioPublicador) consulta.getResultList().get(0);
 		}	
 		return respuesta;
+	}
+
+	@Override
+	public List<UsuarioPublicador> recuperarTodosExcepto(Long id) {
+		List<UsuarioPublicador> resultado = null;
+		Query consulta = this.getEntityManager()
+				.createQuery("SELECT e FROM " + this.getPersistentClass().getSimpleName() + " e where e.id <> :id AND borrado = :borrado");
+		consulta.setParameter("borrado", false);
+		consulta.setParameter("id", id);
+		resultado = consulta.getResultList();
+		return resultado;
 	}
 }
