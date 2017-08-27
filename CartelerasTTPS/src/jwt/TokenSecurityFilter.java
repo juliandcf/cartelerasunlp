@@ -54,7 +54,10 @@ public class TokenSecurityFilter implements Filter {
 		}
         
 		System.out.println(path);
-		if ("login".equals(path) || "existeUsuario".equals(path)) {
+		System.out.println(req.getMethod());
+		if ("login".equals(path) || "existeUsuario".equals(path) || 
+			((req.getMethod().equals("POST")) && ("docente".equals(path) || "alumnos".equals(path) ))
+		   ) {
 			// sigue la cadena de ejecucion hacia el login o al existeUsuario
 			chain.doFilter(req, response);
 		}else{

@@ -15,6 +15,8 @@ public interface UsuarioPublicadorService extends UsuarioService<UsuarioPublicad
 	GenericDTO recuperarPublicadoresVO(Long id);
 
 	GenericDTO modificarPerfilVO(Long id, UsuarioPublicadorVO usuarioPublicadorVO);
+
+	GenericDTO altaDocenteVO(UsuarioPublicadorVO usuarioPublicadorVO);
 	
 	
 	

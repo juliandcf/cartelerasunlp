@@ -38,6 +38,11 @@ public class UsuarioPublicadorRestController {
 		return (new ResponseEntity<GenericDTO>(this.getUsuarioPublicadorService().altaVO(usuarioPublicadorVO), HttpStatus.OK));
 	}
 
+	@RequestMapping(method=RequestMethod.POST, value="/docente")
+	public ResponseEntity<GenericDTO> altaDocente(@RequestBody UsuarioPublicadorVO usuarioPublicadorVO){
+		return (new ResponseEntity<GenericDTO>(this.getUsuarioPublicadorService().altaDocenteVO(usuarioPublicadorVO), HttpStatus.OK));
+	}
+	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT, produces={"application/json"})
 	public ResponseEntity<GenericDTO> actualizar(@PathVariable("id") Long id,@RequestBody UsuarioPublicadorVO usuarioPublicadorVO){
 		return new ResponseEntity<>(this.getUsuarioPublicadorService().modificarVO(id, usuarioPublicadorVO),HttpStatus.OK);

@@ -79,6 +79,22 @@ public class UsuarioPublicadorServiceImpl extends GenericServiceImpl<UsuarioPubl
 		return dto;
 	}
 	
+
+	@Override
+	public GenericDTO altaDocenteVO(UsuarioPublicadorVO usuarioVO) {
+		GenericDTO dto = new GenericDTO();
+		if (getPermisoCarteleraService().existenNombre(usuarioVO.getPermisosCartelerasNombres())){
+			UsuarioPublicador usuario = usuarioVO.toEntidad();
+			usuario = agregarPermisosNombre(usuarioVO, usuario);
+			UsuarioPublicador usuarioCreado = this.alta(usuario);
+			if(usuarioCreado == null){
+				dto.setCodigo(HttpStatus.CONFLICT.value());
+			}
+		}	
+		return dto;
+	}
+
+	
 	@Override
 	public GenericDTO modificarVO(Long id, UsuarioPublicadorVO usuarioVO) {
 		GenericDTO dto = new GenericDTO();
@@ -313,6 +329,7 @@ public class UsuarioPublicadorServiceImpl extends GenericServiceImpl<UsuarioPubl
 		}
 		return token;
 	}
+
 
 
 

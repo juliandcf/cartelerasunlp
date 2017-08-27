@@ -26,7 +26,7 @@ public class PublicacionVO extends GenericVO implements Serializable {
 	public String titulo;
 	
 	public String texto;
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy hh:mm:ss")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy hh:mm a", timezone="America/Argentina/Buenos_Aires")
 	public Date fecha;
 	@JsonInclude(Include.NON_NULL)
 	public Long idPublicador;

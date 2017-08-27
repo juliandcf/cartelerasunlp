@@ -18,9 +18,9 @@ public class ComentarioVO extends GenericVO implements Serializable {
 	@JsonInclude(Include.NON_NULL)
     public String texto;
 	@JsonInclude(Include.NON_NULL)
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy hh:mm:ss")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy hh:mm a", timezone="America/Argentina/Buenos_Aires")
     public Date fecha;
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy hh:mm:ss")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy hh:mm a", timezone="America/Argentina/Buenos_Aires")
     public Date fechaEdicion;
 	@JsonInclude(Include.NON_NULL)
     public UsuarioVO usuario;
