@@ -170,7 +170,7 @@ public class UsuarioPublicadorServiceImpl extends GenericServiceImpl<UsuarioPubl
 			dto.setCodigo(HttpStatus.NOT_FOUND.value());
 			dto.setMensaje("No existe el usuario publicador seleccionado");
 		}else{
-			UsuarioPublicador usuarioModificado = usuarioPublicadorVO.copiarAtributosEn(usuarioRecuperar);
+			UsuarioPublicador usuarioModificado = usuarioPublicadorVO.copiarAtributosSinPass(usuarioRecuperar);
 			this.modificar(usuarioModificado);			
 			dto.setObjeto(new UsuarioPublicadorVO(usuarioModificado));
 		}

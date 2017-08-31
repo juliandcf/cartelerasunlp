@@ -25,17 +25,6 @@ public class UsuarioVO extends GenericVO implements Serializable {
     public String apellido;
     @JsonInclude(Include.NON_NULL)
     public String fotoPerfil;
-//    /*Estos tuve que incluirlos porque el token parsea y retorna un usuarioVO, quizas podria ver crear un usuarioTokenVo*/
-//    @JsonInclude(Include.NON_NULL)
-//    public List<PermisoCarteleraVO> permisosCartelerasVO;
-//    @JsonInclude(Include.NON_NULL)
-//	public List<Long> permisosCarteleras;
-//    @JsonInclude(Include.NON_NULL)
-//    public String legajo;
-//    @JsonInclude(Include.NON_NULL)
-//	public String mail;
-//    @JsonInclude(Include.NON_NULL)
-//    public Set<CarteleraVO> cartelerasDeInteres;
 
     
 	

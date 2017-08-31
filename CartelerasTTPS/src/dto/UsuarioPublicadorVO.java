@@ -50,17 +50,18 @@ public class UsuarioPublicadorVO extends UsuarioVO implements Serializable {
 		userRecuperar.setContrasena(this.getContrasena());
 		userRecuperar.setNombre(this.getNombre());
 		userRecuperar.setApellido(this.getApellido());
-//		if(userRecuperar.getFotoPerfil() == null) {
-//			Multimedia multimedia= new Multimedia(this.getFotoPerfil(),TipoEnlace.IMAGEN.name());
-//			userRecuperar.setFotoPerfil(multimedia);
-//		}else {
-			userRecuperar.setURlFotoPerfil(this.getFotoPerfil());
-		//}
-		//userRecuperar.setTipoUsuario(this.getTipoUsuario());
-		// setear los permisos en los servicios, para poder llamar al service de roles.
+		userRecuperar.setURlFotoPerfil(this.getFotoPerfil());
 		return userRecuperar;
 	}
 
+	public UsuarioPublicador copiarAtributosSinPass(UsuarioPublicador userRecuperar) {
+		userRecuperar.setUsuario(this.getUsuario());
+		userRecuperar.setNombre(this.getNombre());
+		userRecuperar.setApellido(this.getApellido());
+		userRecuperar.setURlFotoPerfil(this.getFotoPerfil());
+		return userRecuperar;
+	}
+	
 	public List<Long> getPermisosCarteleras() {
 		return permisosCarteleras;
 	}
